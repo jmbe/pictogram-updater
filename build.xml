@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<project name="6B4041" default="zip">
+<project name="6B4035" default="zip">
 
     <property name="project.name" value="lab" />
-    <property name="kurskod" value="6B4041" />
+    <property name="kurskod" value="6B4035" />
     <property name="namn" value="Jan-Mikael_Bergqvist" />
     <property name="zipfile.name"
               value="${kurskod}_${project.name}_${namn}.zip" />
