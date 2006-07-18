@@ -133,13 +133,18 @@ namespace PictogramUpdater {
         /// <returns>en boolean som talar om ifall kontouppgifterna var giltiga</returns>
         public bool checkLogin(string username, string password) {
             ProgressChanged(ProgressBarStyle.Marquee, 0, 1);
-            PictosysWebService service = new PictosysWebService();
-            bool login = service.verifyLogin(username, password);
+            bool login = false;
+            try {
+                PictosysWebService service = new PictosysWebService();
+                login = service.verifyLogin(username, password);
 
-            if (login) {
-                StatusChanged("Kontouppgifterna är giltiga.");
-            } else {
-                StatusChanged("Kontrollera kontouppgifterna!");
+                if (login) {
+                    StatusChanged("Kontouppgifterna är giltiga.");
+                } else {
+                    StatusChanged("Kontrollera kontouppgifterna!");
+                }
+            } catch {
+                LogMessage("Kunde inte ansluta till server.");
             }
             ProgressChanged(ProgressBarStyle.Blocks, 0, 1);
             return login;
