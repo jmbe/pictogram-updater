@@ -58,12 +58,12 @@
     
     <target name="create.web.service.client.proxy">
         <!-- Den property som står högst upp är den som gäller. -->
-        <property name="server" value="localhost"/>
-        <property name="server" value="pictosys.com"/>
+        <property name="server" value="http://localhost:8080/pictosys-ejb/WebService?WSDL"/>
+        <property name="server" value="http://pictosys.com:8080/pictosys/pictosys-ejb/WebServiceEndpoint?WSDL"/>
         
         <exec executable="wsdl.exe">
             <arg value="/out:PictogramUpdater/PictosysWebservice.cs"/>
-            <arg value="http://${server}:8080/pictosys/pictosys-ejb/WebServiceEndpoint?WSDL"/>
+            <arg value="${server}"/>
         </exec>
     </target>
 </project>
