@@ -57,6 +57,20 @@ namespace PictogramUpdater {
 
         }
 
+        /// <summary>
+        /// Laddar ner pictogram som zipfil. Avsett att köras i egen tråd.
+        /// </summary>
+        private void DownloadZip() {
+            SetControlsEnabled(false);
+
+            downloader.TargetPath = this.pathTextbox.Text;
+            downloader.DownloadZip(this.usernameTextbox.Text, this.passwordTextbox.Text, GetLanguage());
+
+            SetControlsEnabled(true);
+            this.currentWorkingThread = null;
+        }
+
+
 
         /// <summary>
         /// Kontrollerar om inloggningsuppgifterna är giltiga. Avsett att köras i egen tråd.
@@ -65,7 +79,7 @@ namespace PictogramUpdater {
 
             SetControlsEnabled(false);
             SetStatus("Kontrollerar kontouppgifter...");
-            downloader.checkLogin(this.usernameTextbox.Text,this.passwordTextbox.Text);
+            downloader.checkLogin(this.usernameTextbox.Text, this.passwordTextbox.Text);
             SetControlsEnabled(true);
             this.currentWorkingThread = null;
 
@@ -159,7 +173,7 @@ namespace PictogramUpdater {
         /// </summary>
         /// <param name="enabled"></param>
         private void SetControlsEnabled(bool enabled) {
-            foreach (Control control in new Control[] { verifyLabel, installButton, updateLinkLabel, overwriteCheckbox }) {
+            foreach (Control control in new Control[] { verifyLabel, installButton, updateLinkLabel, overwriteCheckbox, zipButton }) {
                 SetControlEnabled(control, enabled);
             }
         }
@@ -287,6 +301,7 @@ namespace PictogramUpdater {
                 this.languagesComboBox.Invoke(new SetLanguageDataSourceCallback(setLanguageDataSource), new object[] { source });
             } else {
                 this.languagesComboBox.DataSource = source;
+                this.languagesComboBox.SelectedIndex = this.languagesComboBox.FindString("Svenska");
             }
         }
 
@@ -302,6 +317,11 @@ namespace PictogramUpdater {
                 SetStatus("Nedladdning avbruten!");
                 SetControlsEnabled(true);
             }
+        }
+
+        private void zipButton_Click(object sender, EventArgs e) {
+            this.currentWorkingThread = new Thread(new ThreadStart(DownloadZip));
+            currentWorkingThread.Start();
         }
     }
 }

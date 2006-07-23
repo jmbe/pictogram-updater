@@ -35,6 +35,8 @@ public partial class PictosysWebService : System.Web.Services.Protocols.SoapHttp
     
     private System.Threading.SendOrPostCallback downloadJPEGOperationCompleted;
     
+    private System.Threading.SendOrPostCallback downloadPictogramZipOperationCompleted;
+    
     private System.Threading.SendOrPostCallback downloadSVGOperationCompleted;
     
     private System.Threading.SendOrPostCallback downloadSoundOperationCompleted;
@@ -69,7 +71,7 @@ public partial class PictosysWebService : System.Web.Services.Protocols.SoapHttp
     
     /// <remarks/>
     public PictosysWebService() {
-        this.Url = "http://pictosys.com:8080/pictosys/pictosys-ejb/WebServiceEndpoint";
+        this.Url = "http://x2-4400:8080/pictosys-ejb/WebService";
     }
     
     /// <remarks/>
@@ -83,6 +85,9 @@ public partial class PictosysWebService : System.Web.Services.Protocols.SoapHttp
     
     /// <remarks/>
     public event downloadJPEGCompletedEventHandler downloadJPEGCompleted;
+    
+    /// <remarks/>
+    public event downloadPictogramZipCompletedEventHandler downloadPictogramZipCompleted;
     
     /// <remarks/>
     public event downloadSVGCompletedEventHandler downloadSVGCompleted;
@@ -336,6 +341,54 @@ public partial class PictosysWebService : System.Web.Services.Protocols.SoapHttp
         if ((this.downloadJPEGCompleted != null)) {
             System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
             this.downloadJPEGCompleted(this, new downloadJPEGCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+        }
+    }
+    
+    /// <remarks/>
+    [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://www.pictosys.com/WebService", ResponseNamespace="http://www.pictosys.com/WebService")]
+    [return: System.Xml.Serialization.SoapElementAttribute("result", DataType="base64Binary")]
+    public byte[] downloadPictogramZip(string String_1, string String_2, string String_3) {
+        object[] results = this.Invoke("downloadPictogramZip", new object[] {
+                    String_1,
+                    String_2,
+                    String_3});
+        return ((byte[])(results[0]));
+    }
+    
+    /// <remarks/>
+    public System.IAsyncResult BegindownloadPictogramZip(string String_1, string String_2, string String_3, System.AsyncCallback callback, object asyncState) {
+        return this.BeginInvoke("downloadPictogramZip", new object[] {
+                    String_1,
+                    String_2,
+                    String_3}, callback, asyncState);
+    }
+    
+    /// <remarks/>
+    public byte[] EnddownloadPictogramZip(System.IAsyncResult asyncResult) {
+        object[] results = this.EndInvoke(asyncResult);
+        return ((byte[])(results[0]));
+    }
+    
+    /// <remarks/>
+    public void downloadPictogramZipAsync(string String_1, string String_2, string String_3) {
+        this.downloadPictogramZipAsync(String_1, String_2, String_3, null);
+    }
+    
+    /// <remarks/>
+    public void downloadPictogramZipAsync(string String_1, string String_2, string String_3, object userState) {
+        if ((this.downloadPictogramZipOperationCompleted == null)) {
+            this.downloadPictogramZipOperationCompleted = new System.Threading.SendOrPostCallback(this.OndownloadPictogramZipOperationCompleted);
+        }
+        this.InvokeAsync("downloadPictogramZip", new object[] {
+                    String_1,
+                    String_2,
+                    String_3}, this.downloadPictogramZipOperationCompleted, userState);
+    }
+    
+    private void OndownloadPictogramZipOperationCompleted(object arg) {
+        if ((this.downloadPictogramZipCompleted != null)) {
+            System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+            this.downloadPictogramZipCompleted(this, new downloadPictogramZipCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
         }
     }
     
@@ -1189,6 +1242,32 @@ public partial class downloadJPEGCompletedEventArgs : System.ComponentModel.Asyn
     private object[] results;
     
     internal downloadJPEGCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+            base(exception, cancelled, userState) {
+        this.results = results;
+    }
+    
+    /// <remarks/>
+    public byte[] Result {
+        get {
+            this.RaiseExceptionIfNecessary();
+            return ((byte[])(this.results[0]));
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "2.0.50727.42")]
+public delegate void downloadPictogramZipCompletedEventHandler(object sender, downloadPictogramZipCompletedEventArgs e);
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "2.0.50727.42")]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class downloadPictogramZipCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    
+    private object[] results;
+    
+    internal downloadPictogramZipCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
             base(exception, cancelled, userState) {
         this.results = results;
     }

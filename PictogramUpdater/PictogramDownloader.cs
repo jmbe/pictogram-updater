@@ -62,7 +62,7 @@ namespace PictogramUpdater {
         /// Sätter igång nedladdning av pictogrambilder.
         /// </summary>
         public void Download(string username, string password, string language) {
-            ProgressChanged(ProgressBarStyle.Continuous,0,1);
+            ProgressChanged(ProgressBarStyle.Continuous, 0, 1);
             StatusChanged("Laddar ner pictogram...");
             
             try {
@@ -109,6 +109,46 @@ namespace PictogramUpdater {
                 Console.WriteLine(ex.Message);
             }
         }
+
+        public void DownloadZip(string username, string password, string language) {
+            ProgressChanged(ProgressBarStyle.Marquee, 0, 1);
+            StatusChanged("Laddar ner pictogramzip...");
+
+            try {
+                /* Skapa målkatalog */
+                DirectoryInfo target = CreateTargetDirectory();
+
+                PictosysWebService service = new PictosysWebService();
+                string locale = this.languageProvider.GetLocale(language);
+                LogMessage("Laddar ner zipfil...");
+                BinaryWriter writer = null;
+                try {
+                    byte[] buffer = service.downloadPictogramZip(username, password, locale);
+                    if (buffer.Length > 0) {
+                        string file = target.FullName + @"\pict" + language + ".zip";
+                        writer = new BinaryWriter(new FileStream(file, FileMode.OpenOrCreate));
+                        writer.Write(buffer);
+                    } else {
+                        LogMessage("No zipfile for that language exists.");
+                    }
+                } catch (SoapException e) {
+                    LogMessage("Fel vid nedladdning av zipfil: " + e.Message);
+                } catch (FileNotFoundException e) {
+                    LogMessage("Fel vid nedladdning av zipfil: " + e.Message);
+                } finally {
+                    if (writer != null) {
+                        writer.Close();
+                    }
+                }
+
+
+            } catch (ArgumentException ex) {
+                Console.WriteLine(ex.Message);
+            }
+            ProgressChanged(ProgressBarStyle.Blocks, 0, 1);
+            StatusChanged("Klar");
+        }
+
 
         /// <summary>
         /// Skapar målkatalogen om den inte redan finns.

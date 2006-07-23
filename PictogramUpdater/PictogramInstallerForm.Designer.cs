@@ -48,6 +48,7 @@ namespace PictogramUpdater
             this.logTextbox = new System.Windows.Forms.TextBox();
             this.installButton = new System.Windows.Forms.Button();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.zipButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -254,11 +255,22 @@ namespace PictogramUpdater
             this.installButton.UseVisualStyleBackColor = true;
             this.installButton.Click += new System.EventHandler(this.installButton_Click);
             // 
+            // zipButton
+            // 
+            this.zipButton.Location = new System.Drawing.Point(333, 272);
+            this.zipButton.Name = "zipButton";
+            this.zipButton.Size = new System.Drawing.Size(85, 23);
+            this.zipButton.TabIndex = 9;
+            this.zipButton.Text = "&Ladda ner zip";
+            this.zipButton.UseVisualStyleBackColor = true;
+            this.zipButton.Click += new System.EventHandler(this.zipButton_Click);
+            // 
             // PictogramInstallerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(511, 320);
+            this.Controls.Add(this.zipButton);
             this.Controls.Add(this.logTextbox);
             this.Controls.Add(this.installButton);
             this.Controls.Add(this.groupBox2);
@@ -301,6 +313,7 @@ namespace PictogramUpdater
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.LinkLabel updateLinkLabel;
         private System.Windows.Forms.CheckBox overwriteCheckbox;
+        private System.Windows.Forms.Button zipButton;
     }
 }
 
