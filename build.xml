@@ -55,4 +55,15 @@
             </zipfileset>
         </zip>
     </target>
+    
+    <target name="create.web.service.client.proxy">
+        <!-- Den property som står högst upp är den som gäller. -->
+        <property name="server" value="localhost"/>
+        <property name="server" value="pictosys.com"/>
+        
+        <exec executable="wsdl.exe">
+            <arg value="/out:PictogramUpdater/PictosysWebservice.cs"/>
+            <arg value="http://${server}:8080/pictosys/pictosys-ejb/WebServiceEndpoint?WSDL"/>
+        </exec>
+    </target>
 </project>
