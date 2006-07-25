@@ -49,6 +49,7 @@ namespace PictogramUpdater
             this.installButton = new System.Windows.Forms.Button();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.zipButton = new System.Windows.Forms.Button();
+            this.getZipUrlButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -257,6 +258,7 @@ namespace PictogramUpdater
             // 
             // zipButton
             // 
+            this.zipButton.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.zipButton.Location = new System.Drawing.Point(333, 272);
             this.zipButton.Name = "zipButton";
             this.zipButton.Size = new System.Drawing.Size(85, 23);
@@ -265,11 +267,23 @@ namespace PictogramUpdater
             this.zipButton.UseVisualStyleBackColor = true;
             this.zipButton.Click += new System.EventHandler(this.zipButton_Click);
             // 
+            // getZipUrlButton
+            // 
+            this.getZipUrlButton.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.getZipUrlButton.Location = new System.Drawing.Point(229, 272);
+            this.getZipUrlButton.Name = "getZipUrlButton";
+            this.getZipUrlButton.Size = new System.Drawing.Size(98, 23);
+            this.getZipUrlButton.TabIndex = 10;
+            this.getZipUrlButton.Text = "&Hämta zip-URL";
+            this.getZipUrlButton.UseVisualStyleBackColor = true;
+            this.getZipUrlButton.Click += new System.EventHandler(this.getZipUrlButton_Click);
+            // 
             // PictogramInstallerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(511, 320);
+            this.Controls.Add(this.getZipUrlButton);
             this.Controls.Add(this.zipButton);
             this.Controls.Add(this.logTextbox);
             this.Controls.Add(this.installButton);
@@ -314,6 +328,7 @@ namespace PictogramUpdater
         private System.Windows.Forms.LinkLabel updateLinkLabel;
         private System.Windows.Forms.CheckBox overwriteCheckbox;
         private System.Windows.Forms.Button zipButton;
+        private System.Windows.Forms.Button getZipUrlButton;
     }
 }
 

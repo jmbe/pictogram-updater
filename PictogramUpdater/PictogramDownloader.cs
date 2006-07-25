@@ -58,6 +58,23 @@ namespace PictogramUpdater {
         }
 
 
+        public void DownloadPictogramZipUrl(string username, string password, string languageName) {
+            ProgressChanged(ProgressBarStyle.Continuous, 0, 1);
+            StatusChanged("Hämtar pictogram-URL...");
+
+            try {
+                PictosysWebService service = new PictosysWebService();
+                string locale = this.languageProvider.GetLocale(languageName);
+                LogMessage(service.getPictogramZipDownloadUrl(username, password, locale));
+            } catch (Exception e) {
+                LogMessage(e.Message);
+            }
+
+            ProgressChanged(ProgressBarStyle.Blocks, 0, 1);
+            StatusChanged("Klar");
+
+        }
+
         /// <summary>
         /// Sätter igång nedladdning av pictogrambilder.
         /// </summary>
@@ -120,12 +137,13 @@ namespace PictogramUpdater {
 
                 PictosysWebService service = new PictosysWebService();
                 string locale = this.languageProvider.GetLocale(language);
-                LogMessage("Laddar ner zipfil...");
+                
                 BinaryWriter writer = null;
                 try {
+                    string file = target.FullName + @"\pict" + language + ".zip";
+                    LogMessage("Laddar ner zipfil till " + file + "...");
                     byte[] buffer = service.downloadPictogramZip(username, password, locale);
                     if (buffer.Length > 0) {
-                        string file = target.FullName + @"\pict" + language + ".zip";
                         writer = new BinaryWriter(new FileStream(file, FileMode.OpenOrCreate));
                         writer.Write(buffer);
                     } else {

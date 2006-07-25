@@ -63,6 +63,8 @@ public partial class PictosysWebService : System.Web.Services.Protocols.SoapHttp
     
     private System.Threading.SendOrPostCallback getPictogramPhrasesByLocaleOperationCompleted;
     
+    private System.Threading.SendOrPostCallback getPictogramZipDownloadUrlOperationCompleted;
+    
     private System.Threading.SendOrPostCallback getSwedishLanguageNamesOperationCompleted;
     
     private System.Threading.SendOrPostCallback getSwedishLanguageNames2OperationCompleted;
@@ -71,7 +73,7 @@ public partial class PictosysWebService : System.Web.Services.Protocols.SoapHttp
     
     /// <remarks/>
     public PictosysWebService() {
-        this.Url = "http://x2-4400:8080/pictosys-ejb/WebService";
+        this.Url = "http://pictosys.com:8080/pictosys/pictosys-ejb/WebServiceEndpoint";
     }
     
     /// <remarks/>
@@ -127,6 +129,9 @@ public partial class PictosysWebService : System.Web.Services.Protocols.SoapHttp
     
     /// <remarks/>
     public event getPictogramPhrasesByLocaleCompletedEventHandler getPictogramPhrasesByLocaleCompleted;
+    
+    /// <remarks/>
+    public event getPictogramZipDownloadUrlCompletedEventHandler getPictogramZipDownloadUrlCompleted;
     
     /// <remarks/>
     public event getSwedishLanguageNamesCompletedEventHandler getSwedishLanguageNamesCompleted;
@@ -1019,6 +1024,54 @@ public partial class PictosysWebService : System.Web.Services.Protocols.SoapHttp
     /// <remarks/>
     [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://www.pictosys.com/WebService", ResponseNamespace="http://www.pictosys.com/WebService")]
     [return: System.Xml.Serialization.SoapElementAttribute("result")]
+    public string getPictogramZipDownloadUrl(string String_1, string String_2, string String_3) {
+        object[] results = this.Invoke("getPictogramZipDownloadUrl", new object[] {
+                    String_1,
+                    String_2,
+                    String_3});
+        return ((string)(results[0]));
+    }
+    
+    /// <remarks/>
+    public System.IAsyncResult BegingetPictogramZipDownloadUrl(string String_1, string String_2, string String_3, System.AsyncCallback callback, object asyncState) {
+        return this.BeginInvoke("getPictogramZipDownloadUrl", new object[] {
+                    String_1,
+                    String_2,
+                    String_3}, callback, asyncState);
+    }
+    
+    /// <remarks/>
+    public string EndgetPictogramZipDownloadUrl(System.IAsyncResult asyncResult) {
+        object[] results = this.EndInvoke(asyncResult);
+        return ((string)(results[0]));
+    }
+    
+    /// <remarks/>
+    public void getPictogramZipDownloadUrlAsync(string String_1, string String_2, string String_3) {
+        this.getPictogramZipDownloadUrlAsync(String_1, String_2, String_3, null);
+    }
+    
+    /// <remarks/>
+    public void getPictogramZipDownloadUrlAsync(string String_1, string String_2, string String_3, object userState) {
+        if ((this.getPictogramZipDownloadUrlOperationCompleted == null)) {
+            this.getPictogramZipDownloadUrlOperationCompleted = new System.Threading.SendOrPostCallback(this.OngetPictogramZipDownloadUrlOperationCompleted);
+        }
+        this.InvokeAsync("getPictogramZipDownloadUrl", new object[] {
+                    String_1,
+                    String_2,
+                    String_3}, this.getPictogramZipDownloadUrlOperationCompleted, userState);
+    }
+    
+    private void OngetPictogramZipDownloadUrlOperationCompleted(object arg) {
+        if ((this.getPictogramZipDownloadUrlCompleted != null)) {
+            System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+            this.getPictogramZipDownloadUrlCompleted(this, new getPictogramZipDownloadUrlCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+        }
+    }
+    
+    /// <remarks/>
+    [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://www.pictosys.com/WebService", ResponseNamespace="http://www.pictosys.com/WebService")]
+    [return: System.Xml.Serialization.SoapElementAttribute("result")]
     public string[] getSwedishLanguageNames() {
         object[] results = this.Invoke("getSwedishLanguageNames", new object[0]);
         return ((string[])(results[0]));
@@ -1615,6 +1668,32 @@ public partial class getPictogramPhrasesByLocaleCompletedEventArgs : System.Comp
         get {
             this.RaiseExceptionIfNecessary();
             return ((string[])(this.results[0]));
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "2.0.50727.42")]
+public delegate void getPictogramZipDownloadUrlCompletedEventHandler(object sender, getPictogramZipDownloadUrlCompletedEventArgs e);
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "2.0.50727.42")]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class getPictogramZipDownloadUrlCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    
+    private object[] results;
+    
+    internal getPictogramZipDownloadUrlCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+            base(exception, cancelled, userState) {
+        this.results = results;
+    }
+    
+    /// <remarks/>
+    public string Result {
+        get {
+            this.RaiseExceptionIfNecessary();
+            return ((string)(this.results[0]));
         }
     }
 }

@@ -70,6 +70,20 @@ namespace PictogramUpdater {
             this.currentWorkingThread = null;
         }
 
+        /// <summary>
+        /// Hämtar url för att ladda ner pictogramzipfil.
+        /// Avsett att köras i egen tråd.
+        /// </summary>
+        private void GetZipUrl() {
+            SetControlsEnabled(false);
+
+            downloader.TargetPath = this.pathTextbox.Text;
+            downloader.DownloadPictogramZipUrl(this.usernameTextbox.Text, this.passwordTextbox.Text, GetLanguage());
+
+            SetControlsEnabled(true);
+            this.currentWorkingThread = null;
+        }
+
 
 
         /// <summary>
@@ -119,9 +133,9 @@ namespace PictogramUpdater {
         /// Skriver ut ett meddelande i loggen på ett trådsäkert sätt.
         /// </summary>
         /// <param name="message">meddelande</param>
-        private void logMessage(string message) {
+        private void LogMessage(string message) {
             if (logTextbox.InvokeRequired) {
-                this.logTextbox.Invoke(new LogMessageCallback(logMessage), new object[] { message });
+                this.logTextbox.Invoke(new LogMessageCallback(LogMessage), new object[] { message });
             } else {
                 logTextbox.Text = message + "\r\n" + logTextbox.Text;
             }
@@ -173,7 +187,7 @@ namespace PictogramUpdater {
         /// </summary>
         /// <param name="enabled"></param>
         private void SetControlsEnabled(bool enabled) {
-            foreach (Control control in new Control[] { verifyLabel, installButton, updateLinkLabel, overwriteCheckbox, zipButton }) {
+            foreach (Control control in new Control[] { verifyLabel, installButton, updateLinkLabel, overwriteCheckbox, zipButton, getZipUrlButton }) {
                 SetControlEnabled(control, enabled);
             }
         }
@@ -241,13 +255,13 @@ namespace PictogramUpdater {
 
             /* Ladda ner språk */
             this.languageProvider = new LanguageProvider();
-            this.languageProvider.LogMessage += new LogMessageCallback(logMessage);
+            this.languageProvider.LogMessage += new LogMessageCallback(LogMessage);
             this.currentWorkingThread = new Thread(new ThreadStart(RefreshLanguages));
             currentWorkingThread.Start();
 
             /* Klass att använda för att kommunicera med webservice. */
             this.downloader = new PictogramDownloader(this.languageProvider);
-            this.downloader.LogMessage += new LogMessageCallback(logMessage);
+            this.downloader.LogMessage += new LogMessageCallback(LogMessage);
             this.downloader.ProgressChanged += new CurrentProgressCallback(SetCurrentProgress);
             this.downloader.StatusChanged +=new SetStatusCallback(SetStatus);
 
@@ -322,6 +336,11 @@ namespace PictogramUpdater {
         private void zipButton_Click(object sender, EventArgs e) {
             this.currentWorkingThread = new Thread(new ThreadStart(DownloadZip));
             currentWorkingThread.Start();
+        }
+
+        private void getZipUrlButton_Click(object sender, EventArgs e) {
+            this.currentWorkingThread = new Thread(new ThreadStart(GetZipUrl));
+            this.currentWorkingThread.Start();
         }
     }
 }
