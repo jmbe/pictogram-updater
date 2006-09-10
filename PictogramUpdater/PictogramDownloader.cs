@@ -147,7 +147,7 @@ namespace PictogramUpdater {
                         writer = new BinaryWriter(new FileStream(file, FileMode.OpenOrCreate));
                         writer.Write(buffer);
                     } else {
-                        LogMessage("No zipfile for that language exists.");
+                        LogMessage("No zipfile for that language exists or insufficient rights.");
                     }
                 } catch (SoapException e) {
                     LogMessage("Fel vid nedladdning av zipfil: " + e.Message);
