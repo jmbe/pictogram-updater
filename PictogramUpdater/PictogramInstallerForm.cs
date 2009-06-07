@@ -241,15 +241,23 @@ namespace PictogramUpdater {
 
         private void PictogramInstallerForm_Load(object sender, EventArgs e) {
             /* Installationskatalog */
-            string tempDirectory = System.Environment.GetEnvironmentVariable("temp");
-            DirectoryInfo tempDir = new DirectoryInfo(tempDirectory);
-            pathTextbox.Text = tempDir.FullName + @"\wmf";
+            //string tempDirectory = System.Environment.GetEnvironmentVariable("temp");
+            //DirectoryInfo tempDir = new DirectoryInfo(tempDirectory);
+
+            pathTextbox.Text = @"C:\Picto\WmfSV";
 
             /* Handler för när formuläret stängs */
             this.Closing += new CancelEventHandler(PictogramInstallerForm_Closing);
 
             /* Ladda sparade inställningar */
             this.settings = new PropertyFile();
+
+            string path = this.settings.getProperty("path");
+            if (path != null && path.Length > 0)
+            {
+                pathTextbox.Text = path;
+            }
+
             this.usernameTextbox.Text = this.settings.getProperty("username");
             this.passwordTextbox.Text = this.settings.getProperty("password");
 
@@ -281,6 +289,8 @@ namespace PictogramUpdater {
                 /* Spara inställningar */
                 this.settings.setProperty("username", this.usernameTextbox.Text);
                 this.settings.setProperty("password", this.passwordTextbox.Text);
+
+                this.settings.setProperty("path", this.pathTextbox.Text);
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);
             }
