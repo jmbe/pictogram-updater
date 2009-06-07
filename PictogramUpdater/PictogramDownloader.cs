@@ -113,11 +113,13 @@ namespace PictogramUpdater {
                             }
 
                         } else {
-                            LogMessage(name + " finns redan.");
+                            //LogMessage(name + " finns redan.");
                         }
                         ProgressChanged(ProgressBarStyle.Blocks, current++, names.Length);
                     }
                     StatusChanged("Klar");
+                    LogMessage("");
+                    LogMessage("Installationen är klar.");
                 } else {
                     /* Fanns tydligen inga pictogram att ladda ner. Kontrollera inloggningsuppgifterna. */
                     checkLogin(username, password);
