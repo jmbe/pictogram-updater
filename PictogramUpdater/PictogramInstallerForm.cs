@@ -34,6 +34,7 @@ namespace PictogramUpdater {
         private LanguageProvider languageProvider;
         private PictogramDownloader downloader;
         private Thread currentWorkingThread;
+        private AuthenticationService authenticationService;
 
         public PictogramInstallerForm() {
             InitializeComponent();
@@ -137,11 +138,6 @@ namespace PictogramUpdater {
             } else {
                 logTextbox.Text = message + "\r\n" + logTextbox.Text;
             }
-        }
-
-        private static Boolean IsRunningAsWebservice() {
-            String windir = System.Environment.GetEnvironmentVariable("WINDIR");
-            return new FileInfo(windir + "\\PictogramManager.ini").Exists;
         }
 
         /// <summary>
@@ -254,22 +250,21 @@ namespace PictogramUpdater {
 
             /* Ladda sparade inställningar */
             this.settings = new PropertyFile();
+            this.authenticationService = new AuthenticationService(this.settings);
 
             string path = this.settings.getProperty("path");
             if (path != null && path.Length > 0) {
                 pathTextbox.Text = path;
             }
 
-            if (IsRunningAsWebservice()) {
+            if (this.authenticationService.IsPictogramManagerInstalled()) {
                 this.groupBox1.Visible = false;
                 this.groupBox2.Location = new Point(12, 62);
-                this.usernameTextbox.Text = "webservice";
-                this.passwordTextbox.Text = "tbn2wswzcrf4";
-            } else {
-                this.usernameTextbox.Text = this.settings.getProperty("username");
-                this.passwordTextbox.Text = this.settings.getProperty("password");
             }
 
+            this.usernameTextbox.Text = this.authenticationService.GetUsername();
+            this.passwordTextbox.Text = this.authenticationService.GetPassword();
+            
             /* Ladda ner språk */
             this.languageProvider = new LanguageProvider();
             this.languageProvider.LogMessage += new LogMessageCallback(LogMessage);
@@ -297,7 +292,7 @@ namespace PictogramUpdater {
 
                 /* Spara inställningar */
 
-                if (!IsRunningAsWebservice()) {
+                if (!this.authenticationService.IsPictogramManagerInstalled()) {
                     this.settings.setProperty("username", this.usernameTextbox.Text);
                     this.settings.setProperty("password", this.passwordTextbox.Text);
                 }

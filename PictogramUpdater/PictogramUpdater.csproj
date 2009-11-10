@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthenticationService.cs" />
     <Compile Include="ISettingsPersistence.cs" />
     <Compile Include="LanguageProvider.cs" />
     <Compile Include="PictogramDownloader.cs" />
