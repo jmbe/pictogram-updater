@@ -94,7 +94,7 @@ namespace PictogramUpdater
             this.verifyLabel.TabIndex = 6;
             this.verifyLabel.TabStop = true;
             this.verifyLabel.Text = "Kontrollera";
-            this.verifyLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.verifyLabel_LinkClicked);
+            this.verifyLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.VerifyLabel_LinkClicked);
             // 
             // passwordTextbox
             // 
@@ -127,7 +127,7 @@ namespace PictogramUpdater
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(394, 17);
+            this.statusLabel.Size = new System.Drawing.Size(363, 17);
             this.statusLabel.Spring = true;
             this.statusLabel.Text = "Klar";
             this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -136,11 +136,11 @@ namespace PictogramUpdater
             // 
             this.statusProgressBar.Name = "statusProgressBar";
             this.statusProgressBar.Size = new System.Drawing.Size(100, 16);
-            this.statusProgressBar.Click += new System.EventHandler(this.statusProgressBar_Click);
+            this.statusProgressBar.Click += new System.EventHandler(this.StatusProgressBar_Click);
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.overwriteCheckbox);
             this.groupBox2.Controls.Add(this.updateLinkLabel);
@@ -158,7 +158,7 @@ namespace PictogramUpdater
             // 
             // overwriteCheckbox
             // 
-            this.overwriteCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.overwriteCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.overwriteCheckbox.AutoSize = true;
             this.overwriteCheckbox.Location = new System.Drawing.Point(10, 63);
             this.overwriteCheckbox.Name = "overwriteCheckbox";
@@ -169,7 +169,7 @@ namespace PictogramUpdater
             // 
             // updateLinkLabel
             // 
-            this.updateLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.updateLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.updateLinkLabel.AutoSize = true;
             this.updateLinkLabel.Location = new System.Drawing.Point(199, 20);
             this.updateLinkLabel.Name = "updateLinkLabel";
@@ -177,22 +177,22 @@ namespace PictogramUpdater
             this.updateLinkLabel.TabIndex = 1;
             this.updateLinkLabel.TabStop = true;
             this.updateLinkLabel.Text = "Uppdatera";
-            this.updateLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.updateLinkLabel_LinkClicked);
+            this.updateLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.UpdateLinkLabel_LinkClicked);
             // 
             // browseButton
             // 
-            this.browseButton.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.browseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.browseButton.Location = new System.Drawing.Point(199, 36);
             this.browseButton.Name = "browseButton";
             this.browseButton.Size = new System.Drawing.Size(75, 23);
             this.browseButton.TabIndex = 3;
             this.browseButton.Text = "&Bläddra ...";
             this.browseButton.UseVisualStyleBackColor = true;
-            this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
+            this.browseButton.Click += new System.EventHandler(this.BrowseButton_Click);
             // 
             // languagesComboBox
             // 
-            this.languagesComboBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.languagesComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.languagesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.languagesComboBox.FormattingEnabled = true;
@@ -221,7 +221,7 @@ namespace PictogramUpdater
             // 
             // pathTextbox
             // 
-            this.pathTextbox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.pathTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.pathTextbox.Location = new System.Drawing.Point(59, 39);
             this.pathTextbox.Name = "pathTextbox";
@@ -230,7 +230,7 @@ namespace PictogramUpdater
             // 
             // logTextbox
             // 
-            this.logTextbox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.logTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.logTextbox.BackColor = System.Drawing.Color.White;
@@ -247,36 +247,36 @@ namespace PictogramUpdater
             // 
             // installButton
             // 
-            this.installButton.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.installButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.installButton.Location = new System.Drawing.Point(424, 272);
             this.installButton.Name = "installButton";
             this.installButton.Size = new System.Drawing.Size(75, 23);
             this.installButton.TabIndex = 8;
             this.installButton.Text = "&Installera";
             this.installButton.UseVisualStyleBackColor = true;
-            this.installButton.Click += new System.EventHandler(this.installButton_Click);
+            this.installButton.Click += new System.EventHandler(this.InstallButton_Click);
             // 
             // zipButton
             // 
-            this.zipButton.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.zipButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.zipButton.Location = new System.Drawing.Point(333, 272);
             this.zipButton.Name = "zipButton";
             this.zipButton.Size = new System.Drawing.Size(85, 23);
             this.zipButton.TabIndex = 9;
             this.zipButton.Text = "&Ladda ner zip";
             this.zipButton.UseVisualStyleBackColor = true;
-            this.zipButton.Click += new System.EventHandler(this.zipButton_Click);
+            this.zipButton.Click += new System.EventHandler(this.ZipButton_Click);
             // 
             // getZipUrlButton
             // 
-            this.getZipUrlButton.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.getZipUrlButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.getZipUrlButton.Location = new System.Drawing.Point(229, 272);
             this.getZipUrlButton.Name = "getZipUrlButton";
             this.getZipUrlButton.Size = new System.Drawing.Size(98, 23);
             this.getZipUrlButton.TabIndex = 10;
             this.getZipUrlButton.Text = "&Hämta zip-URL";
             this.getZipUrlButton.UseVisualStyleBackColor = true;
-            this.getZipUrlButton.Click += new System.EventHandler(this.getZipUrlButton_Click);
+            this.getZipUrlButton.Click += new System.EventHandler(this.GetZipUrlButton_Click);
             // 
             // PictogramInstallerForm
             // 
@@ -292,8 +292,8 @@ namespace PictogramUpdater
             this.Controls.Add(this.groupBox1);
             this.Name = "PictogramInstallerForm";
             this.Text = "Pictograminstalleraren";
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form_Paint);
             this.Load += new System.EventHandler(this.PictogramInstallerForm_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form_Paint);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.statusStrip.ResumeLayout(false);

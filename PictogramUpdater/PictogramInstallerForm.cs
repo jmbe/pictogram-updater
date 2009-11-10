@@ -12,8 +12,7 @@ using System.Threading;
 
 
 namespace PictogramUpdater {
-
-
+    
     delegate void SetProgressStyleCallback(ProgressBarStyle style);
     delegate void SetControlEnabledCallback(Control control, bool enabled);
     delegate void LogMessageCallback(string message);
@@ -21,8 +20,7 @@ namespace PictogramUpdater {
     delegate void SetStatusCallback(string message);
     delegate string GetLanguageCallback();
     delegate void CurrentProgressCallback(ProgressBarStyle style, int current, int max);
-
-
+    
     /// <summary>
     /// Innehåller metoder som har med användargränssnittet att göra.
     /// 
@@ -47,7 +45,7 @@ namespace PictogramUpdater {
         /// </summary>
         private void Download() {
             SetControlsEnabled(false);
-           
+
             downloader.OverwriteExistingFiles = this.overwriteCheckbox.Checked;
             downloader.TargetPath = this.pathTextbox.Text;
 
@@ -123,7 +121,7 @@ namespace PictogramUpdater {
         /// <returns>valt språk</returns>
         private string GetLanguage() {
             if (this.languagesComboBox.InvokeRequired) {
-                return (string) this.languagesComboBox.Invoke(new GetLanguageCallback(GetLanguage));
+                return (string)this.languagesComboBox.Invoke(new GetLanguageCallback(GetLanguage));
             } else {
                 return this.languagesComboBox.Text;
             }
@@ -141,9 +139,7 @@ namespace PictogramUpdater {
             }
         }
 
-
-        private static Boolean IsRunningAsWebservice()
-        {
+        private static Boolean IsRunningAsWebservice() {
             String windir = System.Environment.GetEnvironmentVariable("WINDIR");
             return new FileInfo(windir + "\\PictogramManager.ini").Exists;
         }
@@ -260,24 +256,20 @@ namespace PictogramUpdater {
             this.settings = new PropertyFile();
 
             string path = this.settings.getProperty("path");
-            if (path != null && path.Length > 0)
-            {
+            if (path != null && path.Length > 0) {
                 pathTextbox.Text = path;
             }
 
-            if (IsRunningAsWebservice())
-            {
+            if (IsRunningAsWebservice()) {
                 this.groupBox1.Visible = false;
                 this.groupBox2.Location = new Point(12, 62);
                 this.usernameTextbox.Text = "webservice";
                 this.passwordTextbox.Text = "tbn2wswzcrf4";
-            }
-            else
-            {
+            } else {
                 this.usernameTextbox.Text = this.settings.getProperty("username");
                 this.passwordTextbox.Text = this.settings.getProperty("password");
             }
-            
+
             /* Ladda ner språk */
             this.languageProvider = new LanguageProvider();
             this.languageProvider.LogMessage += new LogMessageCallback(LogMessage);
@@ -288,7 +280,7 @@ namespace PictogramUpdater {
             this.downloader = new PictogramDownloader(this.languageProvider);
             this.downloader.LogMessage += new LogMessageCallback(LogMessage);
             this.downloader.ProgressChanged += new CurrentProgressCallback(SetCurrentProgress);
-            this.downloader.StatusChanged +=new SetStatusCallback(SetStatus);
+            this.downloader.StatusChanged += new SetStatusCallback(SetStatus);
 
         }
 
@@ -305,10 +297,9 @@ namespace PictogramUpdater {
 
                 /* Spara inställningar */
 
-                if (!IsRunningAsWebservice())
-                {
+                if (!IsRunningAsWebservice()) {
                     this.settings.setProperty("username", this.usernameTextbox.Text);
-                    this.settings.setProperty("password", this.passwordTextbox.Text); 
+                    this.settings.setProperty("password", this.passwordTextbox.Text);
                 }
 
                 this.settings.setProperty("path", this.pathTextbox.Text);
