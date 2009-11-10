@@ -103,16 +103,16 @@ namespace PictogramUpdater {
         /// Hämtar giltiga språk och fyller språklistan med dem. Avsett att köras i egen tråd.
         /// </summary>
         private void RefreshLanguages() {
-            setProgressBarStyle(ProgressBarStyle.Marquee);
+            SetProgressBarStyle(ProgressBarStyle.Marquee);
             SetControlsEnabled(false);
             SetStatus("Laddar ner språk...");
 
             languageProvider.RefreshLanguages();
-            setLanguageDataSource(languageProvider.Languages);
+            SetLanguageDataSource(languageProvider.Languages);
 
             SetStatus("Klar");
             SetControlsEnabled(true);
-            setProgressBarStyle(ProgressBarStyle.Blocks);
+            SetProgressBarStyle(ProgressBarStyle.Blocks);
             this.currentWorkingThread = null;
 
         }
@@ -141,6 +141,13 @@ namespace PictogramUpdater {
             }
         }
 
+
+        private static Boolean IsRunningAsWebservice()
+        {
+            String windir = System.Environment.GetEnvironmentVariable("WINDIR");
+            return new FileInfo(windir + "\\PictogramManager.ini").Exists;
+        }
+
         /// <summary>
         /// Anger meddelande att visa i statusfältet.
         /// </summary>
@@ -156,9 +163,9 @@ namespace PictogramUpdater {
         /// 
         /// </summary>
         /// <param name="progressBarStyle"></param>
-        private void setProgressBarStyle(ProgressBarStyle progressBarStyle) {
+        private void SetProgressBarStyle(ProgressBarStyle progressBarStyle) {
             if (this.statusProgressBar.ProgressBar.InvokeRequired) {
-                this.statusProgressBar.ProgressBar.Invoke(new SetProgressStyleCallback(setProgressBarStyle), new object[] { progressBarStyle });
+                this.statusProgressBar.ProgressBar.Invoke(new SetProgressStyleCallback(SetProgressBarStyle), new object[] { progressBarStyle });
             } else {
                 this.statusProgressBar.ProgressBar.Style = progressBarStyle;
             }
@@ -222,7 +229,7 @@ namespace PictogramUpdater {
         /// Hanterar klick på "Kontrollera"-knappen. Kontrollerar att
         /// kontouppgifterna är giltiga.
         /// </summary>
-        private void verifyLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+        private void VerifyLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             this.currentWorkingThread = new Thread(CheckLogin);
             this.currentWorkingThread.Start();
         }
@@ -232,7 +239,7 @@ namespace PictogramUpdater {
         /// Hanterar klick på "Bläddra"-knappen. Låter användaren
         /// välja målkatalog.
         /// </summary>
-        private void browseButton_Click(object sender, EventArgs e) {
+        private void BrowseButton_Click(object sender, EventArgs e) {
             folderBrowserDialog.ShowNewFolderButton = true;
             folderBrowserDialog.SelectedPath = pathTextbox.Text;
             folderBrowserDialog.ShowDialog();
@@ -258,10 +265,7 @@ namespace PictogramUpdater {
                 pathTextbox.Text = path;
             }
 
-            String windir = System.Environment.GetEnvironmentVariable("WINDIR");
-            FileInfo fi = new FileInfo(windir + "\\PictogramManager.ini");
-            Boolean pictogramManagerExists = fi.Exists;
-            if (pictogramManagerExists)
+            if (IsRunningAsWebservice())
             {
                 this.groupBox1.Visible = false;
                 this.groupBox2.Location = new Point(12, 62);
@@ -300,8 +304,12 @@ namespace PictogramUpdater {
                 }
 
                 /* Spara inställningar */
-                this.settings.setProperty("username", this.usernameTextbox.Text);
-                this.settings.setProperty("password", this.passwordTextbox.Text);
+
+                if (!IsRunningAsWebservice())
+                {
+                    this.settings.setProperty("username", this.usernameTextbox.Text);
+                    this.settings.setProperty("password", this.passwordTextbox.Text); 
+                }
 
                 this.settings.setProperty("path", this.pathTextbox.Text);
             } catch (Exception ex) {
@@ -314,7 +322,7 @@ namespace PictogramUpdater {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void updateLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+        private void UpdateLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             this.currentWorkingThread = new Thread(new ThreadStart(RefreshLanguages));
             currentWorkingThread.Start();
         }
@@ -324,7 +332,7 @@ namespace PictogramUpdater {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void installButton_Click(object sender, EventArgs e) {
+        private void InstallButton_Click(object sender, EventArgs e) {
             this.currentWorkingThread = new Thread(new ThreadStart(Download));
             currentWorkingThread.Start();
         }
@@ -333,9 +341,9 @@ namespace PictogramUpdater {
         /// Metod för att sätta val för språk på ett trådsäkert sätt.
         /// </summary>
         /// <param name="source"></param>
-        private void setLanguageDataSource(IList source) {
+        private void SetLanguageDataSource(IList source) {
             if (this.languagesComboBox.InvokeRequired) {
-                this.languagesComboBox.Invoke(new SetLanguageDataSourceCallback(setLanguageDataSource), new object[] { source });
+                this.languagesComboBox.Invoke(new SetLanguageDataSourceCallback(SetLanguageDataSource), new object[] { source });
             } else {
                 this.languagesComboBox.DataSource = source;
                 this.languagesComboBox.SelectedIndex = this.languagesComboBox.FindString("Svenska");
@@ -348,7 +356,7 @@ namespace PictogramUpdater {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void statusProgressBar_Click(object sender, EventArgs e) {
+        private void StatusProgressBar_Click(object sender, EventArgs e) {
             if (this.currentWorkingThread != null) {
                 this.currentWorkingThread.Abort();
                 SetStatus("Nedladdning avbruten!");
@@ -356,12 +364,12 @@ namespace PictogramUpdater {
             }
         }
 
-        private void zipButton_Click(object sender, EventArgs e) {
+        private void ZipButton_Click(object sender, EventArgs e) {
             this.currentWorkingThread = new Thread(new ThreadStart(DownloadZip));
             currentWorkingThread.Start();
         }
 
-        private void getZipUrlButton_Click(object sender, EventArgs e) {
+        private void GetZipUrlButton_Click(object sender, EventArgs e) {
             this.currentWorkingThread = new Thread(new ThreadStart(GetZipUrl));
             this.currentWorkingThread.Start();
         }
