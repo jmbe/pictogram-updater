@@ -12,7 +12,7 @@ using System.Threading;
 
 
 namespace PictogramUpdater {
-    
+
     delegate void SetProgressStyleCallback(ProgressBarStyle style);
     delegate void SetControlEnabledCallback(Control control, bool enabled);
     delegate void LogMessageCallback(string message);
@@ -20,7 +20,7 @@ namespace PictogramUpdater {
     delegate void SetStatusCallback(string message);
     delegate string GetLanguageCallback();
     delegate void CurrentProgressCallback(ProgressBarStyle style, int current, int max);
-    
+
     /// <summary>
     /// Innehåller metoder som har med användargränssnittet att göra.
     /// 
