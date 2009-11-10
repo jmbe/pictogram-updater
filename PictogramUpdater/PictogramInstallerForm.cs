@@ -261,6 +261,17 @@ namespace PictogramUpdater {
             this.usernameTextbox.Text = this.settings.getProperty("username");
             this.passwordTextbox.Text = this.settings.getProperty("password");
 
+            String windir = System.Environment.GetEnvironmentVariable("WINDIR");
+            FileInfo fi = new FileInfo(windir + "\\PictogramManager.ini");
+            Boolean pictogramManagerExists = fi.Exists;
+            if (pictogramManagerExists)
+            {
+                this.usernameTextbox.ReadOnly = true;
+                this.passwordTextbox.ReadOnly = true;
+                this.usernameTextbox.Text = "webservice";
+                this.passwordTextbox.Text = "tbn2wswzcrf4";
+            }
+            
             /* Ladda ner språk */
             this.languageProvider = new LanguageProvider();
             this.languageProvider.LogMessage += new LogMessageCallback(LogMessage);
