@@ -8,8 +8,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Collections;
 using System.Threading;
-
-
+using AMS.Profile;
 
 namespace PictogramUpdater {
 
@@ -30,11 +29,11 @@ namespace PictogramUpdater {
     /// </summary>
     public partial class PictogramInstallerForm : Form {
 
-        private ISettingsPersistence settings;
-        private LanguageProvider languageProvider;
-        private PictogramDownloader downloader;
-        private Thread currentWorkingThread;
-        private AuthenticationService authenticationService;
+        private ISettingsPersistence _settings;
+        private LanguageProvider _languageProvider;
+        private PictogramDownloader _downloader;
+        private Thread _currentWorkingThread;
+        private AuthenticationService _authenticationService;
 
         public PictogramInstallerForm() {
             InitializeComponent();
@@ -47,12 +46,12 @@ namespace PictogramUpdater {
         private void Download() {
             SetControlsEnabled(false);
 
-            downloader.OverwriteExistingFiles = this.overwriteCheckbox.Checked;
-            downloader.TargetPath = this.pathTextbox.Text;
+            _downloader.OverwriteExistingFiles = this.overwriteCheckbox.Checked;
+            _downloader.TargetPath = this.pathTextbox.Text;
 
-            downloader.Download(this.usernameTextbox.Text, this.passwordTextbox.Text, GetLanguage());
+            _downloader.Download(this.usernameTextbox.Text, this.passwordTextbox.Text, GetLanguage());
             SetControlsEnabled(true);
-            this.currentWorkingThread = null;
+            this._currentWorkingThread = null;
 
         }
 
@@ -62,11 +61,11 @@ namespace PictogramUpdater {
         private void DownloadZip() {
             SetControlsEnabled(false);
 
-            downloader.TargetPath = this.pathTextbox.Text;
-            downloader.DownloadZip(this.usernameTextbox.Text, this.passwordTextbox.Text, GetLanguage());
+            _downloader.TargetPath = this.pathTextbox.Text;
+            _downloader.DownloadZip(this.usernameTextbox.Text, this.passwordTextbox.Text, GetLanguage());
 
             SetControlsEnabled(true);
-            this.currentWorkingThread = null;
+            this._currentWorkingThread = null;
         }
 
         /// <summary>
@@ -76,11 +75,11 @@ namespace PictogramUpdater {
         private void GetZipUrl() {
             SetControlsEnabled(false);
 
-            downloader.TargetPath = this.pathTextbox.Text;
-            downloader.DownloadPictogramZipUrl(this.usernameTextbox.Text, this.passwordTextbox.Text, GetLanguage());
+            _downloader.TargetPath = this.pathTextbox.Text;
+            _downloader.DownloadPictogramZipUrl(this.usernameTextbox.Text, this.passwordTextbox.Text, GetLanguage());
 
             SetControlsEnabled(true);
-            this.currentWorkingThread = null;
+            this._currentWorkingThread = null;
         }
 
 
@@ -92,9 +91,9 @@ namespace PictogramUpdater {
 
             SetControlsEnabled(false);
             SetStatus("Kontrollerar kontouppgifter...");
-            downloader.checkLogin(this.usernameTextbox.Text, this.passwordTextbox.Text);
+            _downloader.checkLogin(this.usernameTextbox.Text, this.passwordTextbox.Text);
             SetControlsEnabled(true);
-            this.currentWorkingThread = null;
+            this._currentWorkingThread = null;
 
         }
 
@@ -106,13 +105,13 @@ namespace PictogramUpdater {
             SetControlsEnabled(false);
             SetStatus("Laddar ner språk...");
 
-            languageProvider.RefreshLanguages();
-            SetLanguageDataSource(languageProvider.Languages);
+            _languageProvider.RefreshLanguages();
+            SetLanguageDataSource(_languageProvider.Languages);
 
             SetStatus("Klar");
             SetControlsEnabled(true);
             SetProgressBarStyle(ProgressBarStyle.Blocks);
-            this.currentWorkingThread = null;
+            this._currentWorkingThread = null;
 
         }
 
@@ -222,8 +221,8 @@ namespace PictogramUpdater {
         /// kontouppgifterna är giltiga.
         /// </summary>
         private void VerifyLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            this.currentWorkingThread = new Thread(CheckLogin);
-            this.currentWorkingThread.Start();
+            this._currentWorkingThread = new Thread(CheckLogin);
+            this._currentWorkingThread.Start();
         }
 
 
@@ -246,36 +245,37 @@ namespace PictogramUpdater {
             pathTextbox.Text = @"C:\Picto\WmfSV";
 
             /* Handler för när formuläret stängs */
-            this.Closing += new CancelEventHandler(PictogramInstallerForm_Closing);
+            Closing += PictogramInstallerForm_Closing;
 
             /* Ladda sparade inställningar */
-            this.settings = new PropertyFile();
-            this.authenticationService = new AuthenticationService(this.settings);
+            _settings = new PropertyFile();
+            
+            _authenticationService = new AuthenticationService();
 
-            string path = this.settings.getProperty("path");
-            if (path != null && path.Length > 0) {
+            var path = _settings.getProperty("path");
+            if (!string.IsNullOrEmpty(path)) {
                 pathTextbox.Text = path;
             }
 
-            if (this.authenticationService.IsPictogramManagerInstalled()) {
-                this.groupBox1.Visible = false;
-                this.groupBox2.Location = new Point(12, 62);
+            if (_authenticationService.IsPictogramManagerInstalled()) {
+                groupBox1.Visible = false;
+                groupBox2.Location = new Point(12, 62);
             }
 
-            this.usernameTextbox.Text = this.authenticationService.GetUsername();
-            this.passwordTextbox.Text = this.authenticationService.GetPassword();
+            usernameTextbox.Text = _authenticationService.GetUsername();
+            passwordTextbox.Text = _authenticationService.GetPassword();
             
             /* Ladda ner språk */
-            this.languageProvider = new LanguageProvider();
-            this.languageProvider.LogMessage += new LogMessageCallback(LogMessage);
-            this.currentWorkingThread = new Thread(new ThreadStart(RefreshLanguages));
-            currentWorkingThread.Start();
+            _languageProvider = new LanguageProvider();
+            _languageProvider.LogMessage += LogMessage;
+            _currentWorkingThread = new Thread(RefreshLanguages);
+            _currentWorkingThread.Start();
 
             /* Klass att använda för att kommunicera med webservice. */
-            this.downloader = new PictogramDownloader(this.languageProvider);
-            this.downloader.LogMessage += new LogMessageCallback(LogMessage);
-            this.downloader.ProgressChanged += new CurrentProgressCallback(SetCurrentProgress);
-            this.downloader.StatusChanged += new SetStatusCallback(SetStatus);
+            _downloader = new PictogramDownloader(_languageProvider);
+            _downloader.LogMessage += LogMessage;
+            _downloader.ProgressChanged += SetCurrentProgress;
+            _downloader.StatusChanged += SetStatus;
 
         }
 
@@ -286,18 +286,15 @@ namespace PictogramUpdater {
         /// <param name="e"></param>
         void PictogramInstallerForm_Closing(object sender, CancelEventArgs e) {
             try {
-                if (this.currentWorkingThread != null) {
-                    this.currentWorkingThread.Abort();
+                if (_currentWorkingThread != null) {
+                    _currentWorkingThread.Abort();
                 }
 
                 /* Spara inställningar */
-
-                if (!this.authenticationService.IsPictogramManagerInstalled()) {
-                    this.settings.setProperty("username", this.usernameTextbox.Text);
-                    this.settings.setProperty("password", this.passwordTextbox.Text);
-                }
-
-                this.settings.setProperty("path", this.pathTextbox.Text);
+                _authenticationService.SaveUsername(usernameTextbox.Text);
+                _authenticationService.SavePassword(passwordTextbox.Text);
+                
+                this._settings.setProperty("path", this.pathTextbox.Text);
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);
             }
@@ -309,8 +306,8 @@ namespace PictogramUpdater {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UpdateLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            this.currentWorkingThread = new Thread(new ThreadStart(RefreshLanguages));
-            currentWorkingThread.Start();
+            this._currentWorkingThread = new Thread(new ThreadStart(RefreshLanguages));
+            _currentWorkingThread.Start();
         }
 
         /// <summary>
@@ -319,8 +316,8 @@ namespace PictogramUpdater {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void InstallButton_Click(object sender, EventArgs e) {
-            this.currentWorkingThread = new Thread(new ThreadStart(Download));
-            currentWorkingThread.Start();
+            this._currentWorkingThread = new Thread(new ThreadStart(Download));
+            _currentWorkingThread.Start();
         }
 
         /// <summary>
@@ -343,21 +340,21 @@ namespace PictogramUpdater {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void StatusProgressBar_Click(object sender, EventArgs e) {
-            if (this.currentWorkingThread != null) {
-                this.currentWorkingThread.Abort();
+            if (this._currentWorkingThread != null) {
+                this._currentWorkingThread.Abort();
                 SetStatus("Nedladdning avbruten!");
                 SetControlsEnabled(true);
             }
         }
 
         private void ZipButton_Click(object sender, EventArgs e) {
-            this.currentWorkingThread = new Thread(new ThreadStart(DownloadZip));
-            currentWorkingThread.Start();
+            this._currentWorkingThread = new Thread(new ThreadStart(DownloadZip));
+            _currentWorkingThread.Start();
         }
 
         private void GetZipUrlButton_Click(object sender, EventArgs e) {
-            this.currentWorkingThread = new Thread(new ThreadStart(GetZipUrl));
-            this.currentWorkingThread.Start();
+            this._currentWorkingThread = new Thread(new ThreadStart(GetZipUrl));
+            this._currentWorkingThread.Start();
         }
     }
 }
