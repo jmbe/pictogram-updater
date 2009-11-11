@@ -1,2 +1,4 @@
 *.suo
 *.pdf
+_ReSharper*
+PictogramUpdater.4.5.resharper.user

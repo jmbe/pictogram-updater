@@ -48,6 +48,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AMS.Profile, Version=2.0.1874.1294, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\AMS.Profile.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
