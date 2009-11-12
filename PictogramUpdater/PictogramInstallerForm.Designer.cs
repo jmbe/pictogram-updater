@@ -144,15 +144,15 @@ namespace PictogramUpdater
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.changeInstallPathSelectionLinkLabel);
             this.groupBox2.Controls.Add(this.overwriteCheckbox);
             this.groupBox2.Controls.Add(this.updateLinkLabel);
             this.groupBox2.Controls.Add(this.languagesComboBox);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.directoryPathLabel);
             this.groupBox2.Controls.Add(this.directoryBrowseButton);
             this.groupBox2.Controls.Add(this.directoryLabel);
             this.groupBox2.Controls.Add(this.directoryPathTextbox);
+            this.groupBox2.Controls.Add(this.changeInstallPathSelectionLinkLabel);
+            this.groupBox2.Controls.Add(this.directoryPathLabel);
             this.groupBox2.Location = new System.Drawing.Point(219, 62);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(280, 86);
