@@ -284,13 +284,12 @@ namespace PictogramUpdater {
         }
 
         private void HideInstallPathInput(bool hide) {
-            
-                directoryLabel.Visible = !hide;
-                directoryPathTextbox.Visible = !hide;
-                directoryBrowseButton.Visible = !hide;
+            directoryLabel.Visible = !hide;
+            directoryPathTextbox.Visible = !hide;
+            directoryBrowseButton.Visible = !hide;
 
-                directoryPathLabel.Visible = hide;
-            
+            directoryPathLabel.Visible = hide;
+            changeInstallPathSelectionLinkLabel.Visible = hide;
         }
 
         private void LanguageChanged() {
@@ -389,6 +388,10 @@ namespace PictogramUpdater {
 
         private void DirectoryPathTextbox_Changed(object sender, EventArgs e) {
             _installPath = directoryPathTextbox.Text;
+        }
+
+        private void ChangeInstallPathSelectionLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            HideInstallPathInput(false);
         }
     }
 }

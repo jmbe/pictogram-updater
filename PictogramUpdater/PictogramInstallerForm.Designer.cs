@@ -51,6 +51,7 @@ namespace PictogramUpdater
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.zipButton = new System.Windows.Forms.Button();
             this.getZipUrlButton = new System.Windows.Forms.Button();
+            this.changeInstallPathSelectionLinkLabel = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -143,14 +144,15 @@ namespace PictogramUpdater
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.changeInstallPathSelectionLinkLabel);
             this.groupBox2.Controls.Add(this.overwriteCheckbox);
             this.groupBox2.Controls.Add(this.updateLinkLabel);
-            this.groupBox2.Controls.Add(this.directoryBrowseButton);
             this.groupBox2.Controls.Add(this.languagesComboBox);
-            this.groupBox2.Controls.Add(this.directoryLabel);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.directoryPathTextbox);
             this.groupBox2.Controls.Add(this.directoryPathLabel);
+            this.groupBox2.Controls.Add(this.directoryBrowseButton);
+            this.groupBox2.Controls.Add(this.directoryLabel);
+            this.groupBox2.Controls.Add(this.directoryPathTextbox);
             this.groupBox2.Location = new System.Drawing.Point(219, 62);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(280, 86);
@@ -292,6 +294,18 @@ namespace PictogramUpdater
             this.getZipUrlButton.UseVisualStyleBackColor = true;
             this.getZipUrlButton.Click += new System.EventHandler(this.GetZipUrlButton_Click);
             // 
+            // changeInstallPathSelectionLinkLabel
+            // 
+            this.changeInstallPathSelectionLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.changeInstallPathSelectionLinkLabel.AutoSize = true;
+            this.changeInstallPathSelectionLinkLabel.Location = new System.Drawing.Point(199, 42);
+            this.changeInstallPathSelectionLinkLabel.Name = "changeInstallPathSelectionLinkLabel";
+            this.changeInstallPathSelectionLinkLabel.Size = new System.Drawing.Size(35, 13);
+            this.changeInstallPathSelectionLinkLabel.TabIndex = 13;
+            this.changeInstallPathSelectionLinkLabel.TabStop = true;
+            this.changeInstallPathSelectionLinkLabel.Text = "Ändra";
+            this.changeInstallPathSelectionLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ChangeInstallPathSelectionLabel_LinkClicked);
+            // 
             // PictogramInstallerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -344,6 +358,7 @@ namespace PictogramUpdater
         private System.Windows.Forms.Button zipButton;
         private System.Windows.Forms.Button getZipUrlButton;
         private System.Windows.Forms.Label directoryPathLabel;
+        private System.Windows.Forms.LinkLabel changeInstallPathSelectionLinkLabel;
     }
 }
 
