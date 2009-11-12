@@ -40,11 +40,12 @@ namespace PictogramUpdater
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.overwriteCheckbox = new System.Windows.Forms.CheckBox();
             this.updateLinkLabel = new System.Windows.Forms.LinkLabel();
-            this.browseButton = new System.Windows.Forms.Button();
+            this.directoryBrowseButton = new System.Windows.Forms.Button();
             this.languagesComboBox = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.directoryLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.pathTextbox = new System.Windows.Forms.TextBox();
+            this.directoryPathTextbox = new System.Windows.Forms.TextBox();
+            this.directoryPathLabel = new System.Windows.Forms.Label();
             this.logTextbox = new System.Windows.Forms.TextBox();
             this.installButton = new System.Windows.Forms.Button();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
@@ -127,7 +128,7 @@ namespace PictogramUpdater
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(363, 17);
+            this.statusLabel.Size = new System.Drawing.Size(394, 17);
             this.statusLabel.Spring = true;
             this.statusLabel.Text = "Klar";
             this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -144,11 +145,12 @@ namespace PictogramUpdater
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.overwriteCheckbox);
             this.groupBox2.Controls.Add(this.updateLinkLabel);
-            this.groupBox2.Controls.Add(this.browseButton);
+            this.groupBox2.Controls.Add(this.directoryBrowseButton);
             this.groupBox2.Controls.Add(this.languagesComboBox);
-            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.directoryLabel);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.pathTextbox);
+            this.groupBox2.Controls.Add(this.directoryPathTextbox);
+            this.groupBox2.Controls.Add(this.directoryPathLabel);
             this.groupBox2.Location = new System.Drawing.Point(219, 62);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(280, 86);
@@ -179,16 +181,16 @@ namespace PictogramUpdater
             this.updateLinkLabel.Text = "Uppdatera";
             this.updateLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.UpdateLinkLabel_LinkClicked);
             // 
-            // browseButton
+            // directoryBrowseButton
             // 
-            this.browseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.browseButton.Location = new System.Drawing.Point(199, 36);
-            this.browseButton.Name = "browseButton";
-            this.browseButton.Size = new System.Drawing.Size(75, 23);
-            this.browseButton.TabIndex = 3;
-            this.browseButton.Text = "&Bläddra ...";
-            this.browseButton.UseVisualStyleBackColor = true;
-            this.browseButton.Click += new System.EventHandler(this.BrowseButton_Click);
+            this.directoryBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.directoryBrowseButton.Location = new System.Drawing.Point(199, 36);
+            this.directoryBrowseButton.Name = "directoryBrowseButton";
+            this.directoryBrowseButton.Size = new System.Drawing.Size(75, 23);
+            this.directoryBrowseButton.TabIndex = 3;
+            this.directoryBrowseButton.Text = "&Bläddra ...";
+            this.directoryBrowseButton.UseVisualStyleBackColor = true;
+            this.directoryBrowseButton.Click += new System.EventHandler(this.BrowseButton_Click);
             // 
             // languagesComboBox
             // 
@@ -200,15 +202,16 @@ namespace PictogramUpdater
             this.languagesComboBox.Name = "languagesComboBox";
             this.languagesComboBox.Size = new System.Drawing.Size(134, 21);
             this.languagesComboBox.TabIndex = 0;
+            this.languagesComboBox.SelectedIndexChanged += new System.EventHandler(this.LanguageComboBox_Change);
             // 
-            // label4
+            // directoryLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 42);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(43, 13);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Katalog";
+            this.directoryLabel.AutoSize = true;
+            this.directoryLabel.Location = new System.Drawing.Point(6, 42);
+            this.directoryLabel.Name = "directoryLabel";
+            this.directoryLabel.Size = new System.Drawing.Size(43, 13);
+            this.directoryLabel.TabIndex = 2;
+            this.directoryLabel.Text = "Katalog";
             // 
             // label1
             // 
@@ -219,14 +222,25 @@ namespace PictogramUpdater
             this.label1.TabIndex = 1;
             this.label1.Text = "Språk";
             // 
-            // pathTextbox
+            // directoryPathTextbox
             // 
-            this.pathTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.directoryPathTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.pathTextbox.Location = new System.Drawing.Point(59, 39);
-            this.pathTextbox.Name = "pathTextbox";
-            this.pathTextbox.Size = new System.Drawing.Size(134, 20);
-            this.pathTextbox.TabIndex = 2;
+            this.directoryPathTextbox.Location = new System.Drawing.Point(59, 39);
+            this.directoryPathTextbox.Name = "directoryPathTextbox";
+            this.directoryPathTextbox.Size = new System.Drawing.Size(134, 20);
+            this.directoryPathTextbox.TabIndex = 2;
+            this.directoryPathTextbox.TextChanged += new System.EventHandler(this.DirectoryPathTextbox_Changed);
+            // 
+            // directoryPathLabel
+            // 
+            this.directoryPathLabel.AutoSize = true;
+            this.directoryPathLabel.Location = new System.Drawing.Point(7, 42);
+            this.directoryPathLabel.Name = "directoryPathLabel";
+            this.directoryPathLabel.Size = new System.Drawing.Size(66, 13);
+            this.directoryPathLabel.TabIndex = 12;
+            this.directoryPathLabel.Text = "Installeras till";
+            this.directoryPathLabel.Visible = false;
             // 
             // logTextbox
             // 
@@ -319,16 +333,17 @@ namespace PictogramUpdater
         private System.Windows.Forms.TextBox logTextbox;
         private System.Windows.Forms.Button installButton;
         private System.Windows.Forms.LinkLabel verifyLabel;
-        private System.Windows.Forms.Button browseButton;
+        private System.Windows.Forms.Button directoryBrowseButton;
         private System.Windows.Forms.ComboBox languagesComboBox;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label directoryLabel;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox pathTextbox;
+        private System.Windows.Forms.TextBox directoryPathTextbox;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.LinkLabel updateLinkLabel;
         private System.Windows.Forms.CheckBox overwriteCheckbox;
         private System.Windows.Forms.Button zipButton;
         private System.Windows.Forms.Button getZipUrlButton;
+        private System.Windows.Forms.Label directoryPathLabel;
     }
 }
 

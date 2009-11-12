@@ -11,14 +11,21 @@ using System.Threading;
 using AMS.Profile;
 
 namespace PictogramUpdater {
+    internal delegate void SetProgressStyleCallback(ProgressBarStyle style);
 
-    delegate void SetProgressStyleCallback(ProgressBarStyle style);
-    delegate void SetControlEnabledCallback(Control control, bool enabled);
-    delegate void LogMessageCallback(string message);
-    delegate void SetLanguageDataSourceCallback(IList source);
-    delegate void SetStatusCallback(string message);
-    delegate string GetLanguageCallback();
-    delegate void CurrentProgressCallback(ProgressBarStyle style, int current, int max);
+    internal delegate void SetControlEnabledCallback(Control control, bool enabled);
+
+    internal delegate void LogMessageCallback(string message);
+
+    internal delegate void SetLanguageDataSourceCallback(IList source);
+
+    internal delegate void SetStatusCallback(string message);
+
+    internal delegate string GetLanguageCallback();
+
+    internal delegate void CurrentProgressCallback(ProgressBarStyle style, int current, int max);
+
+    internal delegate void LanguageChangedCallback();
 
     /// <summary>
     /// Innehåller metoder som har med användargränssnittet att göra.
@@ -28,17 +35,18 @@ namespace PictogramUpdater {
     /// http://msdn2.microsoft.com/en-us/library/ms171728.aspx.
     /// </summary>
     public partial class PictogramInstallerForm : Form {
-
         private ISettingsPersistence _settings;
         private LanguageProvider _languageProvider;
         private PictogramDownloader _downloader;
         private Thread _currentWorkingThread;
         private AuthenticationService _authenticationService;
+        private ImageService _imageService;
+        private LanguageSelection _languageSelection;
+        private string _installPath;
 
         public PictogramInstallerForm() {
             InitializeComponent();
         }
-
 
         /// <summary>
         /// Laddar ner pictogram som saknas. Avsett att köras i egen tråd.
@@ -47,12 +55,11 @@ namespace PictogramUpdater {
             SetControlsEnabled(false);
 
             _downloader.OverwriteExistingFiles = this.overwriteCheckbox.Checked;
-            _downloader.TargetPath = this.pathTextbox.Text;
+            _downloader.TargetPath = _installPath;
 
             _downloader.Download(this.usernameTextbox.Text, this.passwordTextbox.Text, GetLanguage());
             SetControlsEnabled(true);
             this._currentWorkingThread = null;
-
         }
 
         /// <summary>
@@ -61,7 +68,7 @@ namespace PictogramUpdater {
         private void DownloadZip() {
             SetControlsEnabled(false);
 
-            _downloader.TargetPath = this.pathTextbox.Text;
+            _downloader.TargetPath = this.directoryPathTextbox.Text;
             _downloader.DownloadZip(this.usernameTextbox.Text, this.passwordTextbox.Text, GetLanguage());
 
             SetControlsEnabled(true);
@@ -75,26 +82,22 @@ namespace PictogramUpdater {
         private void GetZipUrl() {
             SetControlsEnabled(false);
 
-            _downloader.TargetPath = this.pathTextbox.Text;
+            _downloader.TargetPath = this.directoryPathTextbox.Text;
             _downloader.DownloadPictogramZipUrl(this.usernameTextbox.Text, this.passwordTextbox.Text, GetLanguage());
 
             SetControlsEnabled(true);
             this._currentWorkingThread = null;
         }
 
-
-
         /// <summary>
         /// Kontrollerar om inloggningsuppgifterna är giltiga. Avsett att köras i egen tråd.
         /// </summary>
         private void CheckLogin() {
-
             SetControlsEnabled(false);
             SetStatus("Kontrollerar kontouppgifter...");
             _downloader.checkLogin(this.usernameTextbox.Text, this.passwordTextbox.Text);
             SetControlsEnabled(true);
             this._currentWorkingThread = null;
-
         }
 
         /// <summary>
@@ -112,7 +115,6 @@ namespace PictogramUpdater {
             SetControlsEnabled(true);
             SetProgressBarStyle(ProgressBarStyle.Blocks);
             this._currentWorkingThread = null;
-
         }
 
         /// <summary>
@@ -120,11 +122,10 @@ namespace PictogramUpdater {
         /// </summary>
         /// <returns>valt språk</returns>
         private string GetLanguage() {
-            if (this.languagesComboBox.InvokeRequired) {
-                return (string)this.languagesComboBox.Invoke(new GetLanguageCallback(GetLanguage));
-            } else {
-                return this.languagesComboBox.Text;
+            if (languagesComboBox.InvokeRequired) {
+                return (string) languagesComboBox.Invoke(new GetLanguageCallback(GetLanguage));
             }
+            return languagesComboBox.Text;
         }
 
         /// <summary>
@@ -133,7 +134,7 @@ namespace PictogramUpdater {
         /// <param name="message">meddelande</param>
         private void LogMessage(string message) {
             if (logTextbox.InvokeRequired) {
-                this.logTextbox.Invoke(new LogMessageCallback(LogMessage), new object[] { message });
+                this.logTextbox.Invoke(new LogMessageCallback(LogMessage), new object[] {message});
             } else {
                 logTextbox.Text = message + "\r\n" + logTextbox.Text;
             }
@@ -156,12 +157,12 @@ namespace PictogramUpdater {
         /// <param name="progressBarStyle"></param>
         private void SetProgressBarStyle(ProgressBarStyle progressBarStyle) {
             if (this.statusProgressBar.ProgressBar.InvokeRequired) {
-                this.statusProgressBar.ProgressBar.Invoke(new SetProgressStyleCallback(SetProgressBarStyle), new object[] { progressBarStyle });
+                this.statusProgressBar.ProgressBar.Invoke(new SetProgressStyleCallback(SetProgressBarStyle),
+                                                          new object[] {progressBarStyle});
             } else {
                 this.statusProgressBar.ProgressBar.Style = progressBarStyle;
             }
         }
-
 
         /// <summary>
         /// Metod för att sätta egenskaper för progressbar på ett trådsäkert sätt.
@@ -171,13 +172,13 @@ namespace PictogramUpdater {
         /// <param name="max"></param>
         private void SetCurrentProgress(ProgressBarStyle style, int current, int max) {
             if (this.statusProgressBar.ProgressBar.InvokeRequired) {
-                this.statusProgressBar.ProgressBar.Invoke(new CurrentProgressCallback(SetCurrentProgress), new object[] { style, current, max });
+                this.statusProgressBar.ProgressBar.Invoke(new CurrentProgressCallback(SetCurrentProgress),
+                                                          new object[] {style, current, max});
             } else {
                 this.statusProgressBar.ProgressBar.Style = style;
                 this.statusProgressBar.ProgressBar.Maximum = max;
                 this.statusProgressBar.ProgressBar.Value = current;
             }
-
         }
 
         /// <summary>
@@ -185,7 +186,10 @@ namespace PictogramUpdater {
         /// </summary>
         /// <param name="enabled"></param>
         private void SetControlsEnabled(bool enabled) {
-            foreach (Control control in new Control[] { verifyLabel, installButton, updateLinkLabel, overwriteCheckbox, zipButton, getZipUrlButton }) {
+            foreach (
+                Control control in
+                    new Control[]
+                    {verifyLabel, installButton, updateLinkLabel, overwriteCheckbox, zipButton, getZipUrlButton}) {
                 SetControlEnabled(control, enabled);
             }
         }
@@ -197,7 +201,7 @@ namespace PictogramUpdater {
         /// <param name="enabled"></param>
         public void SetControlEnabled(Control control, bool enabled) {
             if (control.InvokeRequired) {
-                control.Invoke(new SetControlEnabledCallback(SetControlEnabled), new object[] { control, enabled });
+                control.Invoke(new SetControlEnabledCallback(SetControlEnabled), new object[] {control, enabled});
             } else {
                 control.Enabled = enabled;
             }
@@ -214,8 +218,6 @@ namespace PictogramUpdater {
             e.Graphics.DrawLine(Pens.Black, new Point(0, 50), new Point(this.Width, 50));
         }
 
-
-
         /// <summary>
         /// Hanterar klick på "Kontrollera"-knappen. Kontrollerar att
         /// kontouppgifterna är giltiga.
@@ -225,36 +227,37 @@ namespace PictogramUpdater {
             this._currentWorkingThread.Start();
         }
 
-
         /// <summary>
         /// Hanterar klick på "Bläddra"-knappen. Låter användaren
         /// välja målkatalog.
         /// </summary>
         private void BrowseButton_Click(object sender, EventArgs e) {
             folderBrowserDialog.ShowNewFolderButton = true;
-            folderBrowserDialog.SelectedPath = pathTextbox.Text;
+            folderBrowserDialog.SelectedPath = directoryPathTextbox.Text;
             folderBrowserDialog.ShowDialog();
-            pathTextbox.Text = folderBrowserDialog.SelectedPath;
+            directoryPathTextbox.Text = folderBrowserDialog.SelectedPath;
         }
 
         private void PictogramInstallerForm_Load(object sender, EventArgs e) {
-            /* Installationskatalog */
-            //string tempDirectory = System.Environment.GetEnvironmentVariable("temp");
-            //DirectoryInfo tempDir = new DirectoryInfo(tempDirectory);
-
-            pathTextbox.Text = @"C:\Picto\WmfSV";
-
             /* Handler för när formuläret stängs */
             Closing += PictogramInstallerForm_Closing;
 
             /* Ladda sparade inställningar */
             _settings = new PropertyFile();
-            
-            _authenticationService = new AuthenticationService();
 
-            var path = _settings.getProperty("path");
-            if (!string.IsNullOrEmpty(path)) {
-                pathTextbox.Text = path;
+            _languageSelection = new LanguageSelection();
+            _authenticationService = new AuthenticationService();
+            _imageService = new ImageService();
+
+            /* Installationskatalog */
+            if (!_imageService.IsPictoWmfInstalled(_languageSelection.Language)) {
+                directoryPathTextbox.Text = @"C:\Picto\Wmf" + _languageSelection.Language;
+                var path = _settings.getProperty("path");
+                if (!string.IsNullOrEmpty(path)) {
+                    directoryPathTextbox.Text = path;
+                }
+            } else {
+                HideInstallPathInput(true);
             }
 
             if (_authenticationService.IsPictogramManagerInstalled()) {
@@ -264,7 +267,7 @@ namespace PictogramUpdater {
 
             usernameTextbox.Text = _authenticationService.GetUsername();
             passwordTextbox.Text = _authenticationService.GetPassword();
-            
+
             /* Ladda ner språk */
             _languageProvider = new LanguageProvider();
             _languageProvider.LogMessage += LogMessage;
@@ -277,6 +280,30 @@ namespace PictogramUpdater {
             _downloader.ProgressChanged += SetCurrentProgress;
             _downloader.StatusChanged += SetStatus;
 
+            _languageSelection.LanguageChanged += LanguageChanged;
+        }
+
+        private void HideInstallPathInput(bool hide) {
+            
+                directoryLabel.Visible = !hide;
+                directoryPathTextbox.Visible = !hide;
+                directoryBrowseButton.Visible = !hide;
+
+                directoryPathLabel.Visible = hide;
+            
+        }
+
+        private void LanguageChanged() {
+            Console.WriteLine("Language changed");
+            if (_imageService.IsPictoWmfInstalled(_languageSelection.Language)) {
+                _installPath = _imageService.GetPictoWmfInstallPath(_languageSelection.Language);
+                directoryPathLabel.Text = "Installeras till '" + _installPath + "'";
+                HideInstallPathInput(true);
+            } else {
+                _installPath = directoryPathTextbox.Text;
+                HideInstallPathInput(false);
+            }
+            Console.WriteLine(_installPath);
         }
 
         /// <summary>
@@ -284,7 +311,7 @@ namespace PictogramUpdater {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void PictogramInstallerForm_Closing(object sender, CancelEventArgs e) {
+        private void PictogramInstallerForm_Closing(object sender, CancelEventArgs e) {
             try {
                 if (_currentWorkingThread != null) {
                     _currentWorkingThread.Abort();
@@ -293,8 +320,8 @@ namespace PictogramUpdater {
                 /* Spara inställningar */
                 _authenticationService.SaveUsername(usernameTextbox.Text);
                 _authenticationService.SavePassword(passwordTextbox.Text);
-                
-                this._settings.setProperty("path", this.pathTextbox.Text);
+
+                this._settings.setProperty("path", this.directoryPathTextbox.Text);
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);
             }
@@ -325,14 +352,17 @@ namespace PictogramUpdater {
         /// </summary>
         /// <param name="source"></param>
         private void SetLanguageDataSource(IList source) {
-            if (this.languagesComboBox.InvokeRequired) {
-                this.languagesComboBox.Invoke(new SetLanguageDataSourceCallback(SetLanguageDataSource), new object[] { source });
+            if (languagesComboBox.InvokeRequired) {
+                languagesComboBox.Invoke(new SetLanguageDataSourceCallback(SetLanguageDataSource), new object[] {source});
             } else {
-                this.languagesComboBox.DataSource = source;
-                this.languagesComboBox.SelectedIndex = this.languagesComboBox.FindString("Svenska");
+                languagesComboBox.DataSource = source;
+                languagesComboBox.SelectedIndex = languagesComboBox.FindString("Svenska");
             }
         }
 
+        private void LanguageComboBox_Change(object sender, EventArgs e) {
+            _languageSelection.Language = _languageProvider.GetLocale(languagesComboBox.SelectedItem as string);
+        }
 
         /// <summary>
         /// Hanterar klick på progressbaren. Avbryter nedladdning om sådan pågår.
@@ -355,6 +385,10 @@ namespace PictogramUpdater {
         private void GetZipUrlButton_Click(object sender, EventArgs e) {
             this._currentWorkingThread = new Thread(new ThreadStart(GetZipUrl));
             this._currentWorkingThread.Start();
+        }
+
+        private void DirectoryPathTextbox_Changed(object sender, EventArgs e) {
+            _installPath = directoryPathTextbox.Text;
         }
     }
 }
