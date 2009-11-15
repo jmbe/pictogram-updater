@@ -31,22 +31,22 @@ namespace PictogramUpdater {
         }
 
         public String GetUsername() {
-            return IsPictogramManagerInstalled() ? "webservice" : _settings.GetValue("Auth", "username") as string;
+            return IsPictogramManagerInstalled() ? "webservice" : _settings.GetValue("Login", "Owner") as string;
         }
 
         public String GetPassword() {
-            return IsPictogramManagerInstalled() ? "tbn2wswzcrf4" : _settings.GetValue("Auth", "password") as string;
+            return IsPictogramManagerInstalled() ? "tbn2wswzcrf4" : _settings.GetValue("Login", "LoginWord") as string;
         }
 
         public void SaveUsername(string username) {
             if(!IsPictogramManagerInstalled()) {
-                _settings.SetValue("Auth", "username", username);    
+                _settings.SetValue("Login", "Owner", username);    
             }
         }
 
         public void SavePassword(string password) {
             if (!IsPictogramManagerInstalled()) {
-                _settings.SetValue("Auth", "password", password);
+                _settings.SetValue("Login", "LoginWord", password);
             }
         }
     }
