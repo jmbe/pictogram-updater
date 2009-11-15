@@ -5,14 +5,14 @@ using System.Text;
 
 namespace PictogramUpdater {
     internal class LanguageSelection {
-        private string _language = "SV";
+        private string _locale = "SV";
 
         public event LanguageChangedCallback LanguageChanged;
 
-        public string Language {
-            get { return _language; }
+        public string Locale {
+            get { return _locale; }
             set {
-                _language = value;
+                _locale = value;
                 LanguageChanged.Invoke();
             }
         }

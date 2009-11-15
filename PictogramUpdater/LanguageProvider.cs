@@ -18,7 +18,7 @@ namespace PictogramUpdater {
         /// Skapar en ny instans av klassen.
         /// </summary>
         public LanguageProvider() {
-            this.languageToLocaleMapping = new Hashtable();
+            languageToLocaleMapping = new Hashtable();
         }
 
         /// <summary>
@@ -26,10 +26,13 @@ namespace PictogramUpdater {
         /// </summary>
         public string GetLocale(string language) {
             if (languageToLocaleMapping.ContainsKey(language)) {
-                return (string) languageToLocaleMapping[language];
-            } else {
-                return "";
+                var locale = languageToLocaleMapping[language] as string;
+                if (locale != null) {
+                    return locale.ToUpper();                    
+                }
             }
+            return "";
+            
         }
 
         /// <summary>
@@ -37,10 +40,10 @@ namespace PictogramUpdater {
         /// </summary>
         public void RefreshLanguages() {
             try {
-                PictosysWebService service = new PictosysWebService();
-                string[] languages = service.getSwedishLanguageNames();
-                for (int i = 0; i < languages.Length; i += 2) {
-                    this.languageToLocaleMapping[languages[i]] = languages[i + 1];
+                var service = new PictosysWebService();
+                var languages = service.getSwedishLanguageNames();
+                for (var i = 0; i < languages.Length; i += 2) {
+                    languageToLocaleMapping[languages[i]] = languages[i + 1];
                     Console.WriteLine(languages[i]);
                 }
 
@@ -54,8 +57,8 @@ namespace PictogramUpdater {
         /// </summary>
         public IList Languages {
             get {
-                string[] result = new string[languageToLocaleMapping.Keys.Count];
-                int i = 0;
+                var result = new string[languageToLocaleMapping.Keys.Count];
+                var i = 0;
                 foreach (string language in languageToLocaleMapping.Keys) {
                     result[i++] = language;
                 }

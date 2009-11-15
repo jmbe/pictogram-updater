@@ -43,6 +43,7 @@ namespace PictogramUpdater {
         private ImageService _imageService;
         private LanguageSelection _languageSelection;
         private string _installPath;
+        private bool _displayInstallPathInputField;
 
         public PictogramInstallerForm() {
             InitializeComponent();
@@ -53,6 +54,8 @@ namespace PictogramUpdater {
         /// </summary>
         private void Download() {
             SetControlsEnabled(false);
+
+            _imageService.CreateOrUpdateINI(_languageProvider.GetLocale(GetLanguage()), _installPath);
 
             _downloader.OverwriteExistingFiles = this.overwriteCheckbox.Checked;
             _downloader.TargetPath = _installPath;
@@ -250,8 +253,8 @@ namespace PictogramUpdater {
             _imageService = new ImageService();
 
             /* Installationskatalog */
-            if (!_imageService.IsPictoWmfInstalled(_languageSelection.Language)) {
-                directoryPathTextbox.Text = @"C:\Picto\Wmf" + _languageSelection.Language;
+            if (_displayInstallPathInputField) {
+                directoryPathTextbox.Text = _imageService.GetDefaultPath(_languageSelection.Locale);
                 var path = _settings.getProperty("path");
                 if (!string.IsNullOrEmpty(path)) {
                     directoryPathTextbox.Text = path;
@@ -293,16 +296,21 @@ namespace PictogramUpdater {
         }
 
         private void LanguageChanged() {
-            Console.WriteLine("Language changed");
-            if (_imageService.IsPictoWmfInstalled(_languageSelection.Language)) {
-                _installPath = _imageService.GetPictoWmfInstallPath(_languageSelection.Language);
-                directoryPathLabel.Text = "Installeras till '" + _installPath + "'";
-                HideInstallPathInput(true);
-            } else {
+            if (_displayInstallPathInputField) {
+                if (directoryPathTextbox.Text.Length == 0) {
+                    directoryPathTextbox.Text = _imageService.GetDefaultPath(_languageSelection.Locale);
+                    Console.WriteLine("Setting default path for " + _languageSelection.Locale);
+                }
                 _installPath = directoryPathTextbox.Text;
                 HideInstallPathInput(false);
+                _displayInstallPathInputField = false;
+            } else {
+                _installPath = _imageService.GetPictoWmfInstallPath(_languageSelection.Locale);
+                directoryPathLabel.Text = "Installeras till '" + _installPath + "'";
+                directoryPathTextbox.Text = _installPath;
+                HideInstallPathInput(true);
             }
-            Console.WriteLine(_installPath);
+            Console.WriteLine("InstallPath: " + _installPath);
         }
 
         /// <summary>
@@ -320,7 +328,7 @@ namespace PictogramUpdater {
                 _authenticationService.SaveUsername(usernameTextbox.Text);
                 _authenticationService.SavePassword(passwordTextbox.Text);
 
-                this._settings.setProperty("path", this.directoryPathTextbox.Text);
+                _settings.setProperty("path", directoryPathTextbox.Text);
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);
             }
@@ -360,7 +368,7 @@ namespace PictogramUpdater {
         }
 
         private void LanguageComboBox_Change(object sender, EventArgs e) {
-            _languageSelection.Language = _languageProvider.GetLocale(languagesComboBox.SelectedItem as string);
+            _languageSelection.Locale = _languageProvider.GetLocale(languagesComboBox.SelectedItem as string);
         }
 
         /// <summary>
@@ -392,6 +400,7 @@ namespace PictogramUpdater {
 
         private void ChangeInstallPathSelectionLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             HideInstallPathInput(false);
+            _displayInstallPathInputField = false;
         }
     }
 }
