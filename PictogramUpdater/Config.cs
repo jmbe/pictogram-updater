@@ -5,7 +5,7 @@ using System.Text;
 using AMS.Profile;
 
 namespace PictogramUpdater {
-    internal class ImageService {
+    internal class Config {
         public bool IsPictoWmfInstalled(string locale) {
             var iniFilePath = GetPictoWmfIniFilePath(locale);
             return new FileInfo(iniFilePath).Exists;

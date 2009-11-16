@@ -40,7 +40,7 @@ namespace PictogramUpdater {
         private PictogramDownloader _downloader;
         private Thread _currentWorkingThread;
         private AuthenticationService _authenticationService;
-        private ImageService _imageService;
+        private Config _config;
         private LanguageSelection _languageSelection;
         private string _installPath;
         private bool _displayInstallPathInputField;
@@ -55,7 +55,7 @@ namespace PictogramUpdater {
         private void Download() {
             SetControlsEnabled(false);
 
-            _imageService.CreateOrUpdateINI(_languageProvider.GetLocale(GetLanguage()), _installPath);
+            _config.CreateOrUpdateINI(_languageProvider.GetLocale(GetLanguage()), _installPath);
 
             _downloader.OverwriteExistingFiles = this.overwriteCheckbox.Checked;
             _downloader.TargetPath = _installPath;
@@ -250,11 +250,11 @@ namespace PictogramUpdater {
 
             _languageSelection = new LanguageSelection();
             _authenticationService = new AuthenticationService();
-            _imageService = new ImageService();
+            _config = new Config();
 
             /* Installationskatalog */
             if (_displayInstallPathInputField) {
-                directoryPathTextbox.Text = _imageService.GetDefaultPath(_languageSelection.Locale);
+                directoryPathTextbox.Text = _config.GetDefaultPath(_languageSelection.Locale);
                 var path = _settings.getProperty("path");
                 if (!string.IsNullOrEmpty(path)) {
                     directoryPathTextbox.Text = path;
@@ -298,14 +298,14 @@ namespace PictogramUpdater {
         private void LanguageChanged() {
             if (_displayInstallPathInputField) {
                 if (directoryPathTextbox.Text.Length == 0) {
-                    directoryPathTextbox.Text = _imageService.GetDefaultPath(_languageSelection.Locale);
+                    directoryPathTextbox.Text = _config.GetDefaultPath(_languageSelection.Locale);
                     Console.WriteLine("Setting default path for " + _languageSelection.Locale);
                 }
                 _installPath = directoryPathTextbox.Text;
                 HideInstallPathInput(false);
                 _displayInstallPathInputField = false;
             } else {
-                _installPath = _imageService.GetPictoWmfInstallPath(_languageSelection.Locale);
+                _installPath = _config.GetPictoWmfInstallPath(_languageSelection.Locale);
                 directoryPathLabel.Text = "Installeras till '" + _installPath + "'";
                 directoryPathTextbox.Text = _installPath;
                 HideInstallPathInput(true);
