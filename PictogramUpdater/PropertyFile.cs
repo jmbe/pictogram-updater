@@ -4,7 +4,7 @@ using System.Text;
 using System.Collections;
 using System.IO;
 
-namespace PictogramUpdater {
+namespace DownloadManager {
 
     /// <summary>
     /// Implementation en av .properties-file för att

@@ -4,7 +4,7 @@ using System.Text;
 using System.IO;
 using AMS.Profile;
 
-namespace PictogramUpdater {
+namespace DownloadManager {
     internal class AuthenticationService {
         private readonly Profile _settings;
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PictogramUpdater {
+namespace DownloadManager {
     internal class CategoryRepository {
         private readonly List<Category> _categories;
         private readonly Dictionary<string, Category> _categoriesByCode;
@@ -10,16 +10,15 @@ namespace PictogramUpdater {
 
         public CategoryRepository() {
             _categories = new List<Category>();
-            
+
             //Create all categories, with i, w removed.
             for (var index = 1; index <= 26; index++) {
                 var code = "";
-                if(index <= 8 ) {
-                    code = ((char) ('a' + index -1)).ToString(); 
-                } else if(index > 21 && index < 25) {
-                    code = ((char)('a' + index + 1)).ToString(); 
-                }
-                else if (index >= 25) {
+                if (index <= 8) {
+                    code = ((char) ('a' + index - 1)).ToString();
+                } else if (index > 21 && index < 25) {
+                    code = ((char) ('a' + index + 1)).ToString();
+                } else if (index >= 25) {
                     code = "a" + ((char) ('a' + index - 25));
                 } else {
                     code = ((char) ('a' + index)).ToString();
@@ -79,8 +78,8 @@ namespace PictogramUpdater {
                                                              };
         }
 
-        public string Translate(Category category, string locale) {
-            return _translations[locale][category.Index - 1];
+        public string Translate(Category category, Language language) {
+            return _translations[language.Code][category.Index - 1];
         }
     }
 

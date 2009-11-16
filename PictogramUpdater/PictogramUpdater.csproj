@@ -65,11 +65,13 @@
   <ItemGroup>
     <Compile Include="AuthenticationService.cs" />
     <Compile Include="Category.cs" />
+    <Compile Include="DownloadListManager.cs" />
     <Compile Include="LanguageSelection.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="ISettingsPersistence.cs" />
     <Compile Include="LanguageProvider.cs" />
     <Compile Include="PictogramDownloader.cs" />
+    <Compile Include="PictogramEntryTests.cs" />
     <Compile Include="PictogramInstallerForm.cs">
       <SubType>Form</SubType>
     </Compile>

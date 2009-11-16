@@ -4,19 +4,19 @@ using System.Text;
 
 using NUnit.Framework;
 
-namespace PictogramUpdater {
+namespace DownloadManager {
     
     [TestFixture]
     public class CategoryTranslationServiceTests {
         
         [Test]
         public void ShouldReturnTranslation() {
-            const string locale = "SV";
+            var language = new Language("SV", "Svenska");
             var service = new CategoryTranslationService();
             var repository = new CategoryRepository();
             var category = repository.FindByCode("a");
             
-            Assert.That(service.Translate(category, locale), Is.EqualTo("Människor"));
+            Assert.That(service.Translate(category, language), Is.EqualTo("Människor"));
         }
     }
 

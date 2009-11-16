@@ -9,8 +9,9 @@ using System.IO;
 using System.Collections;
 using System.Threading;
 using System.Web.Services.Protocols;
+using AMS.Profile;
 
-namespace PictogramUpdater {
+namespace DownloadManager {
     
     /// <summary>
     /// Laddar ner bilder från webbtjänsten.
@@ -78,45 +79,38 @@ namespace PictogramUpdater {
         /// <summary>
         /// Sätter igång nedladdning av pictogrambilder.
         /// </summary>
-        public void Download(string username, string password, string language) {
+        public void Download(string username, string password, Language language, List<PictogramEntry> entries) {
             ProgressChanged(ProgressBarStyle.Continuous, 0, 1);
-            StatusChanged("Laddar ner pictogram...");
-            
+            StatusChanged("Laddar ner " + entries.Count + " pictogram...");
+
             try {
                 /* Skapa målkatalog */
-                DirectoryInfo target = CreateTargetDirectory();
+                var target = CreateTargetDirectory();
 
+                var service = new PictosysWebService();
 
-                /* Ladda ner lista med pictogram och hämta de som saknas. */
-                PictosysWebService service = new PictosysWebService();
-                string[] names = service.getPictogramNames(username, password);
-                if (names.Length > 0) {
-                    string locale = this.languageProvider.GetLocale(language);
-                    int current = 0;
-                    foreach (string name in names) {
+                if (entries.Count > 0) {
+                    var current = 0;
+                    foreach (var entry in entries) {
+                        var file = target.FullName + @"\" + entry.FullCode + ".wmf";
 
-                        string file = target.FullName + @"\" + name + ".wmf";
-                        if (!File.Exists(file) || OverwriteExistingFiles) {
-                            LogMessage("Laddar ner " + name + "...");
-                            BinaryWriter writer = null;
-                            try {
-                                byte[] buffer = service.downloadWMF(username, password, name, locale);
-                                writer = new BinaryWriter(new FileStream(file, FileMode.OpenOrCreate));
-                                writer.Write(buffer);
-                                
-                            } catch (SoapException e) {
-                                LogMessage("Fel vid nedladdning av " + name + ": " + e.Message);
-                            } finally {
-                                if (writer != null) {
-                                    writer.Close();
-                                }
+                        LogMessage("Laddar ner " + entry.FullCode + "...");
+                        BinaryWriter writer = null;
+                        try {
+                            var buffer = service.downloadWMF(username, password, entry.FullCode, language.Code);
+                            writer = new BinaryWriter(new FileStream(file, FileMode.OpenOrCreate));
+                            writer.Write(buffer);
+                        } catch (SoapException e) {
+                            LogMessage("Fel vid nedladdning av " + entry.FullCode + ": " + e.Message);
+                        } finally {
+                            if (writer != null) {
+                                writer.Close();
                             }
-
-                        } else {
-                            //LogMessage(name + " finns redan.");
                         }
-                        ProgressChanged(ProgressBarStyle.Blocks, current++, names.Length);
+                        
+                        ProgressChanged(ProgressBarStyle.Blocks, current++, entries.Count);
                     }
+
                     StatusChanged("Klar");
                     LogMessage("");
                     LogMessage("Installationen är klar.");
@@ -127,6 +121,16 @@ namespace PictogramUpdater {
             } catch (ArgumentException ex) {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        private Dictionary<string, PictogramEntry> GetPictogramEntriesByCode(string[] strings) {
+            var entriesByCode = new Dictionary<string, PictogramEntry>();
+            for (var i = 0; i < strings.Length; i = i + 2 ) {
+                var code = strings[i];
+                var name = strings[i + 1];
+                entriesByCode[code] = new PictogramEntry(code, name);
+            }
+            return entriesByCode;
         }
 
         public void DownloadZip(string username, string password, string language) {

@@ -10,7 +10,7 @@ using System.Collections;
 using System.Threading;
 using AMS.Profile;
 
-namespace PictogramUpdater {
+namespace DownloadManager {
     internal delegate void SetProgressStyleCallback(ProgressBarStyle style);
 
     internal delegate void SetControlEnabledCallback(Control control, bool enabled);
@@ -37,6 +37,7 @@ namespace PictogramUpdater {
     public partial class PictogramInstallerForm : Form {
         private ISettingsPersistence _settings;
         private LanguageProvider _languageProvider;
+        private DownloadListManager _downloadListManager;
         private PictogramDownloader _downloader;
         private Thread _currentWorkingThread;
         private AuthenticationService _authenticationService;
@@ -55,14 +56,18 @@ namespace PictogramUpdater {
         private void Download() {
             SetControlsEnabled(false);
 
-            _config.CreateOrUpdateINI(_languageProvider.GetLocale(GetLanguage()), _installPath);
+            var profile = _config.CreateOrUpdateINI(_languageSelection.Language, _installPath);
 
-            _downloader.OverwriteExistingFiles = this.overwriteCheckbox.Checked;
+            var entries = _downloadListManager.GetEntriesToInstall(usernameTextbox.Text, passwordTextbox.Text, _languageSelection.Language, _config, !overwriteCheckbox.Checked);
+
             _downloader.TargetPath = _installPath;
+            _downloader.Download(usernameTextbox.Text, passwordTextbox.Text, _languageSelection.Language, entries);
 
-            _downloader.Download(this.usernameTextbox.Text, this.passwordTextbox.Text, GetLanguage());
+            _config.CommitEntries(_languageSelection.Language, entries);
+
             SetControlsEnabled(true);
             this._currentWorkingThread = null;
+
         }
 
         /// <summary>
@@ -254,7 +259,7 @@ namespace PictogramUpdater {
 
             /* Installationskatalog */
             if (_displayInstallPathInputField) {
-                directoryPathTextbox.Text = _config.GetDefaultPath(_languageSelection.Locale);
+                directoryPathTextbox.Text = _config.GetDefaultPath(_languageSelection.Language);
                 var path = _settings.getProperty("path");
                 if (!string.IsNullOrEmpty(path)) {
                     directoryPathTextbox.Text = path;
@@ -277,12 +282,16 @@ namespace PictogramUpdater {
             _currentWorkingThread = new Thread(RefreshLanguages);
             _currentWorkingThread.Start();
 
+            
+
             /* Klass att använda för att kommunicera med webservice. */
             _downloader = new PictogramDownloader(_languageProvider);
             _downloader.LogMessage += LogMessage;
             _downloader.ProgressChanged += SetCurrentProgress;
             _downloader.StatusChanged += SetStatus;
 
+            _downloadListManager = new DownloadListManager();
+            
             _languageSelection.LanguageChanged += LanguageChanged;
         }
 
@@ -298,14 +307,14 @@ namespace PictogramUpdater {
         private void LanguageChanged() {
             if (_displayInstallPathInputField) {
                 if (directoryPathTextbox.Text.Length == 0) {
-                    directoryPathTextbox.Text = _config.GetDefaultPath(_languageSelection.Locale);
-                    Console.WriteLine("Setting default path for " + _languageSelection.Locale);
+                    directoryPathTextbox.Text = _config.GetDefaultPath(_languageSelection.Language);
+                    Console.WriteLine("Setting default path for " + _languageSelection.Language.Name);
                 }
                 _installPath = directoryPathTextbox.Text;
                 HideInstallPathInput(false);
                 _displayInstallPathInputField = false;
             } else {
-                _installPath = _config.GetPictoWmfInstallPath(_languageSelection.Locale);
+                _installPath = _config.GetPictoWmfInstallPath(_languageSelection.Language);
                 directoryPathLabel.Text = "Installeras till '" + _installPath + "'";
                 directoryPathTextbox.Text = _installPath;
                 HideInstallPathInput(true);
@@ -368,7 +377,8 @@ namespace PictogramUpdater {
         }
 
         private void LanguageComboBox_Change(object sender, EventArgs e) {
-            _languageSelection.Locale = _languageProvider.GetLocale(languagesComboBox.SelectedItem as string);
+            var languageName = languagesComboBox.SelectedItem as string;
+            _languageSelection.Language = new Language(_languageProvider.GetLocale(languageName), languageName);
         }
 
         /// <summary>

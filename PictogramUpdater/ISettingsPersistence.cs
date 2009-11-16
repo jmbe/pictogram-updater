@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PictogramUpdater {
+namespace DownloadManager {
 
     /// <summary>
     /// Interface för persistenslagret.
