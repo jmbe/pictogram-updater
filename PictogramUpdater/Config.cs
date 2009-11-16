@@ -26,6 +26,7 @@ namespace PictogramUpdater {
                 CreateNewIniFile(locale);
             }
             Profile profile = new Ini(GetPictoWmfIniFilePath(locale));
+            
             profile.SetValue("ProgDir", "Dir", path);
             
             if (profile.GetValue("ProgDir", "Extension") == null) {
@@ -42,6 +43,18 @@ namespace PictogramUpdater {
             }
             if (profile.GetValue("ProgDir", "IDNAME") == null) {
                 profile.SetValue("ProgDir", "IDNAME", "");
+            }
+
+            //Update categories
+            var repository = new CategoryRepository();
+            var translationService = new CategoryTranslationService();
+            var categories = repository.FindAll();
+            profile.SetValue("Grupper", "Antal", categories.Count);
+            foreach (var category in categories) {
+                var translation = translationService.Translate(category, locale);
+                profile.SetValue("Grupper", category.Index.ToString(), translation);
+                profile.SetValue(translation, "Antal", "0");
+                profile.SetValue(translation, "Kod", category.Code);
             }
         }
 
