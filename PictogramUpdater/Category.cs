@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DownloadManager {
+namespace PictogramUpdater {
     internal class CategoryRepository {
         private readonly List<Category> _categories;
         private readonly Dictionary<string, Category> _categoriesByCode;

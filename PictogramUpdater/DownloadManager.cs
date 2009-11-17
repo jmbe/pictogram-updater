@@ -10,7 +10,7 @@ using System.Collections;
 using System.Threading;
 using System.Web.Services.Protocols;
 using AMS.Profile;
-using DownloadManager;
+using PictogramUpdater;
 
 namespace PictogramUpdater {
     /// <summary>

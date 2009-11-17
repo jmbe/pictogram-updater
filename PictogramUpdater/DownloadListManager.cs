@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace DownloadManager {
+namespace PictogramUpdater {
     internal class DownloadListManager {
         /// <summary>
         /// Download phrases from service and then create a list of PictogramEntries from it.
@@ -17,11 +17,9 @@ namespace DownloadManager {
         public List<PictogramEntry> GetEntriesToInstall(string username, string password, Language language, Config config, bool filter) {
             var entries = GetEntries(username, password, language);
             if(filter) {
-                Console.WriteLine("filter");
                 entries = FilterEntries(config, language, entries);    
             }
             
-
             return entries;
         }
 

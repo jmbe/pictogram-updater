@@ -70,7 +70,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="ISettingsPersistence.cs" />
     <Compile Include="LanguageProvider.cs" />
-    <Compile Include="PictogramDownloader.cs" />
+    <Compile Include="DownloadManager.cs" />
     <Compile Include="PictogramEntryTests.cs" />
     <Compile Include="PictogramInstallerForm.cs">
       <SubType>Form</SubType>

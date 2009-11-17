@@ -9,8 +9,9 @@ using System.IO;
 using System.Collections;
 using System.Threading;
 using AMS.Profile;
+using PictogramUpdater;
 
-namespace DownloadManager {
+namespace PictogramUpdater {
     internal delegate void SetProgressStyleCallback(ProgressBarStyle style);
 
     internal delegate void SetControlEnabledCallback(Control control, bool enabled);
@@ -38,7 +39,7 @@ namespace DownloadManager {
         private ISettingsPersistence _settings;
         private LanguageProvider _languageProvider;
         private DownloadListManager _downloadListManager;
-        private PictogramDownloader _downloader;
+        private PictogramUpdater.DownloadManager _downloader;
         private Thread _currentWorkingThread;
         private AuthenticationService _authenticationService;
         private Config _config;
@@ -285,7 +286,7 @@ namespace DownloadManager {
             
 
             /* Klass att använda för att kommunicera med webservice. */
-            _downloader = new PictogramDownloader(_languageProvider);
+            _downloader = new PictogramUpdater.DownloadManager(_languageProvider);
             _downloader.LogMessage += LogMessage;
             _downloader.ProgressChanged += SetCurrentProgress;
             _downloader.StatusChanged += SetStatus;

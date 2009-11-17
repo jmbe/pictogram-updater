@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
 
-namespace DownloadManager {
+namespace PictogramUpdater {
     [TestFixture]
     public class PictogramEntryTests {
 

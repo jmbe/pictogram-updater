@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using AMS.Profile;
 
-namespace DownloadManager {
+namespace PictogramUpdater {
     internal class Config {
         private List<PictogramEntry> _queue;
 

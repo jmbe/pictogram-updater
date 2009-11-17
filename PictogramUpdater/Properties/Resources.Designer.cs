@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DownloadManager.Properties {
+namespace PictogramUpdater.Properties {
     using System;
     
     

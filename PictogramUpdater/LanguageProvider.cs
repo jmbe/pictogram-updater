@@ -4,7 +4,7 @@ using System.Text;
 using System.Collections;
 using System.Net;
 
-namespace DownloadManager {
+namespace PictogramUpdater {
 
     /// <summary>
     /// Klass för att hantera språk.

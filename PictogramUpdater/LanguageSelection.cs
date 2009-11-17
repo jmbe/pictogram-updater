@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DownloadManager {
+namespace PictogramUpdater {
     internal class LanguageSelection {
         private string _locale = "SV";
         private Language _language = new Language("SV", "Svenska");

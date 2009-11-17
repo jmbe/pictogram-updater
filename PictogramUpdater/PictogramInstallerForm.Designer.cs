@@ -1,4 +1,4 @@
-namespace DownloadManager
+namespace PictogramUpdater
 {
     partial class PictogramInstallerForm
     {
