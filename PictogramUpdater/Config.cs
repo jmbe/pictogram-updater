@@ -88,14 +88,27 @@ namespace PictogramUpdater {
             var translationService = new CategoryTranslationService();
             var repository = new CategoryRepository();
             Profile profile = new Ini(GetPictoWmfIniFilePath(language));
-            Console.WriteLine("Commiting " + entries.Count +" Entries");
+            Console.WriteLine("Commiting " + entries.Count + " Entries");
+
+            var categoryCounts = new Dictionary<Category, int>();
             foreach (var entry in entries) {
-                profile.SetValue(translationService.Translate(repository.FindByCode(entry.Code), language), entry.FullCode, entry.Name);
+                var category = repository.FindByCode(entry.Code);
+                var categoryCount = 0;
+                var categoryTranslation = translationService.Translate(category, language);
+                if (categoryCounts.ContainsKey(category)) {
+                    categoryCount = categoryCounts[category];
+                }
+                profile.SetValue(categoryTranslation, entry.FullCode, entry.Name);
+                categoryCount++;
+                categoryCounts[category] = categoryCount;
+            }
+            foreach (var category in categoryCounts.Keys) {
+                profile.SetValue(translationService.Translate(category, language), "Antal", categoryCounts[category]);
             }
         }
     }
 
-    internal class PictogramEntry {
+    internal class PictogramEntry :IComparable<PictogramEntry> {
         private readonly Regex _indexPattern = new Regex(@"\d+$");
 
         public PictogramEntry(string fullCode, string name) {
@@ -103,11 +116,23 @@ namespace PictogramUpdater {
             Name = name;
             var indexMatch = _indexPattern.Match(fullCode);
             Code = fullCode.Substring(0, indexMatch.Index);
+            Index = Convert.ToInt32(fullCode.Substring(indexMatch.Index));
         }
 
         public string FullCode { get; set; }
         public string Name { get; set; }
 
         public string Code { get; private set; }
+
+        public int Index { get; private set; }
+
+        public int CompareTo(PictogramEntry other) {
+            var result = Code.CompareTo(other.Code);
+            if(result == 0 ) {
+                result = Index.CompareTo(other.Index);
+            }
+            
+            return result;
+        }
     }
 }

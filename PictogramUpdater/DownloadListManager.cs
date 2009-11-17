@@ -14,14 +14,13 @@ namespace PictogramUpdater {
         /// <param name="config"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public List<PictogramEntry> GetEntriesToInstall(string username, string password, Language language, Config config, bool filter) {
+        public List<PictogramEntry> GetEntriesToInstall(string username, string password, Language language, Config config) {
             var entries = GetEntries(username, password, language);
-            if(filter) {
-                entries = FilterEntries(config, language, entries);    
-            }
-            
+            entries.Sort();
             return entries;
         }
+
+        
 
         private static List<PictogramEntry> GetEntries(string username, string password, Language language) {
             var entries = new List<PictogramEntry>();
@@ -36,7 +35,7 @@ namespace PictogramUpdater {
             return entries;
         }
 
-        private static List<PictogramEntry> FilterEntries(Config config, Language language,
+        public List<PictogramEntry> FilterEntries(Config config, Language language,
                                                           IEnumerable<PictogramEntry> entries) {
             var installPath = config.GetPictoWmfInstallPath(language);
             var extension = config.GetExtension(language);

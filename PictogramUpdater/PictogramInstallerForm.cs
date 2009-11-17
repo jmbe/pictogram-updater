@@ -59,12 +59,16 @@ namespace PictogramUpdater {
 
             var profile = _config.CreateOrUpdateINI(_languageSelection.Language, _installPath);
 
-            var entries = _downloadListManager.GetEntriesToInstall(usernameTextbox.Text, passwordTextbox.Text, _languageSelection.Language, _config, !overwriteCheckbox.Checked);
-
+            var completeEntryList = _downloadListManager.GetEntriesToInstall(usernameTextbox.Text, passwordTextbox.Text, _languageSelection.Language, _config);
+            var downloadEntryList = completeEntryList;
+            if(!overwriteCheckbox.Checked) {
+                downloadEntryList = _downloadListManager.FilterEntries(_config, _languageSelection.Language,
+                                                                       downloadEntryList);
+            }
             _downloader.TargetPath = _installPath;
-            _downloader.Download(usernameTextbox.Text, passwordTextbox.Text, _languageSelection.Language, entries);
+            _downloader.Download(usernameTextbox.Text, passwordTextbox.Text, _languageSelection.Language, downloadEntryList);
 
-            _config.CommitEntries(_languageSelection.Language, entries);
+            _config.CommitEntries(_languageSelection.Language, completeEntryList);
 
             SetControlsEnabled(true);
             this._currentWorkingThread = null;
