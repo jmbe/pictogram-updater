@@ -60,7 +60,8 @@ namespace PictogramUpdater {
         private void Download() {
             SetControlsEnabled(false);
             var language = _languageSelection.Language;
-            var profile = _config.CreateOrUpdateINI(language, _installPath, _clearTextInstallPath, _soundInstallPath);
+            _config.CreateOrUpdateWmfINI(language, _installPath, _clearTextInstallPath);
+            
             _manager.Download(_installPath, language, overwriteCheckbox.Checked, false, false, usernameTextbox.Text, passwordTextbox.Text);
 
             if(clearTextCheckbox.Checked) {
@@ -69,8 +70,9 @@ namespace PictogramUpdater {
             }
 
             if(soundCheckbox.Checked) {
-                _manager.Download(_soundInstallPath, language, overwriteCheckbox.Checked, false, true,
-                                           usernameTextbox.Text, passwordTextbox.Text);
+                /*_manager.Download(_soundInstallPath, language, overwriteCheckbox.Checked, false, true,
+                                           usernameTextbox.Text, passwordTextbox.Text);*/
+                _config.CreateOrUpdateWavIni(language, _soundInstallPath);
             }
 
             SetControlsEnabled(true);
