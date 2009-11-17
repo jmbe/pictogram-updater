@@ -38,6 +38,16 @@ namespace PictogramUpdater
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.soundDirectoryBrowseButton = new System.Windows.Forms.Button();
+            this.soundDirectoryLabel = new System.Windows.Forms.Label();
+            this.soundDirectoryTextbox = new System.Windows.Forms.TextBox();
+            this.soundCheckbox = new System.Windows.Forms.CheckBox();
+            this.soundChangeInstallPathSelectionLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.soundDirectoryPathLabel = new System.Windows.Forms.Label();
+            this.clearTextDirectoryBrowseButton = new System.Windows.Forms.Button();
+            this.clearTextDirectoryLabel = new System.Windows.Forms.Label();
+            this.clearTextDirectoryTextbox = new System.Windows.Forms.TextBox();
+            this.clearTextCheckbox = new System.Windows.Forms.CheckBox();
             this.overwriteCheckbox = new System.Windows.Forms.CheckBox();
             this.updateLinkLabel = new System.Windows.Forms.LinkLabel();
             this.languagesComboBox = new System.Windows.Forms.ComboBox();
@@ -47,23 +57,13 @@ namespace PictogramUpdater
             this.directoryTextbox = new System.Windows.Forms.TextBox();
             this.changeInstallPathSelectionLinkLabel = new System.Windows.Forms.LinkLabel();
             this.directoryPathLabel = new System.Windows.Forms.Label();
+            this.clearTextChangeInstallPathSelectionLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.clearTextDirectoryPathLabel = new System.Windows.Forms.Label();
             this.logTextbox = new System.Windows.Forms.TextBox();
             this.installButton = new System.Windows.Forms.Button();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.zipButton = new System.Windows.Forms.Button();
             this.getZipUrlButton = new System.Windows.Forms.Button();
-            this.clearTextCheckbox = new System.Windows.Forms.CheckBox();
-            this.clearTextDirectoryBrowseButton = new System.Windows.Forms.Button();
-            this.clearTextDirectoryLabel = new System.Windows.Forms.Label();
-            this.clearTextDirectoryTextbox = new System.Windows.Forms.TextBox();
-            this.clearTextDirectoryPathLabel = new System.Windows.Forms.Label();
-            this.clearTextChangeInstallPathSelectionLinkLabel = new System.Windows.Forms.LinkLabel();
-            this.soundDirectoryBrowseButton = new System.Windows.Forms.Button();
-            this.soundDirectoryLabel = new System.Windows.Forms.Label();
-            this.soundDirectoryTextbox = new System.Windows.Forms.TextBox();
-            this.soundCheckbox = new System.Windows.Forms.CheckBox();
-            this.soundChangeInstallPathSelectionLinkLabel = new System.Windows.Forms.LinkLabel();
-            this.soundDirectoryPathLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -141,7 +141,7 @@ namespace PictogramUpdater
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(394, 17);
+            this.statusLabel.Size = new System.Drawing.Size(363, 17);
             this.statusLabel.Spring = true;
             this.statusLabel.Text = "Klar";
             this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -183,6 +183,106 @@ namespace PictogramUpdater
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Pictogram";
+            // 
+            // soundDirectoryBrowseButton
+            // 
+            this.soundDirectoryBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.soundDirectoryBrowseButton.Location = new System.Drawing.Point(199, 131);
+            this.soundDirectoryBrowseButton.Name = "soundDirectoryBrowseButton";
+            this.soundDirectoryBrowseButton.Size = new System.Drawing.Size(75, 23);
+            this.soundDirectoryBrowseButton.TabIndex = 23;
+            this.soundDirectoryBrowseButton.Text = "&Bläddra ...";
+            this.soundDirectoryBrowseButton.UseVisualStyleBackColor = true;
+            // 
+            // soundDirectoryLabel
+            // 
+            this.soundDirectoryLabel.AutoSize = true;
+            this.soundDirectoryLabel.Location = new System.Drawing.Point(7, 137);
+            this.soundDirectoryLabel.Name = "soundDirectoryLabel";
+            this.soundDirectoryLabel.Size = new System.Drawing.Size(43, 13);
+            this.soundDirectoryLabel.TabIndex = 22;
+            this.soundDirectoryLabel.Text = "Katalog";
+            // 
+            // soundDirectoryTextbox
+            // 
+            this.soundDirectoryTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.soundDirectoryTextbox.Location = new System.Drawing.Point(59, 134);
+            this.soundDirectoryTextbox.Name = "soundDirectoryTextbox";
+            this.soundDirectoryTextbox.Size = new System.Drawing.Size(134, 20);
+            this.soundDirectoryTextbox.TabIndex = 21;
+            // 
+            // soundCheckbox
+            // 
+            this.soundCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.soundCheckbox.AutoSize = true;
+            this.soundCheckbox.Location = new System.Drawing.Point(10, 111);
+            this.soundCheckbox.Name = "soundCheckbox";
+            this.soundCheckbox.Size = new System.Drawing.Size(87, 17);
+            this.soundCheckbox.TabIndex = 20;
+            this.soundCheckbox.Text = "Installera ljud";
+            this.soundCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // soundChangeInstallPathSelectionLinkLabel
+            // 
+            this.soundChangeInstallPathSelectionLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.soundChangeInstallPathSelectionLinkLabel.AutoSize = true;
+            this.soundChangeInstallPathSelectionLinkLabel.Location = new System.Drawing.Point(202, 137);
+            this.soundChangeInstallPathSelectionLinkLabel.Name = "soundChangeInstallPathSelectionLinkLabel";
+            this.soundChangeInstallPathSelectionLinkLabel.Size = new System.Drawing.Size(35, 13);
+            this.soundChangeInstallPathSelectionLinkLabel.TabIndex = 25;
+            this.soundChangeInstallPathSelectionLinkLabel.TabStop = true;
+            this.soundChangeInstallPathSelectionLinkLabel.Text = "Ändra";
+            this.soundChangeInstallPathSelectionLinkLabel.Click += new System.EventHandler(this.ChangeSoundInstallPathSelectionLabel_LinkClicked);
+            // 
+            // soundDirectoryPathLabel
+            // 
+            this.soundDirectoryPathLabel.AutoSize = true;
+            this.soundDirectoryPathLabel.Location = new System.Drawing.Point(7, 137);
+            this.soundDirectoryPathLabel.Name = "soundDirectoryPathLabel";
+            this.soundDirectoryPathLabel.Size = new System.Drawing.Size(66, 13);
+            this.soundDirectoryPathLabel.TabIndex = 24;
+            this.soundDirectoryPathLabel.Text = "Installeras till";
+            this.soundDirectoryPathLabel.Visible = false;
+            // 
+            // clearTextDirectoryBrowseButton
+            // 
+            this.clearTextDirectoryBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.clearTextDirectoryBrowseButton.Location = new System.Drawing.Point(199, 86);
+            this.clearTextDirectoryBrowseButton.Name = "clearTextDirectoryBrowseButton";
+            this.clearTextDirectoryBrowseButton.Size = new System.Drawing.Size(75, 23);
+            this.clearTextDirectoryBrowseButton.TabIndex = 17;
+            this.clearTextDirectoryBrowseButton.Text = "&Bläddra ...";
+            this.clearTextDirectoryBrowseButton.UseVisualStyleBackColor = true;
+            // 
+            // clearTextDirectoryLabel
+            // 
+            this.clearTextDirectoryLabel.AutoSize = true;
+            this.clearTextDirectoryLabel.Location = new System.Drawing.Point(7, 92);
+            this.clearTextDirectoryLabel.Name = "clearTextDirectoryLabel";
+            this.clearTextDirectoryLabel.Size = new System.Drawing.Size(43, 13);
+            this.clearTextDirectoryLabel.TabIndex = 16;
+            this.clearTextDirectoryLabel.Text = "Katalog";
+            // 
+            // clearTextDirectoryTextbox
+            // 
+            this.clearTextDirectoryTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.clearTextDirectoryTextbox.Location = new System.Drawing.Point(59, 89);
+            this.clearTextDirectoryTextbox.Name = "clearTextDirectoryTextbox";
+            this.clearTextDirectoryTextbox.Size = new System.Drawing.Size(134, 20);
+            this.clearTextDirectoryTextbox.TabIndex = 15;
+            // 
+            // clearTextCheckbox
+            // 
+            this.clearTextCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.clearTextCheckbox.AutoSize = true;
+            this.clearTextCheckbox.Location = new System.Drawing.Point(10, 66);
+            this.clearTextCheckbox.Name = "clearTextCheckbox";
+            this.clearTextCheckbox.Size = new System.Drawing.Size(161, 17);
+            this.clearTextCheckbox.TabIndex = 14;
+            this.clearTextCheckbox.Text = "Installera pictobilder i klartext";
+            this.clearTextCheckbox.UseVisualStyleBackColor = true;
             // 
             // overwriteCheckbox
             // 
@@ -280,6 +380,28 @@ namespace PictogramUpdater
             this.directoryPathLabel.Text = "Installeras till";
             this.directoryPathLabel.Visible = false;
             // 
+            // clearTextChangeInstallPathSelectionLinkLabel
+            // 
+            this.clearTextChangeInstallPathSelectionLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.clearTextChangeInstallPathSelectionLinkLabel.AutoSize = true;
+            this.clearTextChangeInstallPathSelectionLinkLabel.Location = new System.Drawing.Point(202, 92);
+            this.clearTextChangeInstallPathSelectionLinkLabel.Name = "clearTextChangeInstallPathSelectionLinkLabel";
+            this.clearTextChangeInstallPathSelectionLinkLabel.Size = new System.Drawing.Size(35, 13);
+            this.clearTextChangeInstallPathSelectionLinkLabel.TabIndex = 19;
+            this.clearTextChangeInstallPathSelectionLinkLabel.TabStop = true;
+            this.clearTextChangeInstallPathSelectionLinkLabel.Text = "Ändra";
+            this.clearTextChangeInstallPathSelectionLinkLabel.Click += new System.EventHandler(this.ChangeClearTextInstallPathSelectionLabel_LinkClicked);
+            // 
+            // clearTextDirectoryPathLabel
+            // 
+            this.clearTextDirectoryPathLabel.AutoSize = true;
+            this.clearTextDirectoryPathLabel.Location = new System.Drawing.Point(7, 92);
+            this.clearTextDirectoryPathLabel.Name = "clearTextDirectoryPathLabel";
+            this.clearTextDirectoryPathLabel.Size = new System.Drawing.Size(66, 13);
+            this.clearTextDirectoryPathLabel.TabIndex = 18;
+            this.clearTextDirectoryPathLabel.Text = "Installeras till";
+            this.clearTextDirectoryPathLabel.Visible = false;
+            // 
             // logTextbox
             // 
             this.logTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -329,128 +451,6 @@ namespace PictogramUpdater
             this.getZipUrlButton.Text = "&Hämta zip-URL";
             this.getZipUrlButton.UseVisualStyleBackColor = true;
             this.getZipUrlButton.Click += new System.EventHandler(this.GetZipUrlButton_Click);
-            // 
-            // clearTextCheckbox
-            // 
-            this.clearTextCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.clearTextCheckbox.AutoSize = true;
-            this.clearTextCheckbox.Location = new System.Drawing.Point(10, 66);
-            this.clearTextCheckbox.Name = "clearTextCheckbox";
-            this.clearTextCheckbox.Size = new System.Drawing.Size(161, 17);
-            this.clearTextCheckbox.TabIndex = 14;
-            this.clearTextCheckbox.Text = "Installera pictobilder i klartext";
-            this.clearTextCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // clearTextDirectoryBrowseButton
-            // 
-            this.clearTextDirectoryBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.clearTextDirectoryBrowseButton.Location = new System.Drawing.Point(199, 86);
-            this.clearTextDirectoryBrowseButton.Name = "clearTextDirectoryBrowseButton";
-            this.clearTextDirectoryBrowseButton.Size = new System.Drawing.Size(75, 23);
-            this.clearTextDirectoryBrowseButton.TabIndex = 17;
-            this.clearTextDirectoryBrowseButton.Text = "&Bläddra ...";
-            this.clearTextDirectoryBrowseButton.UseVisualStyleBackColor = true;
-            // 
-            // clearTextDirectoryLabel
-            // 
-            this.clearTextDirectoryLabel.AutoSize = true;
-            this.clearTextDirectoryLabel.Location = new System.Drawing.Point(7, 92);
-            this.clearTextDirectoryLabel.Name = "clearTextDirectoryLabel";
-            this.clearTextDirectoryLabel.Size = new System.Drawing.Size(43, 13);
-            this.clearTextDirectoryLabel.TabIndex = 16;
-            this.clearTextDirectoryLabel.Text = "Katalog";
-            // 
-            // clearTextDirectoryTextbox
-            // 
-            this.clearTextDirectoryTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.clearTextDirectoryTextbox.Location = new System.Drawing.Point(59, 89);
-            this.clearTextDirectoryTextbox.Name = "clearTextDirectoryTextbox";
-            this.clearTextDirectoryTextbox.Size = new System.Drawing.Size(134, 20);
-            this.clearTextDirectoryTextbox.TabIndex = 15;
-            // 
-            // clearTextDirectoryPathLabel
-            // 
-            this.clearTextDirectoryPathLabel.AutoSize = true;
-            this.clearTextDirectoryPathLabel.Location = new System.Drawing.Point(7, 92);
-            this.clearTextDirectoryPathLabel.Name = "clearTextDirectoryPathLabel";
-            this.clearTextDirectoryPathLabel.Size = new System.Drawing.Size(66, 13);
-            this.clearTextDirectoryPathLabel.TabIndex = 18;
-            this.clearTextDirectoryPathLabel.Text = "Installeras till";
-            this.clearTextDirectoryPathLabel.Visible = false;
-            // 
-            // clearTextChangeInstallPathSelectionLinkLabel
-            // 
-            this.clearTextChangeInstallPathSelectionLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.clearTextChangeInstallPathSelectionLinkLabel.AutoSize = true;
-            this.clearTextChangeInstallPathSelectionLinkLabel.Location = new System.Drawing.Point(202, 92);
-            this.clearTextChangeInstallPathSelectionLinkLabel.Name = "clearTextChangeInstallPathSelectionLinkLabel";
-            this.clearTextChangeInstallPathSelectionLinkLabel.Size = new System.Drawing.Size(35, 13);
-            this.clearTextChangeInstallPathSelectionLinkLabel.TabIndex = 19;
-            this.clearTextChangeInstallPathSelectionLinkLabel.TabStop = true;
-            this.clearTextChangeInstallPathSelectionLinkLabel.Text = "Ändra";
-            this.clearTextChangeInstallPathSelectionLinkLabel.Click += new System.EventHandler(this.ChangeClearTextInstallPathSelectionLabel_LinkClicked);
-            // 
-            // soundDirectoryBrowseButton
-            // 
-            this.soundDirectoryBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.soundDirectoryBrowseButton.Location = new System.Drawing.Point(199, 131);
-            this.soundDirectoryBrowseButton.Name = "soundDirectoryBrowseButton";
-            this.soundDirectoryBrowseButton.Size = new System.Drawing.Size(75, 23);
-            this.soundDirectoryBrowseButton.TabIndex = 23;
-            this.soundDirectoryBrowseButton.Text = "&Bläddra ...";
-            this.soundDirectoryBrowseButton.UseVisualStyleBackColor = true;
-            // 
-            // soundDirectoryLabel
-            // 
-            this.soundDirectoryLabel.AutoSize = true;
-            this.soundDirectoryLabel.Location = new System.Drawing.Point(7, 137);
-            this.soundDirectoryLabel.Name = "soundDirectoryLabel";
-            this.soundDirectoryLabel.Size = new System.Drawing.Size(43, 13);
-            this.soundDirectoryLabel.TabIndex = 22;
-            this.soundDirectoryLabel.Text = "Katalog";
-            // 
-            // soundDirectoryTextbox
-            // 
-            this.soundDirectoryTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.soundDirectoryTextbox.Location = new System.Drawing.Point(59, 134);
-            this.soundDirectoryTextbox.Name = "soundDirectoryTextbox";
-            this.soundDirectoryTextbox.Size = new System.Drawing.Size(134, 20);
-            this.soundDirectoryTextbox.TabIndex = 21;
-            // 
-            // soundCheckbox
-            // 
-            this.soundCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.soundCheckbox.AutoSize = true;
-            this.soundCheckbox.Location = new System.Drawing.Point(10, 111);
-            this.soundCheckbox.Name = "soundCheckbox";
-            this.soundCheckbox.Size = new System.Drawing.Size(87, 17);
-            this.soundCheckbox.TabIndex = 20;
-            this.soundCheckbox.Text = "Installera ljud";
-            this.soundCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // soundChangeInstallPathSelectionLinkLabel
-            // 
-            this.soundChangeInstallPathSelectionLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.soundChangeInstallPathSelectionLinkLabel.AutoSize = true;
-            this.soundChangeInstallPathSelectionLinkLabel.Location = new System.Drawing.Point(202, 137);
-            this.soundChangeInstallPathSelectionLinkLabel.Name = "soundChangeInstallPathSelectionLinkLabel";
-            this.soundChangeInstallPathSelectionLinkLabel.Size = new System.Drawing.Size(35, 13);
-            this.soundChangeInstallPathSelectionLinkLabel.TabIndex = 25;
-            this.soundChangeInstallPathSelectionLinkLabel.TabStop = true;
-            this.soundChangeInstallPathSelectionLinkLabel.Text = "Ändra";
-            this.soundChangeInstallPathSelectionLinkLabel.Click += new System.EventHandler(this.ChangeSoundInstallPathSelectionLabel_LinkClicked);
-            // 
-            // soundDirectoryPathLabel
-            // 
-            this.soundDirectoryPathLabel.AutoSize = true;
-            this.soundDirectoryPathLabel.Location = new System.Drawing.Point(7, 137);
-            this.soundDirectoryPathLabel.Name = "soundDirectoryPathLabel";
-            this.soundDirectoryPathLabel.Size = new System.Drawing.Size(66, 13);
-            this.soundDirectoryPathLabel.TabIndex = 24;
-            this.soundDirectoryPathLabel.Text = "Installeras till";
-            this.soundDirectoryPathLabel.Visible = false;
             // 
             // PictogramInstallerForm
             // 

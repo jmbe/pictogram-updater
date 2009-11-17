@@ -89,12 +89,19 @@ namespace PictogramUpdater {
                     var current = 0;
                     foreach (var entry in DownloadList) {
                         var fileName = ClearText ? entry.Name.Trim() : entry.FullCode;
-                        var file = target.FullName + @"\" + fileName + ".wmf";
+                        var extension = Sound ? ".wav" : ".wmf";
+                        var file = target.FullName + @"\" + fileName + extension;
 
-                        LogMessage("Laddar ner " + entry.FullCode + "...");
+                        LogMessage("Laddar ner " + entry.FullCode + extension + "...");
                         BinaryWriter writer = null;
                         try {
-                            var buffer = service.downloadWMF(Username, Password, entry.FullCode, Language.Code);
+                            byte[] buffer;
+                            if (Sound) {
+                                buffer = service.downloadSound(Username, Password, entry.FullCode, Language.Code.ToLower());
+                            } else {
+                                buffer = service.downloadWMF(Username, Password, entry.FullCode, Language.Code);
+                            }
+
                             writer = new BinaryWriter(new FileStream(file, FileMode.OpenOrCreate));
                             writer.Write(buffer);
                         } catch (SoapException e) {

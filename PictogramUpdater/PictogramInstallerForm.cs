@@ -70,8 +70,8 @@ namespace PictogramUpdater {
             }
 
             if(soundCheckbox.Checked) {
-                /*_manager.Download(_soundInstallPath, language, overwriteCheckbox.Checked, false, true,
-                                           usernameTextbox.Text, passwordTextbox.Text);*/
+                _manager.Download(_soundInstallPath, language, overwriteCheckbox.Checked, false, true,
+                                           usernameTextbox.Text, passwordTextbox.Text);
                 _config.CreateOrUpdateWavIni(language, _soundInstallPath);
             }
 
