@@ -43,6 +43,15 @@ namespace PictogramUpdater {
         /// </summary>
         public string TargetPath { get; set; }
 
+        public string Username { get; set;
+        }
+
+        public List<PictogramEntry> DownloadList { get; set; }
+
+        public string Password { get; set; }
+
+        public Language Language { get; set; }
+
         public void DownloadPictogramZipUrl(string username, string password, string languageName) {
             ProgressChanged(ProgressBarStyle.Continuous, 0, 1);
             StatusChanged("Hämtar pictogram-URL...");
@@ -63,9 +72,9 @@ namespace PictogramUpdater {
         /// <summary>
         /// Sätter igång nedladdning av pictogrambilder.
         /// </summary>
-        public void Download(string username, string password, Language language, List<PictogramEntry> entries) {
+        public void Download() {
             ProgressChanged(ProgressBarStyle.Continuous, 0, 1);
-            StatusChanged("Laddar ner " + entries.Count + " pictogram...");
+            StatusChanged("Laddar ner " + DownloadList.Count + " pictogram...");
 
             try {
                 /* Skapa målkatalog */
@@ -73,15 +82,15 @@ namespace PictogramUpdater {
 
                 var service = new PictosysWebService();
 
-                if (entries.Count > 0) {
+                if (DownloadList.Count > 0) {
                     var current = 0;
-                    foreach (var entry in entries) {
+                    foreach (var entry in DownloadList) {
                         var file = target.FullName + @"\" + entry.FullCode + ".wmf";
 
                         LogMessage("Laddar ner " + entry.FullCode + "...");
                         BinaryWriter writer = null;
                         try {
-                            var buffer = service.downloadWMF(username, password, entry.FullCode, language.Code);
+                            var buffer = service.downloadWMF(Username, Password, entry.FullCode, Language.Code);
                             writer = new BinaryWriter(new FileStream(file, FileMode.OpenOrCreate));
                             writer.Write(buffer);
                         } catch (SoapException e) {
@@ -92,7 +101,7 @@ namespace PictogramUpdater {
                             }
                         }
                         
-                        ProgressChanged(ProgressBarStyle.Blocks, current++, entries.Count);
+                        ProgressChanged(ProgressBarStyle.Blocks, current++, DownloadList.Count);
                     }
 
                     StatusChanged("Klar");
@@ -100,7 +109,7 @@ namespace PictogramUpdater {
                     LogMessage("Installationen är klar.");
                 } else {
                     /* Fanns tydligen inga pictogram att ladda ner. Kontrollera inloggningsuppgifterna. */
-                    checkLogin(username, password);
+                    checkLogin(Username, Password);
                 }
             } catch (ArgumentException ex) {
                 Console.WriteLine(ex.Message);

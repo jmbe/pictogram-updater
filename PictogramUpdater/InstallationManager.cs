@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace PictogramUpdater {
     internal class InstallationManager {
@@ -17,26 +18,30 @@ namespace PictogramUpdater {
         }
 
         public void Download(string targetPath, Language language, bool overwrite, string username, string password) {
-            var completeEntryList = _downloadListManager.GetEntriesToInstall(username, password, language, _config);
-            var downloadEntryList = completeEntryList;
+            var completeList = _downloadListManager.GetEntriesToInstall(username, password, language, _config);
+            var downloadList = completeList;
             if (!overwrite) {
-                downloadEntryList = _downloadListManager.FilterEntries(_config, language,
-                                                                       downloadEntryList);
+                downloadList = _downloadListManager.FilterEntries(_config, language,
+                                                                       downloadList);
             }
 
-            var downloadManager = GetDownloadManager(targetPath);
-            downloadManager.Download(username, password, language, downloadEntryList);
+            var downloadManager = GetDownloadManager(targetPath, username, password, language);
+            downloadManager.DownloadList = downloadList;
+            
+            var currentWorkingThread = new Thread(new ThreadStart(downloadManager.Download));
+            currentWorkingThread.Start();
+            currentWorkingThread.Join();
 
-            _config.CommitEntries(language, completeEntryList);
+            _config.CommitEntries(language, completeList);
         }
 
         public void DownloadZip(string targetPath, string username, string password, Language language) {
-            var downloadManager = GetDownloadManager(targetPath);
+            var downloadManager = GetDownloadManager(targetPath, username, password, language);
             downloadManager.DownloadZip(username, password, language);
         }
 
-        private DownloadManager GetDownloadManager(string targetPath) {
-            var downloadManager = new DownloadManager {TargetPath = targetPath};
+        private DownloadManager GetDownloadManager(string targetPath, string username, string password, Language language) {
+            var downloadManager = new DownloadManager {TargetPath = targetPath, Username = username, Password = password, Language = language};
             downloadManager.LogMessage += LogMessage;
             downloadManager.ProgressChanged += ProgressChanged;
             downloadManager.StatusChanged += StatusChanged;
