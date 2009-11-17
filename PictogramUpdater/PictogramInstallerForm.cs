@@ -38,7 +38,6 @@ namespace PictogramUpdater {
     public partial class PictogramInstallerForm : Form {
         private ISettingsPersistence _settings;
         private LanguageProvider _languageProvider;
-        private DownloadListManager _downloadListManager;
         private PictogramUpdater.DownloadManager _downloader;
         private Thread _currentWorkingThread;
         private AuthenticationService _authenticationService;
@@ -46,6 +45,7 @@ namespace PictogramUpdater {
         private LanguageSelection _languageSelection;
         private string _installPath;
         private bool _displayInstallPathInputField;
+        private InstallationManager _manager;
 
         public PictogramInstallerForm() {
             InitializeComponent();
@@ -56,19 +56,9 @@ namespace PictogramUpdater {
         /// </summary>
         private void Download() {
             SetControlsEnabled(false);
-
-            var profile = _config.CreateOrUpdateINI(_languageSelection.Language, _installPath);
-
-            var completeEntryList = _downloadListManager.GetEntriesToInstall(usernameTextbox.Text, passwordTextbox.Text, _languageSelection.Language, _config);
-            var downloadEntryList = completeEntryList;
-            if(!overwriteCheckbox.Checked) {
-                downloadEntryList = _downloadListManager.FilterEntries(_config, _languageSelection.Language,
-                                                                       downloadEntryList);
-            }
-            _downloader.TargetPath = _installPath;
-            _downloader.Download(usernameTextbox.Text, passwordTextbox.Text, _languageSelection.Language, downloadEntryList);
-
-            _config.CommitEntries(_languageSelection.Language, completeEntryList);
+            var language = _languageSelection.Language;
+            var profile = _config.CreateOrUpdateINI(language, _installPath);
+            _manager.Download(_installPath, language, overwriteCheckbox.Checked, usernameTextbox.Text, passwordTextbox.Text);
 
             SetControlsEnabled(true);
             this._currentWorkingThread = null;
@@ -81,11 +71,10 @@ namespace PictogramUpdater {
         private void DownloadZip() {
             SetControlsEnabled(false);
 
-            _downloader.TargetPath = this.directoryPathTextbox.Text;
-            _downloader.DownloadZip(this.usernameTextbox.Text, this.passwordTextbox.Text, GetLanguage());
+            _manager.DownloadZip(_installPath, usernameTextbox.Text, passwordTextbox.Text, _languageSelection.Language);
 
             SetControlsEnabled(true);
-            this._currentWorkingThread = null;
+            _currentWorkingThread = null;
         }
 
         /// <summary>
@@ -287,7 +276,10 @@ namespace PictogramUpdater {
             _currentWorkingThread = new Thread(RefreshLanguages);
             _currentWorkingThread.Start();
 
-            
+            _manager = new InstallationManager(_config);
+            _manager.LogMessage += LogMessage;
+            _manager.ProgressChanged += SetCurrentProgress;
+            _manager.StatusChanged += SetStatus;
 
             /* Klass att använda för att kommunicera med webservice. */
             _downloader = new PictogramUpdater.DownloadManager(_languageProvider);
@@ -295,8 +287,6 @@ namespace PictogramUpdater {
             _downloader.ProgressChanged += SetCurrentProgress;
             _downloader.StatusChanged += SetStatus;
 
-            _downloadListManager = new DownloadListManager();
-            
             _languageSelection.LanguageChanged += LanguageChanged;
         }
 

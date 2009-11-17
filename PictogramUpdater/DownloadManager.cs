@@ -17,7 +17,6 @@ namespace PictogramUpdater {
     /// Laddar ner bilder från webbtjänsten.
     /// </summary>
     class DownloadManager {
-        private string _targetPath;
         private readonly LanguageProvider _languageProvider;
 
         public event LogMessageCallback LogMessage;
@@ -32,6 +31,8 @@ namespace PictogramUpdater {
             this._languageProvider = languageProvider;
         }
 
+        public DownloadManager() {}
+        
         /// <summary>
         /// Anger om befintliga filer ska skrivas över.
         /// </summary>
@@ -40,15 +41,7 @@ namespace PictogramUpdater {
         /// <summary>
         /// Anger i vilken katalog nedladdade filer ska sparas.
         /// </summary>
-        public string TargetPath {
-            get {
-                return this._targetPath;
-            }
-            set {
-                this._targetPath = value;
-            }
-        }
-
+        public string TargetPath { get; set; }
 
         public void DownloadPictogramZipUrl(string username, string password, string languageName) {
             ProgressChanged(ProgressBarStyle.Continuous, 0, 1);
@@ -124,7 +117,7 @@ namespace PictogramUpdater {
             return entriesByCode;
         }
 
-        public void DownloadZip(string username, string password, string language) {
+        public void DownloadZip(string username, string password, Language language) {
             ProgressChanged(ProgressBarStyle.Marquee, 0, 1);
             StatusChanged("Laddar ner pictogramzip...");
 
@@ -133,13 +126,12 @@ namespace PictogramUpdater {
                 DirectoryInfo target = CreateTargetDirectory();
 
                 PictosysWebService service = new PictosysWebService();
-                string locale = this._languageProvider.GetLocale(language);
-                
+
                 BinaryWriter writer = null;
                 try {
                     string file = target.FullName + @"\pict" + language + ".zip";
                     LogMessage("Laddar ner zipfil till " + file + "...");
-                    byte[] buffer = service.downloadPictogramZip(username, password, locale);
+                    byte[] buffer = service.downloadPictogramZip(username, password, language.Code);
                     if (buffer.Length > 0) {
                         writer = new BinaryWriter(new FileStream(file, FileMode.OpenOrCreate));
                         writer.Write(buffer);

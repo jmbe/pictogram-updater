@@ -66,6 +66,7 @@
     <Compile Include="AuthenticationService.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="DownloadListManager.cs" />
+    <Compile Include="InstallationManager.cs" />
     <Compile Include="LanguageSelection.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="ISettingsPersistence.cs" />
