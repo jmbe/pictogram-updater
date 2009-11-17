@@ -12,6 +12,8 @@ namespace PictogramUpdater {
         private readonly Config _config;
         private readonly DownloadListManager _downloadListManager;
 
+        public Thread CurrentWorkingThread { get; set; }
+
         public InstallationManager(Config config) {
             _config = config;
             _downloadListManager = new DownloadListManager();
@@ -31,9 +33,9 @@ namespace PictogramUpdater {
             downloadManager.ClearText = clearText;
             downloadManager.Sound = sound;
 
-            var currentWorkingThread = new Thread(new ThreadStart(downloadManager.Download));
-            currentWorkingThread.Start();
-            currentWorkingThread.Join();
+            CurrentWorkingThread = new Thread(new ThreadStart(downloadManager.Download));
+            CurrentWorkingThread.Start();
+            CurrentWorkingThread.Join();
 
             if (!clearText && ! sound) {
                 _config.CommitEntries(language, completeList);

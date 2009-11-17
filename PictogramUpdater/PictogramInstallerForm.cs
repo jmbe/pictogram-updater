@@ -448,6 +448,9 @@ namespace PictogramUpdater {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void StatusProgressBar_Click(object sender, EventArgs e) {
+            if(_manager.CurrentWorkingThread != null) {
+                _manager.CurrentWorkingThread.Abort();
+            }
             if (this._currentWorkingThread != null) {
                 this._currentWorkingThread.Abort();
                 SetStatus("Nedladdning avbruten!");
