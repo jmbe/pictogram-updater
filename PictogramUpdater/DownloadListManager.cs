@@ -37,7 +37,7 @@ namespace PictogramUpdater {
 
         public List<PictogramEntry> FilterEntries(Config config, Language language,
                                                           IEnumerable<PictogramEntry> entries) {
-            var installPath = config.GetPictoWmfInstallPath(language);
+            var installPath = config.GetPictoInstallPath(language);
             var extension = config.GetExtension(language);
 
             var newEntries = new List<PictogramEntry>();

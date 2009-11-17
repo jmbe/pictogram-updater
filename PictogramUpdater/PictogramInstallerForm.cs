@@ -44,7 +44,11 @@ namespace PictogramUpdater {
         private Config _config;
         private LanguageSelection _languageSelection;
         private string _installPath;
+        private string _clearTextInstallPath;
+        private string _soundInstallPath;
         private bool _displayInstallPathInputField;
+        private bool _displayClearTextInstallPathInputField;
+        private bool _displaySoundInstallPathInputField;
         private InstallationManager _manager;
 
         public PictogramInstallerForm() {
@@ -84,7 +88,7 @@ namespace PictogramUpdater {
         private void GetZipUrl() {
             SetControlsEnabled(false);
 
-            _downloader.TargetPath = this.directoryPathTextbox.Text;
+            _downloader.TargetPath = this.directoryTextbox.Text;
             _downloader.DownloadPictogramZipUrl(this.usernameTextbox.Text, this.passwordTextbox.Text, GetLanguage());
 
             SetControlsEnabled(true);
@@ -235,9 +239,9 @@ namespace PictogramUpdater {
         /// </summary>
         private void BrowseButton_Click(object sender, EventArgs e) {
             folderBrowserDialog.ShowNewFolderButton = true;
-            folderBrowserDialog.SelectedPath = directoryPathTextbox.Text;
+            folderBrowserDialog.SelectedPath = directoryTextbox.Text;
             folderBrowserDialog.ShowDialog();
-            directoryPathTextbox.Text = folderBrowserDialog.SelectedPath;
+            directoryTextbox.Text = folderBrowserDialog.SelectedPath;
         }
 
         private void PictogramInstallerForm_Load(object sender, EventArgs e) {
@@ -253,13 +257,35 @@ namespace PictogramUpdater {
 
             /* Installationskatalog */
             if (_displayInstallPathInputField) {
-                directoryPathTextbox.Text = _config.GetDefaultPath(_languageSelection.Language);
+                directoryTextbox.Text = _config.GetDefaultPath(_languageSelection.Language);
                 var path = _settings.getProperty("path");
                 if (!string.IsNullOrEmpty(path)) {
-                    directoryPathTextbox.Text = path;
+                    directoryTextbox.Text = path;
                 }
             } else {
                 HideInstallPathInput(true);
+            }
+
+            /* Clear text install dir*/
+            if (_displayClearTextInstallPathInputField) {
+                clearTextDirectoryTextbox.Text = _config.GetDefaultClearTextPath(_languageSelection.Language);
+                var path = _settings.getProperty("path");
+                if (!string.IsNullOrEmpty(path)) {
+                    clearTextDirectoryTextbox.Text = path;
+                }
+            } else {
+                HideClearTextInstallPathInput(true);
+            }
+
+            /* Sound install dir*/
+            if (_displaySoundInstallPathInputField) {
+                soundDirectoryTextbox.Text = _config.GetDefaultSoundPath(_languageSelection.Language);
+                var path = _settings.getProperty("path");
+                if (!string.IsNullOrEmpty(path)) {
+                    soundDirectoryTextbox.Text = path;
+                }
+            } else {
+                HideSoundInstallPathInput(true);
             }
 
             if (_authenticationService.IsPictogramManagerInstalled()) {
@@ -292,29 +318,71 @@ namespace PictogramUpdater {
 
         private void HideInstallPathInput(bool hide) {
             directoryLabel.Visible = !hide;
-            directoryPathTextbox.Visible = !hide;
+            directoryTextbox.Visible = !hide;
             directoryBrowseButton.Visible = !hide;
 
             directoryPathLabel.Visible = hide;
             changeInstallPathSelectionLinkLabel.Visible = hide;
         }
 
+        private void HideClearTextInstallPathInput(bool hide) {
+            clearTextDirectoryLabel.Visible = !hide;
+            clearTextDirectoryTextbox.Visible = !hide;
+            clearTextDirectoryBrowseButton.Visible = !hide;
+
+            clearTextDirectoryPathLabel.Visible = hide;
+            clearTextChangeInstallPathSelectionLinkLabel.Visible = hide;
+        }
+
+        private void HideSoundInstallPathInput(bool hide) {
+            soundDirectoryLabel.Visible = !hide;
+            soundDirectoryTextbox.Visible = !hide;
+            soundDirectoryBrowseButton.Visible = !hide;
+
+            soundDirectoryPathLabel.Visible = hide;
+            soundChangeInstallPathSelectionLinkLabel.Visible = hide;
+        }
+
         private void LanguageChanged() {
             if (_displayInstallPathInputField) {
-                if (directoryPathTextbox.Text.Length == 0) {
-                    directoryPathTextbox.Text = _config.GetDefaultPath(_languageSelection.Language);
-                    Console.WriteLine("Setting default path for " + _languageSelection.Language.Name);
+                if (directoryTextbox.Text.Length == 0) {
+                    directoryTextbox.Text = _config.GetDefaultPath(_languageSelection.Language);
                 }
-                _installPath = directoryPathTextbox.Text;
+                _installPath = directoryTextbox.Text;
                 HideInstallPathInput(false);
                 _displayInstallPathInputField = false;
             } else {
-                _installPath = _config.GetPictoWmfInstallPath(_languageSelection.Language);
+                _installPath = _config.GetPictoInstallPath(_languageSelection.Language);
                 directoryPathLabel.Text = "Installeras till '" + _installPath + "'";
-                directoryPathTextbox.Text = _installPath;
+                directoryTextbox.Text = _installPath;
                 HideInstallPathInput(true);
             }
-            Console.WriteLine("InstallPath: " + _installPath);
+            if (_displayClearTextInstallPathInputField) {
+                if (clearTextDirectoryTextbox.Text.Length == 0) {
+                    clearTextDirectoryTextbox.Text = _config.GetDefaultClearTextPath(_languageSelection.Language);
+                }
+                _clearTextInstallPath = clearTextDirectoryTextbox.Text;
+                HideClearTextInstallPathInput(false);
+                _displayClearTextInstallPathInputField = false;
+            } else {
+                _clearTextInstallPath = _config.GetPictoClearTextInstallPath(_languageSelection.Language);
+                clearTextDirectoryPathLabel.Text = "Installeras till '" + _clearTextInstallPath + "'";
+                clearTextDirectoryTextbox.Text = _clearTextInstallPath;
+                HideClearTextInstallPathInput(true);
+            }
+            if (_displaySoundInstallPathInputField) {
+                if (soundDirectoryTextbox.Text.Length == 0) {
+                    soundDirectoryTextbox.Text = _config.GetDefaultSoundPath(_languageSelection.Language);
+                }
+                _soundInstallPath = soundDirectoryTextbox.Text;
+                HideSoundInstallPathInput(false);
+                _displaySoundInstallPathInputField = false;
+            } else {
+                _soundInstallPath = _config.GetPictoSoundInstallPath(_languageSelection.Language);
+                soundDirectoryPathLabel.Text = "Installeras till '" + _soundInstallPath + "'";
+                soundDirectoryTextbox.Text = _soundInstallPath;
+                HideSoundInstallPathInput(true);
+            }
         }
 
         /// <summary>
@@ -332,7 +400,7 @@ namespace PictogramUpdater {
                 _authenticationService.SaveUsername(usernameTextbox.Text);
                 _authenticationService.SavePassword(passwordTextbox.Text);
 
-                _settings.setProperty("path", directoryPathTextbox.Text);
+                _settings.setProperty("path", directoryTextbox.Text);
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);
             }
@@ -400,12 +468,22 @@ namespace PictogramUpdater {
         }
 
         private void DirectoryPathTextbox_Changed(object sender, EventArgs e) {
-            _installPath = directoryPathTextbox.Text;
+            _installPath = directoryTextbox.Text;
         }
 
         private void ChangeInstallPathSelectionLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             HideInstallPathInput(false);
             _displayInstallPathInputField = false;
+        }
+
+        private void ChangeClearTextInstallPathSelectionLabel_LinkClicked(object sender, EventArgs e) {
+            HideClearTextInstallPathInput(false);
+            _displayClearTextInstallPathInputField = false;
+        }
+
+        private void ChangeSoundInstallPathSelectionLabel_LinkClicked(object sender, EventArgs e) {
+            HideSoundInstallPathInput(false);
+            _displaySoundInstallPathInputField = false;
         }
     }
 }

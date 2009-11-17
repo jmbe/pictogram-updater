@@ -22,11 +22,25 @@ namespace PictogramUpdater {
             return Environment.GetEnvironmentVariable("WINDIR") + @"\PicWmf" + language.Code + @".ini";
         }
 
-        public string GetPictoWmfInstallPath(Language language
+        public string GetPictoInstallPath(Language language
             ) {
             Profile settings = new Ini(GetPictoWmfIniFilePath(language));
             var path = settings.GetValue("ProgDir", "Dir") as string;
             return path ?? GetDefaultPath(language);
+        }
+        
+        public string GetPictoClearTextInstallPath(Language language
+            ) {
+            Profile settings = new Ini(GetPictoWmfIniFilePath(language));
+            var path = settings.GetValue("ProgDir", "ClearTextDir") as string;
+            return path ?? GetDefaultClearTextPath(language);
+        }
+
+        public string GetPictoSoundInstallPath(Language language
+            ) {
+            Profile settings = new Ini(GetPictoWmfIniFilePath(language));
+            var path = settings.GetValue("ProgDir", "SoundDir") as string;
+            return path ?? GetDefaultSoundPath(language);
         }
 
         public string GetExtension(Language language) {
@@ -82,6 +96,14 @@ namespace PictogramUpdater {
 
         public string GetDefaultPath(Language language) {
             return @"C:\Picto\Wmf" + language.Code.ToUpper();
+        }
+
+        public string GetDefaultClearTextPath(Language language) {
+            return @"C:\Picto\Wmf" + language.Code.ToUpper() + " i klartext";
+        }
+
+        public string GetDefaultSoundPath(Language language) {
+            return @"C:\Picto\Wav" + language.Code.ToUpper();
         }
 
         public void CommitEntries(Language language, List<PictogramEntry> entries) {
