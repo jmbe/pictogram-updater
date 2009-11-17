@@ -10,17 +10,15 @@ using System.Collections;
 using System.Threading;
 using System.Web.Services.Protocols;
 using AMS.Profile;
+using DownloadManager;
 
-namespace DownloadManager {
-    
+namespace PictogramUpdater {
     /// <summary>
     /// Laddar ner bilder från webbtjänsten.
     /// </summary>
-    class PictogramDownloader {
-
-        private bool overwriteExistingFiles;
-        private string targetPath;
-        private LanguageProvider languageProvider;
+    class DownloadManager {
+        private string _targetPath;
+        private readonly LanguageProvider _languageProvider;
 
         public event LogMessageCallback LogMessage;
         public event CurrentProgressCallback ProgressChanged;
@@ -30,31 +28,24 @@ namespace DownloadManager {
         /// <summary>
         /// Skapar en ny instans av klassen.
         /// </summary>
-        public PictogramDownloader(LanguageProvider languageProvider) {
-            this.languageProvider = languageProvider;
+        public DownloadManager(LanguageProvider languageProvider) {
+            this._languageProvider = languageProvider;
         }
 
         /// <summary>
         /// Anger om befintliga filer ska skrivas över.
         /// </summary>
-        public bool OverwriteExistingFiles {
-            get {
-                return this.overwriteExistingFiles;
-            }
-            set {
-                this.overwriteExistingFiles = value;
-            }
-        }
+        public bool OverwriteExistingFiles { get; set; }
 
         /// <summary>
         /// Anger i vilken katalog nedladdade filer ska sparas.
         /// </summary>
         public string TargetPath {
             get {
-                return this.targetPath;
+                return this._targetPath;
             }
             set {
-                this.targetPath = value;
+                this._targetPath = value;
             }
         }
 
@@ -65,7 +56,7 @@ namespace DownloadManager {
 
             try {
                 PictosysWebService service = new PictosysWebService();
-                string locale = this.languageProvider.GetLocale(languageName);
+                string locale = this._languageProvider.GetLocale(languageName);
                 LogMessage(service.getPictogramZipDownloadUrl(username, password, locale));
             } catch (Exception e) {
                 LogMessage(e.Message);
@@ -142,7 +133,7 @@ namespace DownloadManager {
                 DirectoryInfo target = CreateTargetDirectory();
 
                 PictosysWebService service = new PictosysWebService();
-                string locale = this.languageProvider.GetLocale(language);
+                string locale = this._languageProvider.GetLocale(language);
                 
                 BinaryWriter writer = null;
                 try {
