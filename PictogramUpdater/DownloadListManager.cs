@@ -12,7 +12,6 @@ namespace PictogramUpdater {
         /// <param name="language"></param>
         /// <param name="username"></param>
         /// <param name="config"></param>
-        /// <param name="filter"></param>
         /// <returns></returns>
         public List<PictogramEntry> GetEntriesToInstall(string username, string password, Language language, Config config) {
             var entries = GetEntries(username, password, language);
@@ -36,14 +35,23 @@ namespace PictogramUpdater {
         }
 
         public List<PictogramEntry> FilterEntries(Config config, Language language,
-                                                          IEnumerable<PictogramEntry> entries) {
-            var installPath = config.GetPictoInstallPath(language);
-            var extension = config.GetExtension(language);
+                                                          IEnumerable<PictogramEntry> entries, bool clearText, bool sound) {
+            string installPath; 
+            if(clearText) {
+                installPath = config.GetPictoClearTextInstallPath(language);
+            } else if(sound) {
+                installPath = config.GetPictoSoundInstallPath(language);
+            } else {
+                installPath = config.GetPictoInstallPath(language);    
+            }
+
+            var extension = sound ? "wav" : "wmf";
 
             var newEntries = new List<PictogramEntry>();
 
             foreach (var entry in entries) {
-                var fileInfo = new FileInfo(installPath + @"\" + entry.FullCode + "." + extension);
+                var fileName = clearText ? entry.Name.Trim() : entry.FullCode;
+                var fileInfo = new FileInfo(installPath + @"\" + fileName + "." + extension);
                 if (!fileInfo.Exists) {
                     newEntries.Add(entry);
                 }

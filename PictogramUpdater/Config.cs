@@ -48,13 +48,15 @@ namespace PictogramUpdater {
             return settings.GetValue("ProgDir", "Extension") as string;
         }
 
-        public Profile CreateOrUpdateINI(Language language, string path) {
+        public Profile CreateOrUpdateINI(Language language, string installPath, string clearTextInstallPath, string soundInstallPath) {
             if (!IsPictoWmfInstalled(language)) {
                 CreateNewIniFile(language);
             }
             Profile profile = new Ini(GetPictoWmfIniFilePath(language));
 
-            profile.SetValue("ProgDir", "Dir", path);
+            profile.SetValue("ProgDir", "Dir", installPath);
+            profile.SetValue("ProgDir", "ClearTextDir", clearTextInstallPath);
+            profile.SetValue("ProgDir", "SoundDir", soundInstallPath);
 
             if (profile.GetValue("ProgDir", "Extension") == null) {
                 profile.SetValue("ProgDir", "Extension", "WMF");
@@ -127,6 +129,13 @@ namespace PictogramUpdater {
             foreach (var category in categoryCounts.Keys) {
                 profile.SetValue(translationService.Translate(category, language), "Antal", categoryCounts[category]);
             }
+        }
+
+        public void SetPictoInstallPaths(Language language, string installPath, string clearTextInstallPath, string soundInstallPath) {
+            var profile = new Ini(GetPictoWmfIniFilePath(language));
+            profile.SetValue("ProgDir", "Dir", installPath);
+            profile.SetValue("ProgDir", "ClearTextDir", clearTextInstallPath);
+            profile.SetValue("ProgDir", "SoundDir", soundInstallPath);
         }
     }
 

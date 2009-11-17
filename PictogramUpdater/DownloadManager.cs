@@ -18,6 +18,7 @@ namespace PictogramUpdater {
     /// </summary>
     class DownloadManager {
         private readonly LanguageProvider _languageProvider;
+        
 
         public event LogMessageCallback LogMessage;
         public event CurrentProgressCallback ProgressChanged;
@@ -37,6 +38,8 @@ namespace PictogramUpdater {
         /// Anger om befintliga filer ska skrivas över.
         /// </summary>
         public bool OverwriteExistingFiles { get; set; }
+        public bool ClearText { get; set; }
+        public bool Sound { get; set; }
 
         /// <summary>
         /// Anger i vilken katalog nedladdade filer ska sparas.
@@ -85,7 +88,8 @@ namespace PictogramUpdater {
                 if (DownloadList.Count > 0) {
                     var current = 0;
                     foreach (var entry in DownloadList) {
-                        var file = target.FullName + @"\" + entry.FullCode + ".wmf";
+                        var fileName = ClearText ? entry.Name.Trim() : entry.FullCode;
+                        var file = target.FullName + @"\" + fileName + ".wmf";
 
                         LogMessage("Laddar ner " + entry.FullCode + "...");
                         BinaryWriter writer = null;

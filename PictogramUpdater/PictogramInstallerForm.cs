@@ -36,9 +36,8 @@ namespace PictogramUpdater {
     /// http://msdn2.microsoft.com/en-us/library/ms171728.aspx.
     /// </summary>
     public partial class PictogramInstallerForm : Form {
-        private ISettingsPersistence _settings;
         private LanguageProvider _languageProvider;
-        private PictogramUpdater.DownloadManager _downloader;
+        private DownloadManager _downloader;
         private Thread _currentWorkingThread;
         private AuthenticationService _authenticationService;
         private Config _config;
@@ -61,8 +60,18 @@ namespace PictogramUpdater {
         private void Download() {
             SetControlsEnabled(false);
             var language = _languageSelection.Language;
-            var profile = _config.CreateOrUpdateINI(language, _installPath);
-            _manager.Download(_installPath, language, overwriteCheckbox.Checked, usernameTextbox.Text, passwordTextbox.Text);
+            var profile = _config.CreateOrUpdateINI(language, _installPath, _clearTextInstallPath, _soundInstallPath);
+            _manager.Download(_installPath, language, overwriteCheckbox.Checked, false, false, usernameTextbox.Text, passwordTextbox.Text);
+
+            if(clearTextCheckbox.Checked) {
+                _manager.Download(_clearTextInstallPath, language, overwriteCheckbox.Checked, true, false,
+                                           usernameTextbox.Text, passwordTextbox.Text);
+            }
+
+            if(soundCheckbox.Checked) {
+                _manager.Download(_soundInstallPath, language, overwriteCheckbox.Checked, false, true,
+                                           usernameTextbox.Text, passwordTextbox.Text);
+            }
 
             SetControlsEnabled(true);
             this._currentWorkingThread = null;
@@ -249,7 +258,6 @@ namespace PictogramUpdater {
             Closing += PictogramInstallerForm_Closing;
 
             /* Ladda sparade inställningar */
-            _settings = new PropertyFile();
 
             _languageSelection = new LanguageSelection();
             _authenticationService = new AuthenticationService();
@@ -258,10 +266,6 @@ namespace PictogramUpdater {
             /* Installationskatalog */
             if (_displayInstallPathInputField) {
                 directoryTextbox.Text = _config.GetDefaultPath(_languageSelection.Language);
-                var path = _settings.getProperty("path");
-                if (!string.IsNullOrEmpty(path)) {
-                    directoryTextbox.Text = path;
-                }
             } else {
                 HideInstallPathInput(true);
             }
@@ -269,10 +273,6 @@ namespace PictogramUpdater {
             /* Clear text install dir*/
             if (_displayClearTextInstallPathInputField) {
                 clearTextDirectoryTextbox.Text = _config.GetDefaultClearTextPath(_languageSelection.Language);
-                var path = _settings.getProperty("path");
-                if (!string.IsNullOrEmpty(path)) {
-                    clearTextDirectoryTextbox.Text = path;
-                }
             } else {
                 HideClearTextInstallPathInput(true);
             }
@@ -280,10 +280,6 @@ namespace PictogramUpdater {
             /* Sound install dir*/
             if (_displaySoundInstallPathInputField) {
                 soundDirectoryTextbox.Text = _config.GetDefaultSoundPath(_languageSelection.Language);
-                var path = _settings.getProperty("path");
-                if (!string.IsNullOrEmpty(path)) {
-                    soundDirectoryTextbox.Text = path;
-                }
             } else {
                 HideSoundInstallPathInput(true);
             }
@@ -400,7 +396,7 @@ namespace PictogramUpdater {
                 _authenticationService.SaveUsername(usernameTextbox.Text);
                 _authenticationService.SavePassword(passwordTextbox.Text);
 
-                _settings.setProperty("path", directoryTextbox.Text);
+                _config.SetPictoInstallPaths(_languageSelection.Language, directoryTextbox.Text, clearTextDirectoryTextbox.Text, soundDirectoryTextbox.Text);
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);
             }
