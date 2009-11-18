@@ -318,6 +318,7 @@ namespace PictogramUpdater {
             directoryLabel.Visible = !hide;
             directoryTextbox.Visible = !hide;
             directoryBrowseButton.Visible = !hide;
+            directoryOkButton.Visible = !hide;
 
             directoryPathLabel.Visible = hide;
             changeInstallPathSelectionLinkLabel.Visible = hide;
@@ -327,6 +328,7 @@ namespace PictogramUpdater {
             clearTextDirectoryLabel.Visible = !hide;
             clearTextDirectoryTextbox.Visible = !hide;
             clearTextDirectoryBrowseButton.Visible = !hide;
+            clearTextDirectoryOkButton.Visible = !hide;
 
             clearTextDirectoryPathLabel.Visible = hide;
             clearTextChangeInstallPathSelectionLinkLabel.Visible = hide;
@@ -336,6 +338,7 @@ namespace PictogramUpdater {
             soundDirectoryLabel.Visible = !hide;
             soundDirectoryTextbox.Visible = !hide;
             soundDirectoryBrowseButton.Visible = !hide;
+            soundDirectoryOkButton.Visible = !hide;
 
             soundDirectoryPathLabel.Visible = hide;
             soundChangeInstallPathSelectionLinkLabel.Visible = hide;
@@ -485,6 +488,21 @@ namespace PictogramUpdater {
         private void ChangeSoundInstallPathSelectionLabel_LinkClicked(object sender, EventArgs e) {
             HideSoundInstallPathInput(false);
             _displaySoundInstallPathInputField = false;
+        }
+
+        private void DirectoryOkButton_Click(object sender, EventArgs e) {
+            directoryPathLabel.Text = directoryTextbox.Text;
+            HideInstallPathInput(true);
+        }
+
+        private void ClearTextDirectoryOkButton_Click(object sender, EventArgs e) {
+            clearTextDirectoryPathLabel.Text = clearTextDirectoryTextbox.Text;
+            HideClearTextInstallPathInput(true);
+        }
+
+        private void SoundDirectoryOkButton_Click(object sender, EventArgs e) {
+            soundDirectoryPathLabel.Text = soundDirectoryTextbox.Text;
+            HideSoundInstallPathInput(true);
         }
     }
 }

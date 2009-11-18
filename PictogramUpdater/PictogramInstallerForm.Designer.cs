@@ -64,6 +64,9 @@ namespace PictogramUpdater
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.zipButton = new System.Windows.Forms.Button();
             this.getZipUrlButton = new System.Windows.Forms.Button();
+            this.directoryOkButton = new System.Windows.Forms.Button();
+            this.clearTextDirectoryOkButton = new System.Windows.Forms.Button();
+            this.soundDirectoryOkButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -134,14 +137,14 @@ namespace PictogramUpdater
             this.statusProgressBar});
             this.statusStrip.Location = new System.Drawing.Point(0, 478);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(511, 22);
+            this.statusStrip.Size = new System.Drawing.Size(616, 22);
             this.statusStrip.TabIndex = 5;
             this.statusStrip.Text = "statusStrip";
             // 
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(363, 17);
+            this.statusLabel.Size = new System.Drawing.Size(499, 17);
             this.statusLabel.Spring = true;
             this.statusLabel.Text = "Klar";
             this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -156,6 +159,9 @@ namespace PictogramUpdater
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.soundDirectoryOkButton);
+            this.groupBox2.Controls.Add(this.clearTextDirectoryOkButton);
+            this.groupBox2.Controls.Add(this.directoryOkButton);
             this.groupBox2.Controls.Add(this.soundDirectoryBrowseButton);
             this.groupBox2.Controls.Add(this.soundDirectoryLabel);
             this.groupBox2.Controls.Add(this.soundDirectoryTextbox);
@@ -179,7 +185,7 @@ namespace PictogramUpdater
             this.groupBox2.Controls.Add(this.clearTextDirectoryPathLabel);
             this.groupBox2.Location = new System.Drawing.Point(219, 62);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(280, 176);
+            this.groupBox2.Size = new System.Drawing.Size(385, 176);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Pictogram";
@@ -187,11 +193,11 @@ namespace PictogramUpdater
             // soundDirectoryBrowseButton
             // 
             this.soundDirectoryBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.soundDirectoryBrowseButton.Location = new System.Drawing.Point(199, 131);
+            this.soundDirectoryBrowseButton.Location = new System.Drawing.Point(264, 132);
             this.soundDirectoryBrowseButton.Name = "soundDirectoryBrowseButton";
             this.soundDirectoryBrowseButton.Size = new System.Drawing.Size(75, 23);
             this.soundDirectoryBrowseButton.TabIndex = 23;
-            this.soundDirectoryBrowseButton.Text = "&Bläddra ...";
+            this.soundDirectoryBrowseButton.Text = "Bläddra ...";
             this.soundDirectoryBrowseButton.UseVisualStyleBackColor = true;
             // 
             // soundDirectoryLabel
@@ -209,7 +215,7 @@ namespace PictogramUpdater
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.soundDirectoryTextbox.Location = new System.Drawing.Point(59, 134);
             this.soundDirectoryTextbox.Name = "soundDirectoryTextbox";
-            this.soundDirectoryTextbox.Size = new System.Drawing.Size(134, 20);
+            this.soundDirectoryTextbox.Size = new System.Drawing.Size(195, 20);
             this.soundDirectoryTextbox.TabIndex = 21;
             // 
             // soundCheckbox
@@ -227,7 +233,7 @@ namespace PictogramUpdater
             // 
             this.soundChangeInstallPathSelectionLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.soundChangeInstallPathSelectionLinkLabel.AutoSize = true;
-            this.soundChangeInstallPathSelectionLinkLabel.Location = new System.Drawing.Point(202, 137);
+            this.soundChangeInstallPathSelectionLinkLabel.Location = new System.Drawing.Point(307, 137);
             this.soundChangeInstallPathSelectionLinkLabel.Name = "soundChangeInstallPathSelectionLinkLabel";
             this.soundChangeInstallPathSelectionLinkLabel.Size = new System.Drawing.Size(35, 13);
             this.soundChangeInstallPathSelectionLinkLabel.TabIndex = 25;
@@ -248,11 +254,11 @@ namespace PictogramUpdater
             // clearTextDirectoryBrowseButton
             // 
             this.clearTextDirectoryBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.clearTextDirectoryBrowseButton.Location = new System.Drawing.Point(199, 86);
+            this.clearTextDirectoryBrowseButton.Location = new System.Drawing.Point(264, 87);
             this.clearTextDirectoryBrowseButton.Name = "clearTextDirectoryBrowseButton";
             this.clearTextDirectoryBrowseButton.Size = new System.Drawing.Size(75, 23);
             this.clearTextDirectoryBrowseButton.TabIndex = 17;
-            this.clearTextDirectoryBrowseButton.Text = "&Bläddra ...";
+            this.clearTextDirectoryBrowseButton.Text = "Bläddra ...";
             this.clearTextDirectoryBrowseButton.UseVisualStyleBackColor = true;
             // 
             // clearTextDirectoryLabel
@@ -270,7 +276,7 @@ namespace PictogramUpdater
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.clearTextDirectoryTextbox.Location = new System.Drawing.Point(59, 89);
             this.clearTextDirectoryTextbox.Name = "clearTextDirectoryTextbox";
-            this.clearTextDirectoryTextbox.Size = new System.Drawing.Size(134, 20);
+            this.clearTextDirectoryTextbox.Size = new System.Drawing.Size(195, 20);
             this.clearTextDirectoryTextbox.TabIndex = 15;
             // 
             // clearTextCheckbox
@@ -299,7 +305,7 @@ namespace PictogramUpdater
             // 
             this.updateLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.updateLinkLabel.AutoSize = true;
-            this.updateLinkLabel.Location = new System.Drawing.Point(199, 20);
+            this.updateLinkLabel.Location = new System.Drawing.Point(304, 20);
             this.updateLinkLabel.Name = "updateLinkLabel";
             this.updateLinkLabel.Size = new System.Drawing.Size(57, 13);
             this.updateLinkLabel.TabIndex = 1;
@@ -315,7 +321,7 @@ namespace PictogramUpdater
             this.languagesComboBox.FormattingEnabled = true;
             this.languagesComboBox.Location = new System.Drawing.Point(59, 15);
             this.languagesComboBox.Name = "languagesComboBox";
-            this.languagesComboBox.Size = new System.Drawing.Size(134, 21);
+            this.languagesComboBox.Size = new System.Drawing.Size(239, 21);
             this.languagesComboBox.TabIndex = 0;
             this.languagesComboBox.SelectedIndexChanged += new System.EventHandler(this.LanguageComboBox_Change);
             // 
@@ -331,7 +337,7 @@ namespace PictogramUpdater
             // directoryBrowseButton
             // 
             this.directoryBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.directoryBrowseButton.Location = new System.Drawing.Point(199, 36);
+            this.directoryBrowseButton.Location = new System.Drawing.Point(264, 40);
             this.directoryBrowseButton.Name = "directoryBrowseButton";
             this.directoryBrowseButton.Size = new System.Drawing.Size(75, 23);
             this.directoryBrowseButton.TabIndex = 3;
@@ -354,7 +360,7 @@ namespace PictogramUpdater
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.directoryTextbox.Location = new System.Drawing.Point(59, 42);
             this.directoryTextbox.Name = "directoryTextbox";
-            this.directoryTextbox.Size = new System.Drawing.Size(134, 20);
+            this.directoryTextbox.Size = new System.Drawing.Size(195, 20);
             this.directoryTextbox.TabIndex = 2;
             this.directoryTextbox.TextChanged += new System.EventHandler(this.DirectoryPathTextbox_Changed);
             // 
@@ -362,7 +368,7 @@ namespace PictogramUpdater
             // 
             this.changeInstallPathSelectionLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.changeInstallPathSelectionLinkLabel.AutoSize = true;
-            this.changeInstallPathSelectionLinkLabel.Location = new System.Drawing.Point(199, 42);
+            this.changeInstallPathSelectionLinkLabel.Location = new System.Drawing.Point(304, 42);
             this.changeInstallPathSelectionLinkLabel.Name = "changeInstallPathSelectionLinkLabel";
             this.changeInstallPathSelectionLinkLabel.Size = new System.Drawing.Size(35, 13);
             this.changeInstallPathSelectionLinkLabel.TabIndex = 13;
@@ -373,6 +379,7 @@ namespace PictogramUpdater
             // directoryPathLabel
             // 
             this.directoryPathLabel.AutoSize = true;
+            this.directoryPathLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.directoryPathLabel.Location = new System.Drawing.Point(7, 42);
             this.directoryPathLabel.Name = "directoryPathLabel";
             this.directoryPathLabel.Size = new System.Drawing.Size(66, 13);
@@ -384,7 +391,7 @@ namespace PictogramUpdater
             // 
             this.clearTextChangeInstallPathSelectionLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.clearTextChangeInstallPathSelectionLinkLabel.AutoSize = true;
-            this.clearTextChangeInstallPathSelectionLinkLabel.Location = new System.Drawing.Point(202, 92);
+            this.clearTextChangeInstallPathSelectionLinkLabel.Location = new System.Drawing.Point(307, 92);
             this.clearTextChangeInstallPathSelectionLinkLabel.Name = "clearTextChangeInstallPathSelectionLinkLabel";
             this.clearTextChangeInstallPathSelectionLinkLabel.Size = new System.Drawing.Size(35, 13);
             this.clearTextChangeInstallPathSelectionLinkLabel.TabIndex = 19;
@@ -413,7 +420,7 @@ namespace PictogramUpdater
             this.logTextbox.Name = "logTextbox";
             this.logTextbox.ReadOnly = true;
             this.logTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.logTextbox.Size = new System.Drawing.Size(487, 202);
+            this.logTextbox.Size = new System.Drawing.Size(592, 202);
             this.logTextbox.TabIndex = 7;
             this.logTextbox.TabStop = false;
             this.logTextbox.Text = "1. Fyll i användarnamn och lösenord.\r\n2. Klicka på Bläddra för att välja målkatal" +
@@ -422,7 +429,7 @@ namespace PictogramUpdater
             // installButton
             // 
             this.installButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.installButton.Location = new System.Drawing.Point(424, 452);
+            this.installButton.Location = new System.Drawing.Point(529, 452);
             this.installButton.Name = "installButton";
             this.installButton.Size = new System.Drawing.Size(75, 23);
             this.installButton.TabIndex = 8;
@@ -433,7 +440,7 @@ namespace PictogramUpdater
             // zipButton
             // 
             this.zipButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.zipButton.Location = new System.Drawing.Point(333, 452);
+            this.zipButton.Location = new System.Drawing.Point(438, 452);
             this.zipButton.Name = "zipButton";
             this.zipButton.Size = new System.Drawing.Size(85, 23);
             this.zipButton.TabIndex = 9;
@@ -444,7 +451,7 @@ namespace PictogramUpdater
             // getZipUrlButton
             // 
             this.getZipUrlButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.getZipUrlButton.Location = new System.Drawing.Point(229, 452);
+            this.getZipUrlButton.Location = new System.Drawing.Point(334, 452);
             this.getZipUrlButton.Name = "getZipUrlButton";
             this.getZipUrlButton.Size = new System.Drawing.Size(98, 23);
             this.getZipUrlButton.TabIndex = 10;
@@ -452,11 +459,44 @@ namespace PictogramUpdater
             this.getZipUrlButton.UseVisualStyleBackColor = true;
             this.getZipUrlButton.Click += new System.EventHandler(this.GetZipUrlButton_Click);
             // 
+            // directoryOkButton
+            // 
+            this.directoryOkButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.directoryOkButton.Location = new System.Drawing.Point(345, 40);
+            this.directoryOkButton.Name = "directoryOkButton";
+            this.directoryOkButton.Size = new System.Drawing.Size(34, 23);
+            this.directoryOkButton.TabIndex = 26;
+            this.directoryOkButton.Text = "Ok";
+            this.directoryOkButton.UseVisualStyleBackColor = true;
+            this.directoryOkButton.Click += new System.EventHandler(this.DirectoryOkButton_Click);
+            // 
+            // clearTextDirectoryOkButton
+            // 
+            this.clearTextDirectoryOkButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.clearTextDirectoryOkButton.Location = new System.Drawing.Point(345, 87);
+            this.clearTextDirectoryOkButton.Name = "clearTextDirectoryOkButton";
+            this.clearTextDirectoryOkButton.Size = new System.Drawing.Size(34, 23);
+            this.clearTextDirectoryOkButton.TabIndex = 27;
+            this.clearTextDirectoryOkButton.Text = "Ok";
+            this.clearTextDirectoryOkButton.UseVisualStyleBackColor = true;
+            this.clearTextDirectoryOkButton.Click += new System.EventHandler(this.ClearTextDirectoryOkButton_Click);
+            // 
+            // soundDirectoryOkButton
+            // 
+            this.soundDirectoryOkButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.soundDirectoryOkButton.Location = new System.Drawing.Point(345, 132);
+            this.soundDirectoryOkButton.Name = "soundDirectoryOkButton";
+            this.soundDirectoryOkButton.Size = new System.Drawing.Size(34, 23);
+            this.soundDirectoryOkButton.TabIndex = 28;
+            this.soundDirectoryOkButton.Text = "Ok";
+            this.soundDirectoryOkButton.UseVisualStyleBackColor = true;
+            this.soundDirectoryOkButton.Click += new System.EventHandler(this.SoundDirectoryOkButton_Click);
+            // 
             // PictogramInstallerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(511, 500);
+            this.ClientSize = new System.Drawing.Size(616, 500);
             this.Controls.Add(this.getZipUrlButton);
             this.Controls.Add(this.zipButton);
             this.Controls.Add(this.logTextbox);
@@ -517,6 +557,9 @@ namespace PictogramUpdater
         private System.Windows.Forms.CheckBox soundCheckbox;
         private System.Windows.Forms.LinkLabel soundChangeInstallPathSelectionLinkLabel;
         private System.Windows.Forms.Label soundDirectoryPathLabel;
+        private System.Windows.Forms.Button soundDirectoryOkButton;
+        private System.Windows.Forms.Button clearTextDirectoryOkButton;
+        private System.Windows.Forms.Button directoryOkButton;
     }
 }
 
