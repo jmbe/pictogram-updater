@@ -2,3 +2,6 @@
 *.pdf
 _ReSharper*
 PictogramUpdater.4.5.resharper.user
+*/bin/*
+*/obj/*
+*.user
