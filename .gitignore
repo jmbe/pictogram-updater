@@ -5,3 +5,4 @@ PictogramUpdater.4.5.resharper.user
 */bin/*
 */obj/*
 *.user
+TestResult.xml
