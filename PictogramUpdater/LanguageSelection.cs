@@ -19,7 +19,7 @@ namespace PictogramUpdater {
         }
     }
 
-    internal class Language {
+    public class Language {
         private readonly string _name;
         private readonly string _code;
 

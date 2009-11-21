@@ -52,7 +52,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\AMS.Profile.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.5.2.9222, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -72,7 +71,6 @@
     <Compile Include="ISettingsPersistence.cs" />
     <Compile Include="LanguageProvider.cs" />
     <Compile Include="DownloadManager.cs" />
-    <Compile Include="PictogramEntryTests.cs" />
     <Compile Include="PictogramInstallerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,7 +104,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="PropertyFile.cs" />
-    <Compile Include="CategoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace PictogramUpdater {
-    internal class CategoryRepository {
+    public class CategoryRepository {
         private readonly List<Category> _categories;
         private readonly Dictionary<string, Category> _categoriesByCode;
         private readonly Dictionary<int, Category> _categoriesByIndex;
@@ -49,7 +49,7 @@ namespace PictogramUpdater {
         }
     }
 
-    internal class CategoryTranslationService {
+    public class CategoryTranslationService {
         private readonly Dictionary<string, string[]> _translations;
 
         public CategoryTranslationService() {
@@ -83,7 +83,7 @@ namespace PictogramUpdater {
         }
     }
 
-    internal class Category {
+    public class Category {
         public Category(int index, string code) {
             Index = index;
             Code = code;

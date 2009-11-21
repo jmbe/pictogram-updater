@@ -160,7 +160,7 @@ namespace PictogramUpdater {
         }
     }
 
-    internal class PictogramEntry :IComparable<PictogramEntry> {
+    public class PictogramEntry :IComparable<PictogramEntry> {
         private readonly Regex _indexPattern = new Regex(@"\d+$");
 
         public PictogramEntry(string fullCode, string name) {
