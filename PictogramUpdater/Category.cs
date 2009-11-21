@@ -57,7 +57,7 @@ namespace PictogramUpdater {
                                                                  {
                                                                      "SV", new[] {
                                                                                      "Människor", "Kroppsdelar",
-                                                                                     "Kläder och personliga tillhörighete"
+                                                                                     "Kläder och personliga tillhörigheter"
                                                                                      ,
                                                                                      "Inventarier", "Kök",
                                                                                      "Badrum", "Mat",
