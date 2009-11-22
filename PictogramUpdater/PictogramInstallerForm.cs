@@ -42,12 +42,6 @@ namespace PictogramUpdater {
         private AuthenticationService _authenticationService;
         private Config _config;
         private LanguageSelection _languageSelection;
-        private string _installPath;
-        private string _clearTextInstallPath;
-        private string _soundInstallPath;
-        private bool _displayInstallPathInputField;
-        private bool _displayClearTextInstallPathInputField;
-        private bool _displaySoundInstallPathInputField;
         private InstallationManager _manager;
 
         public PictogramInstallerForm() {
@@ -60,19 +54,19 @@ namespace PictogramUpdater {
         private void Download() {
             SetControlsEnabled(false);
             var language = _languageSelection.Language;
-            _config.CreateOrUpdateWmfINI(language, _installPath, _clearTextInstallPath);
+            _config.CreateOrUpdateWmfINI(language, wmfDirectoryChooser.InstallPath, plainTextDirectoryChooser.InstallPath);
             
-            _manager.Download(_installPath, language, overwriteCheckbox.Checked, false, false, usernameTextbox.Text, passwordTextbox.Text);
+            _manager.Download(wmfDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, false, false, usernameTextbox.Text, passwordTextbox.Text);
 
             if(clearTextCheckbox.Checked) {
-                _manager.Download(_clearTextInstallPath, language, overwriteCheckbox.Checked, true, false,
+                _manager.Download(plainTextDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, true, false,
                                            usernameTextbox.Text, passwordTextbox.Text);
             }
 
             if(soundCheckbox.Checked) {
-                _manager.Download(_soundInstallPath, language, overwriteCheckbox.Checked, false, true,
+                _manager.Download(soundDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, false, true,
                                            usernameTextbox.Text, passwordTextbox.Text);
-                _config.CreateOrUpdateWavIni(language, _soundInstallPath);
+                _config.CreateOrUpdateWavIni(language, soundDirectoryChooser.InstallPath);
             }
 
             SetControlsEnabled(true);
@@ -86,7 +80,7 @@ namespace PictogramUpdater {
         private void DownloadZip() {
             SetControlsEnabled(false);
 
-            _manager.DownloadZip(_installPath, usernameTextbox.Text, passwordTextbox.Text, _languageSelection.Language);
+            _manager.DownloadZip(wmfDirectoryChooser.InstallPath, usernameTextbox.Text, passwordTextbox.Text, _languageSelection.Language);
 
             SetControlsEnabled(true);
             _currentWorkingThread = null;
@@ -99,7 +93,7 @@ namespace PictogramUpdater {
         private void GetZipUrl() {
             SetControlsEnabled(false);
 
-            _downloader.TargetPath = this.directoryTextbox.Text;
+            _downloader.TargetPath = this.wmfDirectoryChooser.InstallPath;
             _downloader.DownloadPictogramZipUrl(this.usernameTextbox.Text, this.passwordTextbox.Text, GetLanguage());
 
             SetControlsEnabled(true);
@@ -244,17 +238,6 @@ namespace PictogramUpdater {
             this._currentWorkingThread.Start();
         }
 
-        /// <summary>
-        /// Hanterar klick på "Bläddra"-knappen. Låter användaren
-        /// välja målkatalog.
-        /// </summary>
-        private void BrowseButton_Click(object sender, EventArgs e) {
-            folderBrowserDialog.ShowNewFolderButton = true;
-            folderBrowserDialog.SelectedPath = directoryTextbox.Text;
-            folderBrowserDialog.ShowDialog();
-            directoryTextbox.Text = folderBrowserDialog.SelectedPath;
-        }
-
         private void PictogramInstallerForm_Load(object sender, EventArgs e) {
             /* Handler för när formuläret stängs */
             Closing += PictogramInstallerForm_Closing;
@@ -265,26 +248,17 @@ namespace PictogramUpdater {
             _authenticationService = new AuthenticationService();
             _config = new Config();
 
-            /* Installationskatalog */
-            if (_displayInstallPathInputField) {
-                directoryTextbox.Text = _config.GetDefaultPath(_languageSelection.Language);
-            } else {
-                HideInstallPathInput(true);
-            }
 
-            /* Clear text install dir*/
-            if (_displayClearTextInstallPathInputField) {
-                clearTextDirectoryTextbox.Text = _config.GetDefaultPlainTextPath(_languageSelection.Language);
-            } else {
-                HideClearTextInstallPathInput(true);
-            }
+
+            /* Installationskatalog för wmf */
+            this.wmfDirectoryChooser.InstallPath = _config.GetDefaultPath(_languageSelection.Language);
+
+            /* Plain text install dir*/
+            this.plainTextDirectoryChooser.InstallPath = _config.GetDefaultPlainTextPath(_languageSelection.Language);
 
             /* Sound install dir*/
-            if (_displaySoundInstallPathInputField) {
-                soundDirectoryTextbox.Text = _config.GetDefaultSoundPath(_languageSelection.Language);
-            } else {
-                HideSoundInstallPathInput(true);
-            }
+            this.soundDirectoryChooser.InstallPath = _config.GetDefaultSoundPath(_languageSelection.Language);
+
 
             if (_authenticationService.IsPictogramManagerInstalled()) {
                 groupBox1.Visible = false;
@@ -314,76 +288,17 @@ namespace PictogramUpdater {
             _languageSelection.LanguageChanged += LanguageChanged;
         }
 
-        private void HideInstallPathInput(bool hide) {
-            directoryLabel.Visible = !hide;
-            directoryTextbox.Visible = !hide;
-            directoryBrowseButton.Visible = !hide;
-            directoryOkButton.Visible = !hide;
-
-            directoryPathLabel.Visible = hide;
-            changeInstallPathSelectionLinkLabel.Visible = hide;
-        }
-
-        private void HideClearTextInstallPathInput(bool hide) {
-            clearTextDirectoryLabel.Visible = !hide;
-            clearTextDirectoryTextbox.Visible = !hide;
-            clearTextDirectoryBrowseButton.Visible = !hide;
-            clearTextDirectoryOkButton.Visible = !hide;
-
-            clearTextDirectoryPathLabel.Visible = hide;
-            clearTextChangeInstallPathSelectionLinkLabel.Visible = hide;
-        }
-
-        private void HideSoundInstallPathInput(bool hide) {
-            soundDirectoryLabel.Visible = !hide;
-            soundDirectoryTextbox.Visible = !hide;
-            soundDirectoryBrowseButton.Visible = !hide;
-            soundDirectoryOkButton.Visible = !hide;
-
-            soundDirectoryPathLabel.Visible = hide;
-            soundChangeInstallPathSelectionLinkLabel.Visible = hide;
-        }
-
         private void LanguageChanged() {
-            if (_displayInstallPathInputField) {
-                if (directoryTextbox.Text.Length == 0) {
-                    directoryTextbox.Text = _config.GetDefaultPath(_languageSelection.Language);
-                }
-                _installPath = directoryTextbox.Text;
-                HideInstallPathInput(false);
-                _displayInstallPathInputField = false;
-            } else {
-                _installPath = _config.GetPictoInstallPath(_languageSelection.Language);
-                directoryPathLabel.Text = "Installeras till '" + _installPath + "'";
-                directoryTextbox.Text = _installPath;
-                HideInstallPathInput(true);
-            }
-            if (_displayClearTextInstallPathInputField) {
-                if (clearTextDirectoryTextbox.Text.Length == 0) {
-                    clearTextDirectoryTextbox.Text = _config.GetDefaultPlainTextPath(_languageSelection.Language);
-                }
-                _clearTextInstallPath = clearTextDirectoryTextbox.Text;
-                HideClearTextInstallPathInput(false);
-                _displayClearTextInstallPathInputField = false;
-            } else {
-                _clearTextInstallPath = _config.GetPictoPlainTextInstallPath(_languageSelection.Language);
-                clearTextDirectoryPathLabel.Text = "Installeras till '" + _clearTextInstallPath + "'";
-                clearTextDirectoryTextbox.Text = _clearTextInstallPath;
-                HideClearTextInstallPathInput(true);
-            }
-            if (_displaySoundInstallPathInputField) {
-                if (soundDirectoryTextbox.Text.Length == 0) {
-                    soundDirectoryTextbox.Text = _config.GetDefaultSoundPath(_languageSelection.Language);
-                }
-                _soundInstallPath = soundDirectoryTextbox.Text;
-                HideSoundInstallPathInput(false);
-                _displaySoundInstallPathInputField = false;
-            } else {
-                _soundInstallPath = _config.GetPictoSoundInstallPath(_languageSelection.Language);
-                soundDirectoryPathLabel.Text = "Installeras till '" + _soundInstallPath + "'";
-                soundDirectoryTextbox.Text = _soundInstallPath;
-                HideSoundInstallPathInput(true);
-            }
+
+            string wmfPath = _config.GetPictoInstallPath(_languageSelection.Language);
+            wmfDirectoryChooser.languageChanged(wmfPath);
+
+            string plainTextPath = _config.GetPictoPlainTextInstallPath(_languageSelection.Language);
+            plainTextDirectoryChooser.languageChanged(plainTextPath);
+
+            string soundPath = _config.GetPictoSoundInstallPath(_languageSelection.Language);
+            soundDirectoryChooser.languageChanged(soundPath);
+           
         }
 
         /// <summary>
@@ -401,7 +316,7 @@ namespace PictogramUpdater {
                 _authenticationService.SaveUsername(usernameTextbox.Text);
                 _authenticationService.SavePassword(passwordTextbox.Text);
 
-                _config.SetPictoInstallPaths(_languageSelection.Language, directoryTextbox.Text, clearTextDirectoryTextbox.Text, soundDirectoryTextbox.Text);
+                _config.SetPictoInstallPaths(_languageSelection.Language, wmfDirectoryChooser.InstallPath, plainTextDirectoryChooser.InstallPath, soundDirectoryChooser.InstallPath);
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);
             }
@@ -469,40 +384,6 @@ namespace PictogramUpdater {
         private void GetZipUrlButton_Click(object sender, EventArgs e) {
             this._currentWorkingThread = new Thread(new ThreadStart(GetZipUrl));
             this._currentWorkingThread.Start();
-        }
-
-        private void DirectoryPathTextbox_Changed(object sender, EventArgs e) {
-            _installPath = directoryTextbox.Text;
-        }
-
-        private void ChangeInstallPathSelectionLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            HideInstallPathInput(false);
-            _displayInstallPathInputField = false;
-        }
-
-        private void ChangeClearTextInstallPathSelectionLabel_LinkClicked(object sender, EventArgs e) {
-            HideClearTextInstallPathInput(false);
-            _displayClearTextInstallPathInputField = false;
-        }
-
-        private void ChangeSoundInstallPathSelectionLabel_LinkClicked(object sender, EventArgs e) {
-            HideSoundInstallPathInput(false);
-            _displaySoundInstallPathInputField = false;
-        }
-
-        private void DirectoryOkButton_Click(object sender, EventArgs e) {
-            directoryPathLabel.Text = directoryTextbox.Text;
-            HideInstallPathInput(true);
-        }
-
-        private void ClearTextDirectoryOkButton_Click(object sender, EventArgs e) {
-            clearTextDirectoryPathLabel.Text = clearTextDirectoryTextbox.Text;
-            HideClearTextInstallPathInput(true);
-        }
-
-        private void SoundDirectoryOkButton_Click(object sender, EventArgs e) {
-            soundDirectoryPathLabel.Text = soundDirectoryTextbox.Text;
-            HideSoundInstallPathInput(true);
         }
     }
 }

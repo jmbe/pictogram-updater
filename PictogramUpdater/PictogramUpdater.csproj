@@ -64,6 +64,24 @@
   <ItemGroup>
     <Compile Include="AuthenticationService.cs" />
     <Compile Include="Category.cs" />
+    <Compile Include="DirectoryChooser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DirectoryChooser.Designer.cs">
+      <DependentUpon>DirectoryChooser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DirectoryChooserInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DirectoryChooserInfo.Designer.cs">
+      <DependentUpon>DirectoryChooserInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DirectoryChooserInput.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DirectoryChooserInput.Designer.cs">
+      <DependentUpon>DirectoryChooserInput.cs</DependentUpon>
+    </Compile>
     <Compile Include="DownloadListManager.cs" />
     <Compile Include="InstallationManager.cs" />
     <Compile Include="LanguageSelection.cs" />
@@ -80,6 +98,18 @@
     <Compile Include="PictosysWebService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DirectoryChooser.resx">
+      <DependentUpon>DirectoryChooser.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DirectoryChooserInfo.resx">
+      <DependentUpon>DirectoryChooserInfo.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DirectoryChooserInput.resx">
+      <DependentUpon>DirectoryChooserInput.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="PictogramInstallerForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>PictogramInstallerForm.cs</DependentUpon>
