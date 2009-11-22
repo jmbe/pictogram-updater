@@ -274,7 +274,7 @@ namespace PictogramUpdater {
 
             /* Clear text install dir*/
             if (_displayClearTextInstallPathInputField) {
-                clearTextDirectoryTextbox.Text = _config.GetDefaultClearTextPath(_languageSelection.Language);
+                clearTextDirectoryTextbox.Text = _config.GetDefaultPlainTextPath(_languageSelection.Language);
             } else {
                 HideClearTextInstallPathInput(true);
             }
@@ -360,13 +360,13 @@ namespace PictogramUpdater {
             }
             if (_displayClearTextInstallPathInputField) {
                 if (clearTextDirectoryTextbox.Text.Length == 0) {
-                    clearTextDirectoryTextbox.Text = _config.GetDefaultClearTextPath(_languageSelection.Language);
+                    clearTextDirectoryTextbox.Text = _config.GetDefaultPlainTextPath(_languageSelection.Language);
                 }
                 _clearTextInstallPath = clearTextDirectoryTextbox.Text;
                 HideClearTextInstallPathInput(false);
                 _displayClearTextInstallPathInputField = false;
             } else {
-                _clearTextInstallPath = _config.GetPictoClearTextInstallPath(_languageSelection.Language);
+                _clearTextInstallPath = _config.GetPictoPlainTextInstallPath(_languageSelection.Language);
                 clearTextDirectoryPathLabel.Text = "Installeras till '" + _clearTextInstallPath + "'";
                 clearTextDirectoryTextbox.Text = _clearTextInstallPath;
                 HideClearTextInstallPathInput(true);

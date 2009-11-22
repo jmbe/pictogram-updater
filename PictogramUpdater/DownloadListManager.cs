@@ -35,14 +35,14 @@ namespace PictogramUpdater {
         }
 
         public List<PictogramEntry> FilterEntries(Config config, Language language,
-                                                          IEnumerable<PictogramEntry> entries, bool clearText, bool sound) {
+                                                          IEnumerable<PictogramEntry> entries, bool plainText, bool sound) {
             string installPath; 
-            if(clearText) {
-                installPath = config.GetPictoClearTextInstallPath(language);
-            } else if(sound) {
+            if (plainText) {
+                installPath = config.GetPictoPlainTextInstallPath(language);
+            } else if (sound) {
                 installPath = config.GetPictoSoundInstallPath(language);
             } else {
-                installPath = config.GetPictoInstallPath(language);    
+                installPath = config.GetPictoInstallPath(language);
             }
 
             var extension = sound ? "wav" : "wmf";
@@ -50,7 +50,7 @@ namespace PictogramUpdater {
             var newEntries = new List<PictogramEntry>();
 
             foreach (var entry in entries) {
-                var fileName = clearText ? entry.Name.Trim() : entry.FullCode;
+                var fileName = plainText ? entry.Name.Trim() : entry.FullCode;
                 var fileInfo = new FileInfo(installPath + @"\" + fileName + "." + extension);
                 if (!fileInfo.Exists) {
                     newEntries.Add(entry);
