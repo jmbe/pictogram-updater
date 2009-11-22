@@ -6,3 +6,4 @@ PictogramUpdater.4.5.resharper.user
 */obj/*
 *.user
 TestResult.xml
+*/*.VisualState.xml
