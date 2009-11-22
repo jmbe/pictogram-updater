@@ -200,7 +200,7 @@ namespace PictogramUpdater {
             foreach (
                 Control control in
                     new Control[]
-                    {verifyLabel, installButton, updateLinkLabel, overwriteCheckbox, zipButton, getZipUrlButton}) {
+                    {verifyLabel, installButton, updateLinkLabel, overwriteCheckbox, zipButton, getZipUrlButton, wmfDirectoryChooser, soundDirectoryChooser, plainTextDirectoryChooser}) {
                 SetControlEnabled(control, enabled);
             }
         }
