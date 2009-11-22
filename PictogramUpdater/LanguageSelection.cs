@@ -5,7 +5,6 @@ using System.Text;
 
 namespace PictogramUpdater {
     internal class LanguageSelection {
-        private string _locale = "SV";
         private Language _language = new Language("SV", "Svenska");
 
         public event LanguageChangedCallback LanguageChanged;
@@ -20,20 +19,19 @@ namespace PictogramUpdater {
     }
 
     public class Language {
-        private readonly string _name;
-        private readonly string _code;
-
         public Language(string code, string name) {
-            _code = code;
-            _name = name;
+            Code = code;
+            Name = name;
         }
 
         public string Name {
-            get { return _name; }
+            get;
+            private set;
         }
 
         public string Code {
-            get { return _code; }
+            get;
+            private set;
         }
     }
 }
