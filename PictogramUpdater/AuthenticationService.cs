@@ -13,6 +13,16 @@ namespace PictogramUpdater {
             _settings = new Ini(settingsFile);
         }
 
+        public bool IsPictogramLibraryInstalled() {
+
+
+            var windowsDir = Environment.GetEnvironmentVariable("WINDIR");
+            var file = new FileInfo(windowsDir);
+            var dir = new DirectoryInfo(windowsDir);
+            var files = dir.GetFiles("picwmf*.ini");
+            return files.Length > 0;
+        }
+
         public Boolean IsPictogramManagerInstalled() {
             var iniFilePath = Environment.GetEnvironmentVariable("WINDIR") + @"\PictogramManager.ini";
             var iniFile = new FileInfo(iniFilePath);

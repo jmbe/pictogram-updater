@@ -277,7 +277,7 @@ namespace PictogramUpdater {
             this.soundDirectoryChooser.InstallPath = _config.GetDefaultSoundPath(_languageSelection.Language);
 
 
-            if (_authenticationService.IsPictogramManagerInstalled()) {
+            if (_authenticationService.IsPictogramLibraryInstalled()) {
                 groupBox1.Visible = false;
 
             }
@@ -341,8 +341,6 @@ namespace PictogramUpdater {
                 /* Spara inställningar */
                 _authenticationService.SaveUsername(usernameTextbox.Text);
                 _authenticationService.SavePassword(passwordTextbox.Text);
-
-                _config.SetPictoInstallPaths(_languageSelection.Language, wmfDirectoryChooser.InstallPath, plainTextDirectoryChooser.InstallPath, soundDirectoryChooser.InstallPath);
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);
             }
