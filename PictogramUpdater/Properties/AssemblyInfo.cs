@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PictogramUpdater")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Pictogramuppdatering")]
+[assembly: AssemblyDescription("Uppdaterar lokalt installerade pictobilder")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PictogramUpdater")]
-[assembly: AssemblyCopyright("Copyright ©  2005")]
+[assembly: AssemblyCompany("Specialpedagogiska skolmyndigheten")]
+[assembly: AssemblyProduct("Pictogramuppdatering")]
+[assembly: AssemblyCopyright("Copyright ©  2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
