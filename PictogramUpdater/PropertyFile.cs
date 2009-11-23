@@ -9,6 +9,9 @@ namespace PictogramUpdater {
     /// <summary>
     /// Implementation en av .properties-file för att
     /// lagra inställningar.
+    /// 
+    /// 
+    /// Används inte längre. Använd ini-filer istället.
     /// </summary>
     class PropertyFile : ISettingsPersistence {
 
