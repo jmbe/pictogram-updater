@@ -57,24 +57,41 @@ namespace PictogramUpdater {
         /// </summary>
         private void Download() {
             SetControlsEnabled(false);
+            
             var language = _languageSelection.Language;
             _config.CreateOrUpdateWmfINI(language, wmfDirectoryChooser.InstallPath, plainTextDirectoryChooser.InstallPath);
-            
-            installationManager.Download(wmfDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, false, false, usernameTextbox.Text, passwordTextbox.Text);
 
-            if(clearTextCheckbox.Checked) {
-                installationManager.Download(plainTextDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, true, false,
-                                           usernameTextbox.Text, passwordTextbox.Text);
+
+            LogMessage("Laddar ner pictobilder...");
+            installationManager.Download(wmfDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.CODE, usernameTextbox.Text, passwordTextbox.Text);
+            LogMessage("Nedladdning av pictobilder klar.");
+            LogMessage("");
+            
+
+            if (plainTextCheckbox.Checked) {
+                LogMessage("Laddar ner pictobilder i klartext...");
+                    installationManager.Download(plainTextDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.PLAIN_TEXT,
+                                       usernameTextbox.Text, passwordTextbox.Text);
+                    LogMessage("Nedladdning av pictobilder i klartext klar.");
+                    LogMessage("");
+            
             }
 
-            if(soundCheckbox.Checked) {
-                installationManager.Download(soundDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, false, true,
+            if (soundCheckbox.Checked) {
+                LogMessage("Ladda ner ljud...");
+                installationManager.Download(soundDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.SOUND,
                                            usernameTextbox.Text, passwordTextbox.Text);
                 _config.CreateOrUpdateWavIni(language, soundDirectoryChooser.InstallPath);
+                LogMessage("Nedladdning av ljud klar.");
+                LogMessage("");
             }
 
             SetControlsEnabled(true);
             this._currentWorkingThread = null;
+
+            LogMessage("");
+            LogMessage("Installationen är klar.");
+            SetStatus("Installationen är klar.");
 
         }
 
@@ -324,17 +341,17 @@ namespace PictogramUpdater {
             this.categoryRepository = new CategoryRepository();
             this.categoryTranslationService = new CategoryTranslationService();
 
-            this._config = new Config(this.categoryRepository, this.categoryTranslationService);
-
-
             this.languageProvider = new LanguageProvider();
-
-            this.downloadManager = new DownloadManager(languageProvider);
-
             this.pictosysWebService = new PictosysWebService();
+
+
+            this._config = new Config(this.categoryRepository, this.categoryTranslationService);
+            this.downloadManager = new DownloadManager(this.languageProvider, this.pictosysWebService);
+
+            
             this.downloadListManager = new DownloadListManager(this.pictosysWebService);
 
-            this.installationManager = new InstallationManager(this._config, this.downloadListManager);
+            this.installationManager = new InstallationManager(this._config, this.downloadListManager, this.languageProvider, this.pictosysWebService);
         }
 
         private void LanguageChanged() {

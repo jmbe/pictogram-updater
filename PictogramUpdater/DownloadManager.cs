@@ -18,6 +18,7 @@ namespace PictogramUpdater {
     /// </summary>
     class DownloadManager {
         private readonly LanguageProvider _languageProvider;
+        private PictosysWebService pictosysWebService;
         
 
         public event LogMessageCallback LogMessage;
@@ -28,18 +29,38 @@ namespace PictogramUpdater {
         /// <summary>
         /// Skapar en ny instans av klassen.
         /// </summary>
-        public DownloadManager(LanguageProvider languageProvider) {
+        public DownloadManager(LanguageProvider languageProvider, PictosysWebService pictosysWebService) {
+            if (languageProvider == null) {
+                throw new NullReferenceException("Language provider cannot be null");
+            }
             this._languageProvider = languageProvider;
+
+            if (pictosysWebService == null) {
+                throw new NullReferenceException("Pictosys Web service cannot be null");
+            }
+
+            this.pictosysWebService = pictosysWebService;
         }
 
-        public DownloadManager() {}
         
         /// <summary>
         /// Anger om befintliga filer ska skrivas över.
         /// </summary>
         public bool OverwriteExistingFiles { get; set; }
-        public bool ClearText { get; set; }
-        public bool Sound { get; set; }
+        public InstallationType InstallationType{ get; set; }
+
+        public bool PlainText {
+            get {
+                return InstallationType.PLAIN_TEXT.Equals(InstallationType);
+            }
+        }
+
+        public bool Sound {
+            get {
+                return InstallationType.SOUND.Equals(InstallationType);
+            }
+        }
+        
 
         /// <summary>
         /// Anger i vilken katalog nedladdade filer ska sparas.
@@ -77,35 +98,35 @@ namespace PictogramUpdater {
         /// </summary>
         public void Download() {
             ProgressChanged(ProgressBarStyle.Continuous, 0, 1);
-            StatusChanged("Laddar ner " + DownloadList.Count + " pictogram...");
+            StatusChanged("Laddar ner " + DownloadList.Count + " nya filer...");
 
             try {
                 /* Skapa målkatalog */
                 var target = CreateTargetDirectory();
 
-                var service = new PictosysWebService();
 
                 if (DownloadList.Count > 0) {
                     var current = 0;
                     foreach (var entry in DownloadList) {
-                        var fileName = ClearText ? entry.Name.Trim() : entry.FullCode;
-                        var extension = Sound ? ".wav" : ".wmf";
-                        var file = target.FullName + @"\" + fileName + extension;
 
-                        LogMessage("Laddar ner " + entry.FullCode + extension + "...");
+
+                        var fileName = entry.ToFilename(InstallationType);
+                        var file = target.FullName + @"\" + fileName;
+
+                        LogMessage("Laddar ner " + fileName + "...");
                         BinaryWriter writer = null;
                         try {
                             byte[] buffer;
                             if (Sound) {
-                                buffer = service.downloadSound(Username, Password, entry.FullCode, Language.Code.ToLower());
+                                buffer = this.pictosysWebService.downloadSound(Username, Password, entry.FullCode, Language.Code.ToLower());
                             } else {
-                                buffer = service.downloadWMF(Username, Password, entry.FullCode, Language.Code);
+                                buffer = this.pictosysWebService.downloadWMF(Username, Password, entry.FullCode, Language.Code);
                             }
 
                             writer = new BinaryWriter(new FileStream(file, FileMode.OpenOrCreate));
                             writer.Write(buffer);
                         } catch (SoapException e) {
-                            LogMessage("Fel vid nedladdning av " + entry.FullCode + ": " + e.Message);
+                            LogMessage("Fel vid nedladdning av " + fileName + ": " + e.Message);
                         } finally {
                             if (writer != null) {
                                 writer.Close();

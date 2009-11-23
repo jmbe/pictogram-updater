@@ -42,6 +42,18 @@ namespace PictogramUpdater {
             return path ?? GetDefaultPlainTextPath(language);
         }
 
+        public string getInstallPathForLanguage(Language language, InstallationType installationType) {
+            switch (installationType) {
+                case InstallationType.PLAIN_TEXT:
+                    return GetPictoPlainTextInstallPath(language);
+                case InstallationType.SOUND:
+                    return GetPictoSoundInstallPath(language);
+                default:
+                    return GetPictoInstallPath(language);
+            }
+
+        }
+
         public string GetPictoSoundInstallPath(Language language) {
             Profile settings = new Ini(GetPictoWavIniFilePath(language));
             var path = settings.GetValue("ProgDir", "Dir") as string;
@@ -133,7 +145,7 @@ namespace PictogramUpdater {
 
             var categoryCounts = new Dictionary<Category, int>();
             foreach (var entry in entries) {
-                var category = this.categoryRepository.FindByCode(entry.Code);
+                var category = this.categoryRepository.FindByCode(entry.CategoryCode);
                 var categoryCount = 0;
                 var categoryTranslation = this.categoryTranslationService.Translate(category, language);
                 if (categoryCounts.ContainsKey(category)) {
@@ -165,19 +177,33 @@ namespace PictogramUpdater {
             FullCode = fullCode;
             Name = name;
             var indexMatch = _indexPattern.Match(fullCode);
-            Code = fullCode.Substring(0, indexMatch.Index);
+            CategoryCode = fullCode.Substring(0, indexMatch.Index);
             Index = Convert.ToInt32(fullCode.Substring(indexMatch.Index));
         }
 
         public string FullCode { get; set; }
         public string Name { get; set; }
 
-        public string Code { get; private set; }
+        public string CategoryCode { get; private set; }
 
         public int Index { get; private set; }
 
+        public string ToFilename(InstallationType installationType) {
+
+            if (InstallationType.SOUND.Equals(installationType)) {
+                return CategoryCode + ".wav";
+            }
+
+            if (InstallationType.PLAIN_TEXT.Equals(installationType)) {
+                return Name.Trim() + ".wmf";
+            }
+
+            // InstallationType.CODE
+            return FullCode + ".wmf";
+        }
+
         public int CompareTo(PictogramEntry other) {
-            var result = Code.CompareTo(other.Code);
+            var result = CategoryCode.CompareTo(other.CategoryCode);
             if(result == 0 ) {
                 result = Index.CompareTo(other.Index);
             }

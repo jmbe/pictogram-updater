@@ -42,23 +42,16 @@ namespace PictogramUpdater {
         }
 
         public List<PictogramEntry> FilterEntries(Config config, Language language,
-                                                          IEnumerable<PictogramEntry> entries, bool plainText, bool sound) {
-            string installPath; 
-            if (plainText) {
-                installPath = config.GetPictoPlainTextInstallPath(language);
-            } else if (sound) {
-                installPath = config.GetPictoSoundInstallPath(language);
-            } else {
-                installPath = config.GetPictoInstallPath(language);
-            }
+                                                          IEnumerable<PictogramEntry> entries, InstallationType installationType) {
 
-            var extension = sound ? "wav" : "wmf";
-
+            string installPath = config.getInstallPathForLanguage(language, installationType);
+            
             var newEntries = new List<PictogramEntry>();
 
             foreach (var entry in entries) {
-                var fileName = plainText ? entry.Name.Trim() : entry.FullCode;
-                var fileInfo = new FileInfo(installPath + @"\" + fileName + "." + extension);
+                var fileName = entry.ToFilename(installationType);
+
+                var fileInfo = new FileInfo(installPath + @"\" + fileName);
                 if (!fileInfo.Exists) {
                     newEntries.Add(entry);
                 }

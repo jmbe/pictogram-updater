@@ -40,7 +40,7 @@ namespace PictogramUpdater
             this.statusProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.overwriteCheckbox = new System.Windows.Forms.CheckBox();
             this.soundCheckbox = new System.Windows.Forms.CheckBox();
-            this.clearTextCheckbox = new System.Windows.Forms.CheckBox();
+            this.plainTextCheckbox = new System.Windows.Forms.CheckBox();
             this.updateLinkLabel = new System.Windows.Forms.LinkLabel();
             this.languagesComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -175,16 +175,16 @@ namespace PictogramUpdater
             // 
             // clearTextCheckbox
             // 
-            this.clearTextCheckbox.AutoSize = true;
-            this.clearTextCheckbox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.clearTextCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.clearTextCheckbox.Location = new System.Drawing.Point(487, 221);
-            this.clearTextCheckbox.Margin = new System.Windows.Forms.Padding(0);
-            this.clearTextCheckbox.Name = "clearTextCheckbox";
-            this.clearTextCheckbox.Size = new System.Drawing.Size(307, 29);
-            this.clearTextCheckbox.TabIndex = 14;
-            this.clearTextCheckbox.Text = "Installera pictobilder i klartext";
-            this.clearTextCheckbox.UseVisualStyleBackColor = true;
+            this.plainTextCheckbox.AutoSize = true;
+            this.plainTextCheckbox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.plainTextCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.plainTextCheckbox.Location = new System.Drawing.Point(487, 221);
+            this.plainTextCheckbox.Margin = new System.Windows.Forms.Padding(0);
+            this.plainTextCheckbox.Name = "clearTextCheckbox";
+            this.plainTextCheckbox.Size = new System.Drawing.Size(307, 29);
+            this.plainTextCheckbox.TabIndex = 14;
+            this.plainTextCheckbox.Text = "Installera pictobilder i klartext";
+            this.plainTextCheckbox.UseVisualStyleBackColor = true;
             // 
             // updateLinkLabel
             // 
@@ -378,7 +378,7 @@ namespace PictogramUpdater
             this.Controls.Add(this.soundCheckbox);
             this.Controls.Add(this.zipButton);
             this.Controls.Add(this.logTextbox);
-            this.Controls.Add(this.clearTextCheckbox);
+            this.Controls.Add(this.plainTextCheckbox);
             this.Controls.Add(this.installButton);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.groupBox1);
@@ -424,7 +424,7 @@ namespace PictogramUpdater
         private System.Windows.Forms.CheckBox overwriteCheckbox;
         private System.Windows.Forms.Button zipButton;
         private System.Windows.Forms.Button getZipUrlButton;
-        private System.Windows.Forms.CheckBox clearTextCheckbox;
+        private System.Windows.Forms.CheckBox plainTextCheckbox;
         private System.Windows.Forms.CheckBox soundCheckbox;
         private DirectoryChooser wmfDirectoryChooser;
         private DirectoryChooser plainTextDirectoryChooser;

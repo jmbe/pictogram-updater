@@ -10,7 +10,7 @@ namespace PictogramUpdater {
         [Test]
         public void ShouldReturnCode() {
             var entry = new PictogramEntry("a3", "flicka");
-            Assert.That(entry.Code, Is.EqualTo("a"));
+            Assert.That(entry.CategoryCode, Is.EqualTo("a"));
         }
     }
 }

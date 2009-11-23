@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="AuthenticationService.cs" />
     <Compile Include="Category.cs" />
+    <Compile Include="InstallationType.cs" />
     <Compile Include="DirectoryChooser.cs">
       <SubType>UserControl</SubType>
     </Compile>
