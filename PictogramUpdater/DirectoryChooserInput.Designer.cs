@@ -55,7 +55,7 @@
             // directoryLabel
             // 
             this.directoryLabel.AutoSize = true;
-            this.directoryLabel.Location = new System.Drawing.Point(3, 6);
+            this.directoryLabel.Location = new System.Drawing.Point(0, 6);
             this.directoryLabel.Name = "directoryLabel";
             this.directoryLabel.Size = new System.Drawing.Size(43, 13);
             this.directoryLabel.TabIndex = 27;

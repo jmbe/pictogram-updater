@@ -33,8 +33,8 @@
             // installTextLabel
             // 
             this.installTextLabel.AutoSize = true;
-            this.installTextLabel.Location = new System.Drawing.Point(3, 7);
-            this.installTextLabel.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.installTextLabel.Location = new System.Drawing.Point(0, 7);
+            this.installTextLabel.Margin = new System.Windows.Forms.Padding(0);
             this.installTextLabel.Name = "installTextLabel";
             this.installTextLabel.Size = new System.Drawing.Size(66, 13);
             this.installTextLabel.TabIndex = 3;
@@ -43,7 +43,7 @@
             // changeDestinationLink
             // 
             this.changeDestinationLink.AutoSize = true;
-            this.changeDestinationLink.Location = new System.Drawing.Point(239, 7);
+            this.changeDestinationLink.Location = new System.Drawing.Point(173, 7);
             this.changeDestinationLink.Name = "changeDestinationLink";
             this.changeDestinationLink.Size = new System.Drawing.Size(35, 13);
             this.changeDestinationLink.TabIndex = 7;
@@ -54,13 +54,13 @@
             // destinationLabel
             // 
             this.destinationLabel.AutoSize = true;
-            this.destinationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
-            this.destinationLabel.Location = new System.Drawing.Point(69, 7);
+            this.destinationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.destinationLabel.Location = new System.Drawing.Point(66, 7);
             this.destinationLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.destinationLabel.Name = "destinationLabel";
-            this.destinationLabel.Size = new System.Drawing.Size(164, 13);
+            this.destinationLabel.Size = new System.Drawing.Size(101, 13);
             this.destinationLabel.TabIndex = 6;
-            this.destinationLabel.Text = "Destination med långt namn";
+            this.destinationLabel.Text = "C:\\Picto\\WmfSV";
             // 
             // flowLayoutPanel1
             // 
@@ -68,6 +68,7 @@
             this.flowLayoutPanel1.Controls.Add(this.destinationLabel);
             this.flowLayoutPanel1.Controls.Add(this.changeDestinationLink);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(0, 7, 0, 0);
             this.flowLayoutPanel1.Size = new System.Drawing.Size(380, 26);

@@ -37,13 +37,12 @@ namespace PictogramUpdater
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusProgressBar = new System.Windows.Forms.ToolStripProgressBar();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.overwriteCheckbox = new System.Windows.Forms.CheckBox();
             this.soundCheckbox = new System.Windows.Forms.CheckBox();
             this.clearTextCheckbox = new System.Windows.Forms.CheckBox();
             this.updateLinkLabel = new System.Windows.Forms.LinkLabel();
             this.languagesComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.overwriteCheckbox = new System.Windows.Forms.CheckBox();
             this.logTextbox = new System.Windows.Forms.TextBox();
             this.installButton = new System.Windows.Forms.Button();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
@@ -52,9 +51,17 @@ namespace PictogramUpdater
             this.soundDirectoryChooser = new PictogramUpdater.DirectoryChooser();
             this.plainTextDirectoryChooser = new PictogramUpdater.DirectoryChooser();
             this.wmfDirectoryChooser = new PictogramUpdater.DirectoryChooser();
+            this.label4 = new System.Windows.Forms.Label();
+            this.wmfProgressBar = new System.Windows.Forms.ProgressBar();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.versionLabel = new System.Windows.Forms.Label();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox1.SuspendLayout();
             this.statusStrip.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
+            this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // usernameTextbox
@@ -82,7 +89,7 @@ namespace PictogramUpdater
             this.groupBox1.Controls.Add(this.usernameTextbox);
             this.groupBox1.Location = new System.Drawing.Point(12, 62);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(308, 176);
+            this.groupBox1.Size = new System.Drawing.Size(201, 94);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Inloggningsuppgifter";
@@ -120,16 +127,16 @@ namespace PictogramUpdater
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel,
             this.statusProgressBar});
-            this.statusStrip.Location = new System.Drawing.Point(0, 524);
+            this.statusStrip.Location = new System.Drawing.Point(0, 785);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(786, 22);
+            this.statusStrip.Size = new System.Drawing.Size(978, 22);
             this.statusStrip.TabIndex = 5;
             this.statusStrip.Text = "statusStrip";
             // 
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(669, 17);
+            this.statusLabel.Size = new System.Drawing.Size(861, 17);
             this.statusLabel.Spring = true;
             this.statusLabel.Text = "Klar";
             this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -140,53 +147,48 @@ namespace PictogramUpdater
             this.statusProgressBar.Size = new System.Drawing.Size(100, 16);
             this.statusProgressBar.Click += new System.EventHandler(this.StatusProgressBar_Click);
             // 
-            // groupBox2
+            // overwriteCheckbox
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.soundDirectoryChooser);
-            this.groupBox2.Controls.Add(this.overwriteCheckbox);
-            this.groupBox2.Controls.Add(this.soundCheckbox);
-            this.groupBox2.Controls.Add(this.plainTextDirectoryChooser);
-            this.groupBox2.Controls.Add(this.clearTextCheckbox);
-            this.groupBox2.Controls.Add(this.wmfDirectoryChooser);
-            this.groupBox2.Controls.Add(this.updateLinkLabel);
-            this.groupBox2.Controls.Add(this.languagesComboBox);
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(326, 62);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(448, 176);
-            this.groupBox2.TabIndex = 6;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Pictogram";
+            this.overwriteCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.overwriteCheckbox.AutoSize = true;
+            this.overwriteCheckbox.Location = new System.Drawing.Point(613, 12);
+            this.overwriteCheckbox.Name = "overwriteCheckbox";
+            this.overwriteCheckbox.Size = new System.Drawing.Size(147, 17);
+            this.overwriteCheckbox.TabIndex = 4;
+            this.overwriteCheckbox.Text = "Skriv över befintliga bilder";
+            this.overwriteCheckbox.UseVisualStyleBackColor = true;
+            this.overwriteCheckbox.Visible = false;
             // 
             // soundCheckbox
             // 
-            this.soundCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.soundCheckbox.AutoSize = true;
-            this.soundCheckbox.Location = new System.Drawing.Point(10, 121);
+            this.soundCheckbox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.soundCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.soundCheckbox.Location = new System.Drawing.Point(314, 411);
+            this.soundCheckbox.Margin = new System.Windows.Forms.Padding(0);
             this.soundCheckbox.Name = "soundCheckbox";
-            this.soundCheckbox.Size = new System.Drawing.Size(87, 17);
+            this.soundCheckbox.Size = new System.Drawing.Size(155, 29);
             this.soundCheckbox.TabIndex = 20;
             this.soundCheckbox.Text = "Installera ljud";
             this.soundCheckbox.UseVisualStyleBackColor = true;
             // 
             // clearTextCheckbox
             // 
-            this.clearTextCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.clearTextCheckbox.AutoSize = true;
-            this.clearTextCheckbox.Location = new System.Drawing.Point(10, 66);
+            this.clearTextCheckbox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.clearTextCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.clearTextCheckbox.Location = new System.Drawing.Point(314, 317);
+            this.clearTextCheckbox.Margin = new System.Windows.Forms.Padding(0);
             this.clearTextCheckbox.Name = "clearTextCheckbox";
-            this.clearTextCheckbox.Size = new System.Drawing.Size(161, 17);
+            this.clearTextCheckbox.Size = new System.Drawing.Size(307, 29);
             this.clearTextCheckbox.TabIndex = 14;
             this.clearTextCheckbox.Text = "Installera pictobilder i klartext";
             this.clearTextCheckbox.UseVisualStyleBackColor = true;
             // 
             // updateLinkLabel
             // 
-            this.updateLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.updateLinkLabel.AutoSize = true;
-            this.updateLinkLabel.Location = new System.Drawing.Point(367, 20);
+            this.updateLinkLabel.Location = new System.Drawing.Point(480, 150);
             this.updateLinkLabel.Name = "updateLinkLabel";
             this.updateLinkLabel.Size = new System.Drawing.Size(57, 13);
             this.updateLinkLabel.TabIndex = 1;
@@ -200,31 +202,22 @@ namespace PictogramUpdater
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.languagesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.languagesComboBox.FormattingEnabled = true;
-            this.languagesComboBox.Location = new System.Drawing.Point(59, 15);
+            this.languagesComboBox.Location = new System.Drawing.Point(334, 147);
+            this.languagesComboBox.MinimumSize = new System.Drawing.Size(140, 0);
             this.languagesComboBox.Name = "languagesComboBox";
-            this.languagesComboBox.Size = new System.Drawing.Size(302, 21);
+            this.languagesComboBox.Size = new System.Drawing.Size(140, 21);
             this.languagesComboBox.TabIndex = 0;
             this.languagesComboBox.SelectedIndexChanged += new System.EventHandler(this.LanguageComboBox_Change);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 19);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(329, 119);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.Size = new System.Drawing.Size(68, 25);
             this.label1.TabIndex = 1;
             this.label1.Text = "Språk";
-            // 
-            // overwriteCheckbox
-            // 
-            this.overwriteCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.overwriteCheckbox.AutoSize = true;
-            this.overwriteCheckbox.Location = new System.Drawing.Point(243, 66);
-            this.overwriteCheckbox.Name = "overwriteCheckbox";
-            this.overwriteCheckbox.Size = new System.Drawing.Size(147, 17);
-            this.overwriteCheckbox.TabIndex = 4;
-            this.overwriteCheckbox.Text = "Skriv över befintliga bilder";
-            this.overwriteCheckbox.UseVisualStyleBackColor = true;
             // 
             // logTextbox
             // 
@@ -232,23 +225,24 @@ namespace PictogramUpdater
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.logTextbox.BackColor = System.Drawing.Color.White;
-            this.logTextbox.Location = new System.Drawing.Point(12, 244);
+            this.logTextbox.Location = new System.Drawing.Point(12, 665);
             this.logTextbox.Multiline = true;
             this.logTextbox.Name = "logTextbox";
             this.logTextbox.ReadOnly = true;
             this.logTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.logTextbox.Size = new System.Drawing.Size(762, 248);
+            this.logTextbox.Size = new System.Drawing.Size(408, 117);
             this.logTextbox.TabIndex = 7;
             this.logTextbox.TabStop = false;
             this.logTextbox.Text = "1. Fyll i användarnamn och lösenord.\r\n2. Klicka på Bläddra för att välja målkatal" +
                 "og.\r\n3. Klicka på Installera för att ladda ner pictogram.";
+            this.logTextbox.Visible = false;
             // 
             // installButton
             // 
-            this.installButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.installButton.Location = new System.Drawing.Point(699, 498);
+            this.installButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.installButton.Location = new System.Drawing.Point(336, 506);
             this.installButton.Name = "installButton";
-            this.installButton.Size = new System.Drawing.Size(75, 23);
+            this.installButton.Size = new System.Drawing.Size(279, 45);
             this.installButton.TabIndex = 8;
             this.installButton.Text = "&Installera";
             this.installButton.UseVisualStyleBackColor = true;
@@ -257,30 +251,32 @@ namespace PictogramUpdater
             // zipButton
             // 
             this.zipButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.zipButton.Location = new System.Drawing.Point(608, 498);
+            this.zipButton.Location = new System.Drawing.Point(717, 35);
             this.zipButton.Name = "zipButton";
             this.zipButton.Size = new System.Drawing.Size(85, 23);
             this.zipButton.TabIndex = 9;
             this.zipButton.Text = "&Ladda ner zip";
             this.zipButton.UseVisualStyleBackColor = true;
+            this.zipButton.Visible = false;
             this.zipButton.Click += new System.EventHandler(this.ZipButton_Click);
             // 
             // getZipUrlButton
             // 
             this.getZipUrlButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.getZipUrlButton.Location = new System.Drawing.Point(504, 498);
+            this.getZipUrlButton.Location = new System.Drawing.Point(613, 35);
             this.getZipUrlButton.Name = "getZipUrlButton";
             this.getZipUrlButton.Size = new System.Drawing.Size(98, 23);
             this.getZipUrlButton.TabIndex = 10;
             this.getZipUrlButton.Text = "&Hämta zip-URL";
             this.getZipUrlButton.UseVisualStyleBackColor = true;
+            this.getZipUrlButton.Visible = false;
             this.getZipUrlButton.Click += new System.EventHandler(this.GetZipUrlButton_Click);
             // 
             // soundDirectoryChooser
             // 
             this.soundDirectoryChooser.DisplayDirectoryInput = false;
             this.soundDirectoryChooser.InstallPath = "C:\\Picto\\WmfSV";
-            this.soundDirectoryChooser.Location = new System.Drawing.Point(10, 144);
+            this.soundDirectoryChooser.Location = new System.Drawing.Point(336, 443);
             this.soundDirectoryChooser.Name = "soundDirectoryChooser";
             this.soundDirectoryChooser.Size = new System.Drawing.Size(380, 26);
             this.soundDirectoryChooser.TabIndex = 13;
@@ -289,7 +285,7 @@ namespace PictogramUpdater
             // 
             this.plainTextDirectoryChooser.DisplayDirectoryInput = false;
             this.plainTextDirectoryChooser.InstallPath = "C:\\Picto\\WmfSV";
-            this.plainTextDirectoryChooser.Location = new System.Drawing.Point(10, 89);
+            this.plainTextDirectoryChooser.Location = new System.Drawing.Point(334, 349);
             this.plainTextDirectoryChooser.Name = "plainTextDirectoryChooser";
             this.plainTextDirectoryChooser.Size = new System.Drawing.Size(380, 26);
             this.plainTextDirectoryChooser.TabIndex = 12;
@@ -298,23 +294,102 @@ namespace PictogramUpdater
             // 
             this.wmfDirectoryChooser.DisplayDirectoryInput = false;
             this.wmfDirectoryChooser.InstallPath = "C:\\Picto";
-            this.wmfDirectoryChooser.Location = new System.Drawing.Point(10, 42);
+            this.wmfDirectoryChooser.Location = new System.Drawing.Point(334, 240);
             this.wmfDirectoryChooser.Name = "wmfDirectoryChooser";
             this.wmfDirectoryChooser.Size = new System.Drawing.Size(394, 29);
             this.wmfDirectoryChooser.TabIndex = 7;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(329, 212);
+            this.label4.Margin = new System.Windows.Forms.Padding(0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(204, 25);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Installera pictobilder";
+            // 
+            // wmfProgressBar
+            // 
+            this.wmfProgressBar.Location = new System.Drawing.Point(334, 269);
+            this.wmfProgressBar.Name = "wmfProgressBar";
+            this.wmfProgressBar.Size = new System.Drawing.Size(281, 23);
+            this.wmfProgressBar.TabIndex = 21;
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(140, 0);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(193, 13);
+            this.linkLabel1.TabIndex = 22;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "http://pictoonline.pictogram.se/contact";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.linkLabel1);
+            this.flowLayoutPanel1.Controls.Add(this.label5);
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(642, 760);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(336, 22);
+            this.flowLayoutPanel1.TabIndex = 23;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(65, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(69, 13);
+            this.label5.TabIndex = 24;
+            this.label5.Text = "Kontakta oss";
+            // 
+            // versionLabel
+            // 
+            this.versionLabel.AutoSize = true;
+            this.versionLabel.Location = new System.Drawing.Point(73, 0);
+            this.versionLabel.Name = "versionLabel";
+            this.versionLabel.Size = new System.Drawing.Size(60, 13);
+            this.versionLabel.TabIndex = 24;
+            this.versionLabel.Text = "Version 2.0";
+            // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.Controls.Add(this.versionLabel);
+            this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(842, 9);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(136, 20);
+            this.flowLayoutPanel2.TabIndex = 25;
             // 
             // PictogramInstallerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(786, 546);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(978, 807);
+            this.Controls.Add(this.flowLayoutPanel2);
+            this.Controls.Add(this.flowLayoutPanel1);
+            this.Controls.Add(this.wmfProgressBar);
+            this.Controls.Add(this.overwriteCheckbox);
+            this.Controls.Add(this.updateLinkLabel);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.languagesComboBox);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.getZipUrlButton);
+            this.Controls.Add(this.soundCheckbox);
             this.Controls.Add(this.zipButton);
             this.Controls.Add(this.logTextbox);
+            this.Controls.Add(this.clearTextCheckbox);
             this.Controls.Add(this.installButton);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.wmfDirectoryChooser);
+            this.Controls.Add(this.plainTextDirectoryChooser);
+            this.Controls.Add(this.soundDirectoryChooser);
             this.Name = "PictogramInstallerForm";
             this.Text = "Pictograminstalleraren";
             this.Load += new System.EventHandler(this.PictogramInstallerForm_Load);
@@ -323,8 +398,10 @@ namespace PictogramUpdater
             this.groupBox1.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
+            this.flowLayoutPanel2.ResumeLayout(false);
+            this.flowLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -340,7 +417,6 @@ namespace PictogramUpdater
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.ToolStripProgressBar statusProgressBar;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox logTextbox;
         private System.Windows.Forms.Button installButton;
         private System.Windows.Forms.LinkLabel verifyLabel;
@@ -356,6 +432,13 @@ namespace PictogramUpdater
         private DirectoryChooser wmfDirectoryChooser;
         private DirectoryChooser plainTextDirectoryChooser;
         private DirectoryChooser soundDirectoryChooser;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ProgressBar wmfProgressBar;
+        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label versionLabel;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
     }
 }
 

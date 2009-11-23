@@ -122,7 +122,7 @@ namespace PictogramUpdater {
             _languageProvider.RefreshLanguages();
             SetLanguageDataSource(_languageProvider.Languages);
 
-            SetStatus("Klar");
+            SetStatus("Redo");
             SetControlsEnabled(true);
             SetProgressBarStyle(ProgressBarStyle.Blocks);
             this._currentWorkingThread = null;
@@ -190,6 +190,15 @@ namespace PictogramUpdater {
                 this.statusProgressBar.ProgressBar.Maximum = max;
                 this.statusProgressBar.ProgressBar.Value = current;
             }
+
+            if (this.wmfProgressBar.InvokeRequired) {
+                this.wmfProgressBar.Invoke(new CurrentProgressCallback(SetCurrentProgress), new object[] { style, current, max });
+            } else {
+                this.wmfProgressBar.Style = style;
+                this.wmfProgressBar.Maximum = max;
+                this.wmfProgressBar.Value = current;
+            }
+
         }
 
         /// <summary>
@@ -225,7 +234,8 @@ namespace PictogramUpdater {
         /// <param name="e"></param>
         private void Form_Paint(object sender, PaintEventArgs e) {
             e.Graphics.FillRectangle(Brushes.White, new Rectangle(0, 0, this.Width, 50));
-            e.Graphics.DrawString("Pictograminstalleraren", new Font("Arial", 20), Brushes.SteelBlue, new PointF(10, 10));
+            e.Graphics.DrawString("Pictograminstalleraren", new Font("Arial", 20, FontStyle.Bold), Brushes.SteelBlue, new PointF(10, 10));
+            
             e.Graphics.DrawLine(Pens.Black, new Point(0, 50), new Point(this.Width, 50));
         }
 
@@ -239,6 +249,13 @@ namespace PictogramUpdater {
         }
 
         private void PictogramInstallerForm_Load(object sender, EventArgs e) {
+
+
+            if (System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed) {
+                this.versionLabel.Text =  "Version " + System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
+                this.versionLabel.Show();
+            }
+
             /* Handler för när formuläret stängs */
             Closing += PictogramInstallerForm_Closing;
 
@@ -262,7 +279,7 @@ namespace PictogramUpdater {
 
             if (_authenticationService.IsPictogramManagerInstalled()) {
                 groupBox1.Visible = false;
-                groupBox2.Location = new Point(12, 62);
+
             }
 
             usernameTextbox.Text = _authenticationService.GetUsername();
@@ -298,7 +315,16 @@ namespace PictogramUpdater {
 
             string soundPath = _config.GetPictoSoundInstallPath(_languageSelection.Language);
             soundDirectoryChooser.languageChanged(soundPath);
-           
+
+
+            if (_languageSelection.Language.IsSwedish) {
+                soundDirectoryChooser.Show();
+                soundCheckbox.Show();
+            } else {
+                
+                soundDirectoryChooser.Hide();
+                soundCheckbox.Hide();
+            }
         }
 
         /// <summary>
@@ -371,7 +397,7 @@ namespace PictogramUpdater {
             }
             if (this._currentWorkingThread != null) {
                 this._currentWorkingThread.Abort();
-                SetStatus("Nedladdning avbruten!");
+                SetStatus("Nedladdning avbruten");
                 SetControlsEnabled(true);
             }
         }
@@ -385,5 +411,11 @@ namespace PictogramUpdater {
             this._currentWorkingThread = new Thread(new ThreadStart(GetZipUrl));
             this._currentWorkingThread.Start();
         }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            
+            System.Diagnostics.Process.Start("http://pictoonline.pictogram.se/contact");
+        }
+
     }
 }

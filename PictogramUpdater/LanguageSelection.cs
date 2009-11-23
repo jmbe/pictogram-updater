@@ -33,5 +33,12 @@ namespace PictogramUpdater {
             get;
             private set;
         }
+
+        /// <summary>
+        /// Swedish is special since it is the only language which should have sounds enabled.
+        /// </summary>
+        public bool IsSwedish {
+            get { return "SV".Equals(Code); }
+        }
     }
 }
