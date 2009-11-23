@@ -191,7 +191,7 @@ namespace PictogramUpdater {
         public string ToFilename(InstallationType installationType) {
 
             if (InstallationType.SOUND.Equals(installationType)) {
-                return CategoryCode + ".wav";
+                return FullCode + ".wav";
             }
 
             if (InstallationType.PLAIN_TEXT.Equals(installationType)) {
