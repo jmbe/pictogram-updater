@@ -36,15 +36,17 @@ namespace PictogramUpdater {
     /// http://msdn2.microsoft.com/en-us/library/ms171728.aspx.
     /// </summary>
     public partial class PictogramInstallerForm : Form {
-        private LanguageProvider _languageProvider;
-        private DownloadManager _downloader;
+        private LanguageProvider languageProvider;
+        private DownloadManager downloadManager;
         private Thread _currentWorkingThread;
         private AuthenticationService _authenticationService;
         private Config _config;
         private LanguageSelection _languageSelection;
-        private InstallationManager _manager;
+        private InstallationManager installationManager;
         private CategoryRepository categoryRepository;
         private CategoryTranslationService categoryTranslationService;
+        private DownloadListManager downloadListManager;
+        private PictosysWebService pictosysWebService;
 
         public PictogramInstallerForm() {
             InitializeComponent();
@@ -58,15 +60,15 @@ namespace PictogramUpdater {
             var language = _languageSelection.Language;
             _config.CreateOrUpdateWmfINI(language, wmfDirectoryChooser.InstallPath, plainTextDirectoryChooser.InstallPath);
             
-            _manager.Download(wmfDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, false, false, usernameTextbox.Text, passwordTextbox.Text);
+            installationManager.Download(wmfDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, false, false, usernameTextbox.Text, passwordTextbox.Text);
 
             if(clearTextCheckbox.Checked) {
-                _manager.Download(plainTextDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, true, false,
+                installationManager.Download(plainTextDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, true, false,
                                            usernameTextbox.Text, passwordTextbox.Text);
             }
 
             if(soundCheckbox.Checked) {
-                _manager.Download(soundDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, false, true,
+                installationManager.Download(soundDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, false, true,
                                            usernameTextbox.Text, passwordTextbox.Text);
                 _config.CreateOrUpdateWavIni(language, soundDirectoryChooser.InstallPath);
             }
@@ -82,7 +84,7 @@ namespace PictogramUpdater {
         private void DownloadZip() {
             SetControlsEnabled(false);
 
-            _manager.DownloadZip(wmfDirectoryChooser.InstallPath, usernameTextbox.Text, passwordTextbox.Text, _languageSelection.Language);
+            installationManager.DownloadZip(wmfDirectoryChooser.InstallPath, usernameTextbox.Text, passwordTextbox.Text, _languageSelection.Language);
 
             SetControlsEnabled(true);
             _currentWorkingThread = null;
@@ -95,8 +97,8 @@ namespace PictogramUpdater {
         private void GetZipUrl() {
             SetControlsEnabled(false);
 
-            _downloader.TargetPath = this.wmfDirectoryChooser.InstallPath;
-            _downloader.DownloadPictogramZipUrl(this.usernameTextbox.Text, this.passwordTextbox.Text, GetLanguage());
+            downloadManager.TargetPath = this.wmfDirectoryChooser.InstallPath;
+            downloadManager.DownloadPictogramZipUrl(this.usernameTextbox.Text, this.passwordTextbox.Text, GetLanguage());
 
             SetControlsEnabled(true);
             this._currentWorkingThread = null;
@@ -108,7 +110,7 @@ namespace PictogramUpdater {
         private void CheckLogin() {
             SetControlsEnabled(false);
             SetStatus("Kontrollerar kontouppgifter...");
-            _downloader.checkLogin(this.usernameTextbox.Text, this.passwordTextbox.Text);
+            downloadManager.checkLogin(this.usernameTextbox.Text, this.passwordTextbox.Text);
             SetControlsEnabled(true);
             this._currentWorkingThread = null;
         }
@@ -121,8 +123,8 @@ namespace PictogramUpdater {
             SetControlsEnabled(false);
             SetStatus("Laddar ner språk...");
 
-            _languageProvider.RefreshLanguages();
-            SetLanguageDataSource(_languageProvider.Languages);
+            languageProvider.RefreshLanguages();
+            SetLanguageDataSource(languageProvider.Languages);
 
             SetStatus("Redo");
             SetControlsEnabled(true);
@@ -269,20 +271,12 @@ namespace PictogramUpdater {
             /* Handler för när formuläret stängs */
             Closing += PictogramInstallerForm_Closing;
 
+            createDependencyGraph();
+
             /* Ladda sparade inställningar */
-
+            usernameTextbox.Text = _authenticationService.GetUsername();
+            passwordTextbox.Text = _authenticationService.GetPassword();
             
-            
-            _languageSelection = new LanguageSelection();
-            _authenticationService = new AuthenticationService();
-
-
-            this.categoryRepository = new CategoryRepository();
-            this.categoryTranslationService = new CategoryTranslationService();
-
-            _config = new Config(this.categoryRepository, this.categoryTranslationService);
-
-
 
             /* Installationskatalog för wmf */
             this.wmfDirectoryChooser.InstallPath = _config.GetDefaultPath(_languageSelection.Language);
@@ -296,30 +290,51 @@ namespace PictogramUpdater {
 
             if (_authenticationService.IsPictogramLibraryInstalled()) {
                 groupBox1.Visible = false;
-
             }
 
-            usernameTextbox.Text = _authenticationService.GetUsername();
-            passwordTextbox.Text = _authenticationService.GetPassword();
+           
 
             /* Ladda ner språk */
-            _languageProvider = new LanguageProvider();
-            _languageProvider.LogMessage += LogMessage;
+            languageProvider.LogMessage += LogMessage;
             _currentWorkingThread = new Thread(RefreshLanguages);
             _currentWorkingThread.Start();
 
-            _manager = new InstallationManager(_config);
-            _manager.LogMessage += LogMessage;
-            _manager.ProgressChanged += SetCurrentProgress;
-            _manager.StatusChanged += SetStatus;
+            
+            installationManager.LogMessage += LogMessage;
+            installationManager.ProgressChanged += SetCurrentProgress;
+            installationManager.StatusChanged += SetStatus;
+
 
             /* Klass att använda för att kommunicera med webservice. */
-            _downloader = new PictogramUpdater.DownloadManager(_languageProvider);
-            _downloader.LogMessage += LogMessage;
-            _downloader.ProgressChanged += SetCurrentProgress;
-            _downloader.StatusChanged += SetStatus;
+            downloadManager.LogMessage += LogMessage;
+            downloadManager.ProgressChanged += SetCurrentProgress;
+            downloadManager.StatusChanged += SetStatus;
 
             _languageSelection.LanguageChanged += LanguageChanged;
+        }
+
+        /// <summary>
+        /// Should be refactored to use proper dependency injection.
+        /// </summary>
+        private void createDependencyGraph() {
+
+            this._languageSelection = new LanguageSelection();
+            this._authenticationService = new AuthenticationService();
+
+            this.categoryRepository = new CategoryRepository();
+            this.categoryTranslationService = new CategoryTranslationService();
+
+            this._config = new Config(this.categoryRepository, this.categoryTranslationService);
+
+
+            this.languageProvider = new LanguageProvider();
+
+            this.downloadManager = new DownloadManager(languageProvider);
+
+            this.pictosysWebService = new PictosysWebService();
+            this.downloadListManager = new DownloadListManager(this.pictosysWebService);
+
+            this.installationManager = new InstallationManager(this._config, this.downloadListManager);
         }
 
         private void LanguageChanged() {
@@ -400,7 +415,7 @@ namespace PictogramUpdater {
 
         private void LanguageComboBox_Change(object sender, EventArgs e) {
             var languageName = languagesComboBox.SelectedItem as string;
-            _languageSelection.Language = new Language(_languageProvider.GetLocale(languageName), languageName);
+            _languageSelection.Language = new Language(languageProvider.GetLocale(languageName), languageName);
         }
 
         /// <summary>
@@ -413,8 +428,8 @@ namespace PictogramUpdater {
         }
 
         private void abortDownload() {
-            if (_manager.CurrentWorkingThread != null) {
-                _manager.CurrentWorkingThread.Abort();
+            if (installationManager.CurrentWorkingThread != null) {
+                installationManager.CurrentWorkingThread.Abort();
             }
             if (this._currentWorkingThread != null) {
                 this._currentWorkingThread.Abort();

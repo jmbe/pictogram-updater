@@ -4,6 +4,13 @@ using System.IO;
 
 namespace PictogramUpdater {
     internal class DownloadListManager {
+
+        private PictosysWebService pictosysWebService;
+
+        public DownloadListManager(PictosysWebService pictosysWebService) {
+            this.pictosysWebService = pictosysWebService;
+        }
+
         /// <summary>
         /// Download phrases from service and then create a list of PictogramEntries from it.
         /// The list should be filtered from files already existing on disk
@@ -21,17 +28,17 @@ namespace PictogramUpdater {
 
         
 
-        private static List<PictogramEntry> GetEntries(string username, string password, Language language) {
-            var entries = new List<PictogramEntry>();
-            var service = new PictosysWebService();
-            var phrases = service.getPictogramPhrasesByLocale(username, password, language.Code.ToLower());
+        private List<PictogramEntry> GetEntries(string username, string password, Language language) {
+            var result = new List<PictogramEntry>();
+            
+            var phrases = this.pictosysWebService.getPictogramPhrasesByLocale(username, password, language.Code.ToLower());
 
             for (var i = 0; i + 1 < phrases.Length; i = i + 2) {
                 var name = phrases[i];
                 var code = phrases[i + 1];
-                entries.Add(new PictogramEntry(code, name));
+                result.Add(new PictogramEntry(code, name));
             }
-            return entries;
+            return result;
         }
 
         public List<PictogramEntry> FilterEntries(Config config, Language language,

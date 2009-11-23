@@ -14,31 +14,37 @@ namespace PictogramUpdater {
 
         public Thread CurrentWorkingThread { get; set; }
 
-        public InstallationManager(Config config) {
+        public InstallationManager(Config config, DownloadListManager downloadListManager) {
             _config = config;
-            _downloadListManager = new DownloadListManager();
+            _downloadListManager = downloadListManager;
         }
 
-        public void Download(string targetPath, Language language, bool overwrite, bool clearText, bool sound,
+        public void Download(string targetPath, Language language, bool overwrite, bool plainText, bool sound,
                              string username, string password) {
             var completeList = _downloadListManager.GetEntriesToInstall(username, password, language, _config);
             var downloadList = completeList;
             if (!overwrite) {
                 downloadList = _downloadListManager.FilterEntries(_config, language,
-                                                                  downloadList, clearText, sound);
+                                                                  downloadList, plainText, sound);
             }
 
             var downloadManager = GetDownloadManager(targetPath, username, password, language);
             downloadManager.DownloadList = downloadList;
-            downloadManager.ClearText = clearText;
+            downloadManager.ClearText = plainText;
             downloadManager.Sound = sound;
 
+            LogMessage("Startar delinstallation.");
+            
             CurrentWorkingThread = new Thread(new ThreadStart(downloadManager.Download));
             CurrentWorkingThread.Start();
             CurrentWorkingThread.Join();
 
-            if (!clearText && ! sound) {
+            LogMessage("Delinstallation klar.");
+
+            if (!plainText && ! sound) {
+                LogMessage("Uppdaterar ini-fil");
                 _config.CommitEntries(language, completeList);
+                LogMessage("Ini-fil uppdaterad");
             }
         }
 
