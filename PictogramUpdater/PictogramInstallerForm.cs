@@ -191,6 +191,7 @@ namespace PictogramUpdater {
                 this.statusProgressBar.ProgressBar.Value = current;
             }
 
+            /*
             if (this.wmfProgressBar.InvokeRequired) {
                 this.wmfProgressBar.Invoke(new CurrentProgressCallback(SetCurrentProgress), new object[] { style, current, max });
             } else {
@@ -198,6 +199,7 @@ namespace PictogramUpdater {
                 this.wmfProgressBar.Maximum = max;
                 this.wmfProgressBar.Value = current;
             }
+             */
 
         }
 
@@ -255,6 +257,7 @@ namespace PictogramUpdater {
 
         private void PictogramInstallerForm_Load(object sender, EventArgs e) {
 
+            this.logTextbox.ScrollBars = ScrollBars.None;
 
             if (System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed) {
                 this.versionLabel.Text =  "Version " + System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
@@ -340,9 +343,7 @@ namespace PictogramUpdater {
         /// <param name="e"></param>
         private void PictogramInstallerForm_Closing(object sender, CancelEventArgs e) {
             try {
-                if (_currentWorkingThread != null) {
-                    _currentWorkingThread.Abort();
-                }
+                abortDownload();
 
                 /* Spara inställningar */
                 _authenticationService.SaveUsername(usernameTextbox.Text);
@@ -368,6 +369,9 @@ namespace PictogramUpdater {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void InstallButton_Click(object sender, EventArgs e) {
+
+            this.logTextbox.ScrollBars = ScrollBars.Both;
+
             this._currentWorkingThread = new Thread(new ThreadStart(Download));
             _currentWorkingThread.Start();
         }
@@ -396,7 +400,11 @@ namespace PictogramUpdater {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void StatusProgressBar_Click(object sender, EventArgs e) {
-            if(_manager.CurrentWorkingThread != null) {
+            abortDownload();
+        }
+
+        private void abortDownload() {
+            if (_manager.CurrentWorkingThread != null) {
                 _manager.CurrentWorkingThread.Abort();
             }
             if (this._currentWorkingThread != null) {

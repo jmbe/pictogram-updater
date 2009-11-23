@@ -50,7 +50,6 @@ namespace PictogramUpdater
             this.zipButton = new System.Windows.Forms.Button();
             this.getZipUrlButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.wmfProgressBar = new System.Windows.Forms.ProgressBar();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label5 = new System.Windows.Forms.Label();
@@ -223,7 +222,8 @@ namespace PictogramUpdater
             // logTextbox
             // 
             this.logTextbox.BackColor = System.Drawing.Color.White;
-            this.logTextbox.Location = new System.Drawing.Point(12, 301);
+            this.logTextbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.logTextbox.Location = new System.Drawing.Point(12, 406);
             this.logTextbox.Multiline = true;
             this.logTextbox.Name = "logTextbox";
             this.logTextbox.ReadOnly = true;
@@ -231,9 +231,6 @@ namespace PictogramUpdater
             this.logTextbox.Size = new System.Drawing.Size(449, 79);
             this.logTextbox.TabIndex = 7;
             this.logTextbox.TabStop = false;
-            this.logTextbox.Text = "1. Fyll i användarnamn och lösenord.\r\n2. Klicka på Bläddra för att välja målkatal" +
-                "og.\r\n3. Klicka på Installera för att ladda ner pictogram.";
-            this.logTextbox.Visible = false;
             // 
             // installButton
             // 
@@ -278,13 +275,6 @@ namespace PictogramUpdater
             this.label4.Size = new System.Drawing.Size(204, 25);
             this.label4.TabIndex = 11;
             this.label4.Text = "Installera pictobilder";
-            // 
-            // wmfProgressBar
-            // 
-            this.wmfProgressBar.Location = new System.Drawing.Point(12, 420);
-            this.wmfProgressBar.Name = "wmfProgressBar";
-            this.wmfProgressBar.Size = new System.Drawing.Size(449, 45);
-            this.wmfProgressBar.TabIndex = 21;
             // 
             // linkLabel1
             // 
@@ -379,7 +369,6 @@ namespace PictogramUpdater
             this.ClientSize = new System.Drawing.Size(854, 538);
             this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(this.wmfProgressBar);
             this.Controls.Add(this.overwriteCheckbox);
             this.Controls.Add(this.updateLinkLabel);
             this.Controls.Add(this.label4);
@@ -441,7 +430,6 @@ namespace PictogramUpdater
         private DirectoryChooser plainTextDirectoryChooser;
         private DirectoryChooser soundDirectoryChooser;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ProgressBar wmfProgressBar;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Label label5;
