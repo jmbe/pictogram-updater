@@ -8,9 +8,13 @@ using AMS.Profile;
 namespace PictogramUpdater {
     internal class Config {
         private List<PictogramEntry> _queue;
+        private CategoryRepository categoryRepository;
+        private CategoryTranslationService categoryTranslationService;
 
-        public Config() {
+        public Config(CategoryRepository categoryRepository, CategoryTranslationService categoryTranslationService) {
             _queue = new List<PictogramEntry>();
+            this.categoryRepository = categoryRepository;
+            this.categoryTranslationService = categoryTranslationService;
         }
 
         public bool IsPictoWmfInstalled(Language language) {
@@ -26,8 +30,7 @@ namespace PictogramUpdater {
             return Environment.GetEnvironmentVariable("WINDIR") + @"\PicWav" + language.Code + @".ini";
         }
 
-        public string GetPictoInstallPath(Language language
-            ) {
+        public string GetPictoInstallPath(Language language) {
             Profile settings = new Ini(GetPictoWmfIniFilePath(language));
             var path = settings.GetValue("ProgDir", "Dir") as string;
             return path ?? GetDefaultPath(language);
@@ -39,14 +42,13 @@ namespace PictogramUpdater {
             return path ?? GetDefaultPlainTextPath(language);
         }
 
-        public string GetPictoSoundInstallPath(Language language
-            ) {
+        public string GetPictoSoundInstallPath(Language language) {
             Profile settings = new Ini(GetPictoWavIniFilePath(language));
             var path = settings.GetValue("ProgDir", "Dir") as string;
             return path ?? GetDefaultSoundPath(language);
         }
 
-        public void CreateOrUpdateWmfINI(Language language, string installPath, string clearTextInstallPath) {
+        public void CreateOrUpdateWmfINI(Language language, string installPath, string plainTextInstallPath) {
             if (!IsPictoWmfInstalled(language)) {
                 CreateNewIniFile(language);
             }
@@ -56,7 +58,7 @@ namespace PictogramUpdater {
             Profile profile = new Ini(GetPictoWmfIniFilePath(language));
 
             profile.SetValue("ProgDir", "Dir", installPath);
-            profile.SetValue("ProgDir", "PlainTextDir", clearTextInstallPath);
+            profile.SetValue("ProgDir", "PlainTextDir", plainTextInstallPath);
             
             if (profile.GetValue("ProgDir", "Extension") == null) {
                 profile.SetValue("ProgDir", "Extension", "WMF");
@@ -75,13 +77,12 @@ namespace PictogramUpdater {
             }
 
             //Update categories
-            var repository = new CategoryRepository();
-            var translationService = new CategoryTranslationService();
-            var categories = repository.FindAll();
+            
+            var categories = this.categoryRepository.FindAll();
             profile.SetValue("Grupper", "Antal", categories.Count);
             profile.RemoveSection("Grupper");
             foreach (var category in categories) {
-                var translation = translationService.Translate(category, language);
+                var translation = this.categoryTranslationService.Translate(category, language);
                 profile.SetValue("Grupper", category.Index.ToString(), translation);
                 profile.SetValue(translation, "Antal", "0");
                 profile.SetValue(translation, "Kod", category.Code);
@@ -127,16 +128,14 @@ namespace PictogramUpdater {
         }
 
         public void CommitEntries(Language language, List<PictogramEntry> entries) {
-            var translationService = new CategoryTranslationService();
-            var repository = new CategoryRepository();
             Profile profile = new Ini(GetPictoWmfIniFilePath(language));
             Console.WriteLine("Commiting " + entries.Count + " Entries");
 
             var categoryCounts = new Dictionary<Category, int>();
             foreach (var entry in entries) {
-                var category = repository.FindByCode(entry.Code);
+                var category = this.categoryRepository.FindByCode(entry.Code);
                 var categoryCount = 0;
-                var categoryTranslation = translationService.Translate(category, language);
+                var categoryTranslation = this.categoryTranslationService.Translate(category, language);
                 if (categoryCounts.ContainsKey(category)) {
                     categoryCount = categoryCounts[category];
                 }
@@ -145,7 +144,7 @@ namespace PictogramUpdater {
                 categoryCounts[category] = categoryCount;
             }
             foreach (var category in categoryCounts.Keys) {
-                profile.SetValue(translationService.Translate(category, language), "Antal", categoryCounts[category]);
+                profile.SetValue(categoryTranslationService.Translate(category, language), "Antal", categoryCounts[category]);
             }
         }
 

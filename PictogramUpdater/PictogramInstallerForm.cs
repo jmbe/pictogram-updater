@@ -43,6 +43,8 @@ namespace PictogramUpdater {
         private Config _config;
         private LanguageSelection _languageSelection;
         private InstallationManager _manager;
+        private CategoryRepository categoryRepository;
+        private CategoryTranslationService categoryTranslationService;
 
         public PictogramInstallerForm() {
             InitializeComponent();
@@ -269,9 +271,16 @@ namespace PictogramUpdater {
 
             /* Ladda sparade inställningar */
 
+            
+            
             _languageSelection = new LanguageSelection();
             _authenticationService = new AuthenticationService();
-            _config = new Config();
+
+
+            this.categoryRepository = new CategoryRepository();
+            this.categoryTranslationService = new CategoryTranslationService();
+
+            _config = new Config(this.categoryRepository, this.categoryTranslationService);
 
 
 
