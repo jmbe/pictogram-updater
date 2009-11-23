@@ -9,9 +9,7 @@ namespace PictogramUpdater {
         private readonly Profile _settings;
 
         public AuthenticationService() {
-            var applicationDataDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\PictogramUpdater";
-            var settingsFile = applicationDataDirectory + @"\PictogramUpdater.ini";
-            Console.WriteLine(settingsFile);
+            var settingsFile = Environment.GetEnvironmentVariable("WINDIR") + @"\PictoOn.ini";;
             _settings = new Ini(settingsFile);
         }
 
