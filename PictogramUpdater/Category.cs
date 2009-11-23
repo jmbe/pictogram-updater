@@ -15,13 +15,13 @@ namespace PictogramUpdater {
             for (var index = 1; index <= 26; index++) {
                 var code = "";
                 if (index <= 8) {
-                    code = ((char) ('a' + index - 1)).ToString();
+                    code = ((char)('a' + index - 1)).ToString();
                 } else if (index > 21 && index < 25) {
-                    code = ((char) ('a' + index + 1)).ToString();
+                    code = ((char)('a' + index + 1)).ToString();
                 } else if (index >= 25) {
-                    code = "a" + ((char) ('a' + index - 25));
+                    code = "a" + ((char)('a' + index - 25));
                 } else {
-                    code = ((char) ('a' + index)).ToString();
+                    code = ((char)('a' + index)).ToString();
                 }
 
                 _categories.Add(new Category(index, code));
@@ -54,28 +54,453 @@ namespace PictogramUpdater {
 
         public CategoryTranslationService() {
             _translations = new Dictionary<string, string[]> {
-                                                                 {
-                                                                     "SV", new[] {
-                                                                                     "Människor", "Kroppsdelar",
-                                                                                     "Kläder och personliga tillhörigheter"
-                                                                                     ,
-                                                                                     "Inventarier", "Kök",
-                                                                                     "Badrum", "Mat",
-                                                                                     "Frukt och grönsaker",
-                                                                                     "Djur", "Leksaker",
-                                                                                     "Trädgård",
-                                                                                     "Väder", "Musik", "Fritid",
-                                                                                     "Känslor", "Yrken",
-                                                                                     "Transportmedel",
-                                                                                     "Lokaliteter", "Aktiviteter"
-                                                                                     ,
-                                                                                     "Högtider", "Egenskaper",
-                                                                                     "Läge riktning", "Antal",
-                                                                                     "Diverse",
-                                                                                     "TV-program", "Frågeord"
-                                                                                 }
-                                                                     }
-                                                             };
+																     {
+																	     "SV", new[] {
+																					     "Människor", "Kroppsdelar",
+																					     "Kläder och personliga tillhörigheter"
+																					     ,
+																					     "Inventarier", "Kök",
+																					     "Badrum", "Mat",
+																					     "Frukt och grönsaker",
+																					     "Djur", "Leksaker",
+																					     "Trädgård",
+																					     "Väder", "Musik", "Fritid",
+																					     "Känslor", "Yrken",
+																					     "Transportmedel",
+																					     "Lokaliteter", "Aktiviteter"
+																					     ,
+																					     "Högtider", "Egenskaper",
+																					     "Läge riktning", "Antal",
+																					     "Diverse",
+																					     "TV-program", "Frågeord"
+																				     }
+																	     },
+
+
+																	     { "UK", new[] {
+																		        "People",
+                                                                                "Parts of the body",
+                                                                                "Clothes Belongings",
+                                                                                "Effects",
+                                                                                "Kitchen",
+                                                                                "Bathroom",
+                                                                                "Food",
+                                                                                "Fruit Vegetables",
+                                                                                "Animals",
+                                                                                "Toys",
+                                                                                "Garden",
+                                                                                "Weather",
+                                                                                "Music",
+                                                                                "Leisure time",
+                                                                                "Feelings",
+                                                                                "Professions",
+                                                                                "Means of transportation",
+                                                                                "Premises",
+                                                                                "Activities",
+                                                                                "Festivities",
+                                                                                "Qualities",
+                                                                                "Position Direction",
+                                                                                "Numbers",
+                                                                                "Various",
+                                                                                "TV-programs",
+                                                                                "Questions"
+																	     }
+																	     },
+
+																	     
+
+																	     { "DE", new[] {
+																		     "Menschen",
+																		    "Körperteile",
+																		    "Kleidung und persönliches Eigentum",
+																		    "Einrichtung",
+																		    "Küche",
+																		    "Badezimmer",
+																		    "Essen",
+																		    "Obst und Gemüse",
+																		    "Tiere",
+																		    "Spielzeug",
+																		    "Garten",
+																		    "Wetter",
+																		    "Musik",
+																		    "Freizeit",
+																		    "Gefühle",
+																		    "Berufe",
+																		    "Transportmittel",
+																		    "Örtlichkeiten",
+																		    "Aktivitäten",
+																		    "Feste",
+																		    "Eigenschaften",
+																		    "Richtung",
+																		    "Anzahl",
+																		    "Verschiedenes",
+																		    "Fernsehprogramm",
+																		    "Fragewörter"
+																	     }
+																	     },
+
+																	     { "PL", new[] {
+																		     "Postacie",
+																		    "Części ciała",
+																		    "Odzież Rzeczy osobiste",
+																		    "Przedmioty z otoczenia",
+																		    "Kuchnia",
+																		    "Łazienka",
+																		    "Żywność",
+																		    "Owoce Warzywa",
+																		    "Zwierzęta",
+																		    "Zabawki",
+																		    "Ogród",
+																		    "Pogoda",
+																		    "Muzyka",
+																		    "Sport Czas relaksu",
+																		    "Uczucia",
+																		    "Zawody",
+																		    "Środki transportu",
+																		    "Miejsca",
+																		    "Czynności",
+																		    "Uroczystości Święta",
+																		    "Właściwości Cechy",
+																		    "Pozycje Kierunki",
+																		    "Liczby",
+																		    "Różne",
+																		    "Programy TV",
+																		    "Pytania"
+																	     }
+																	     },
+
+																	     { "DK", new[] {
+																		     "Mennesker",
+																		    "Kropsdele",
+																		    "Tøj og personligt tilbehør",
+																		    "Inventar",
+																		    "Køkken",
+																		    "Badeværelse",
+																		    "Mad",
+																		    "Frugt og grønsager",
+																		    "Dyr",
+																		    "Legetøj",
+																		    "Have",
+																		    "Vejret",
+																		    "Musik",
+																		    "Fritid",
+																		    "Følelser",
+																		    "Erhverv",
+																		    "Transportmidler",
+																		    "Lokaliteter",
+																		    "Aktiviteter",
+																		    "Højtider",
+																		    "Egenskaber",
+																		    "Vej retning",
+																		    "Antal",
+																		    "Diverse",
+																		    "TV-program",
+																		    "Spørgeord"
+																	     }},
+
+																	     {"ES", new [] {
+																	        "Personas",
+																	        "Partes del cuerpo",
+																	        "Ropas y pertenencias",
+																	        "Enseres",
+																	        "Cocina",
+																	        "Baño",
+																	        "Alimentos",
+																	        "Frutas y hortalizas",
+																	        "Animales",
+																	        "Juguetes",
+																	        "Jardín",
+																	        "Tiempo",
+																	        "Música",
+																	        "Ocio",
+																	        "Sentimientos",
+																	        "Profesiones",
+																	        "Medios de transporte",
+																	        "Lugares",
+																	        "Actividades",
+																	        "Fiestas",
+																	        "Características",
+																	        "Posición dirección",
+																	        "Cantidad",
+																	        "Varios",
+																	        "Programas televisivos",
+																	        "Interrogativas"
+    																	 
+																	     }},
+
+
+																	     {"FI", new[] {
+																		    "Ihmiset",
+																		    "Ruumiinosat",
+																		    "Henkkohttavarat",
+																		    "Esineet",
+																		    "Keittiö",
+																		    "Kylpyhuone",
+																		    "Ruoka",
+																		    "Kasvikset",
+																		    "Eläimet",
+																		    "Leikkikalut",
+																		    "Puutarha",
+																		    "Sää",
+																		    "Musiikki",
+																		    "Vapaaaika",
+																		    "Tunteet",
+																		    "Ammatit",
+																		    "Kulkuvälineet",
+																		    "Paikat",
+																		    "Toiminnot",
+																		    "Juhlat",
+																		    "Omihaisuudet",
+																		    "Sijainti suunta",
+																		    "Lukumäärä",
+																		    "Sekalaista",
+																		    "TV-ohjelmat",
+																		    "Kysymyssanat"
+    																	 
+																	     }},
+
+
+																	     {"FR", new[] {
+      																        "Personnes",
+                                                                            "Parties du corps",
+                                                                            "Vêtements et effets personnels",
+                                                                            "Objets usuels",
+                                                                            "Cuisine",
+                                                                            "Salle de bains",
+                                                                            "Alimentation",
+                                                                            "Fruits et légumes",
+                                                                            "Animaux",
+                                                                            "Jouets",
+                                                                            "Jardinage",
+                                                                            "Temps",
+                                                                            "Musique",
+                                                                            "Loisirs",
+                                                                            "Sentiments",
+                                                                            "Métiers",
+                                                                            "Transports",
+                                                                            "Locaux",
+                                                                            "Activités",
+                                                                            "Fêtes",
+                                                                            "Qualités",
+                                                                            "Position direction",
+                                                                            "Nombres",
+                                                                            "Divers",
+                                                                            "Programme de télé",
+                                                                            "Questions"
+    																	 
+																	     }},
+
+																	     {"IS", new[] {
+																	        "Fólk",
+                                                                            "Líkamshlutar",
+                                                                            "Föt persónulegir munir",
+                                                                            "Innanstokksmunir",
+                                                                            "Eldhúsáhöld",
+                                                                            "Baðherbergi",
+                                                                            "Matur",
+                                                                            "Ávextir grænmeti",
+                                                                            "Dýr",
+                                                                            "Leikföng",
+                                                                            "Garður",
+                                                                            "Veður",
+                                                                            "Tónlist",
+                                                                            "Tómstundir",
+                                                                            "Tilfinningar",
+                                                                            "Starfsheiti",
+                                                                            "Samgöngutæki",
+                                                                            "Næsta umhverfi",
+                                                                            "Athafnir",
+                                                                            "Hátíðir",
+                                                                            "Eiginleikar",
+                                                                            "Staðsetning",
+                                                                            "Fjöldi",
+                                                                            "Ýmislegt",
+                                                                            "Sjónvarpsefni",
+                                                                            "Spurnarorð"
+    																	 
+																	     }},
+
+
+
+																	     {"IT", new[] {
+                                                                            "Persone",
+                                                                            "Parti del corpo",
+                                                                            "Vestiti ed effetti personali",
+                                                                            "Mobili ed accessori",
+                                                                            "Cucina",
+                                                                            "Bagno",
+                                                                            "Alimenti",
+                                                                            "Frutta e verdura",
+                                                                            "Animali",
+                                                                            "Giocattoli",
+                                                                            "Giardino",
+                                                                            "Tempo",
+                                                                            "Musica",
+                                                                            "Tempo libero",
+                                                                            "Sensazioni",
+                                                                            "Professioni",
+                                                                            "Mezzi di trasporto",
+                                                                            "Ambienti",
+                                                                            "Attività",
+                                                                            "Feste",
+                                                                            "Proprietà",
+                                                                            "Posizione direzione",
+                                                                            "Quantità",
+                                                                            "Varie",
+                                                                            "Programmi TV",
+                                                                            "Pronomi ed avverbi interrogativi"
+																	     }},
+
+																	     {"LE", new[] {
+																	        "Cilvēki",
+                                                                            "Ķermeņa daļas",
+                                                                            "Apģērbs",
+                                                                            "Priekšmeti",
+                                                                            "Virtuve",
+                                                                            "Vannas istaba",
+                                                                            "Ēdiens",
+                                                                            "Augļi Dārzeņi",
+                                                                            "Dzīvnieki",
+                                                                            "Rotaļlietas",
+                                                                            "Dārzs",
+                                                                            "Laika apstākļi",
+                                                                            "Mūzika",
+                                                                            "Brīvais laiks",
+                                                                            "Jūtas",
+                                                                            "Arodi",
+                                                                            "Transports",
+                                                                            "Telpas",
+                                                                            "Darbības",
+                                                                            "Svētki",
+                                                                            "Īpašības",
+                                                                            "Stāvoklis Virziens",
+                                                                            "Skaitļi",
+                                                                            "Dažādi",
+                                                                            "TV-programmas",
+                                                                            "Jautājumi"
+																	     }},
+
+																	     {"LT", new[] {
+																	        "Žmonės",
+                                                                            "Kūno dalys",
+                                                                            "Asmeniniai daiktai",
+                                                                            "Daiktai",
+                                                                            "Virtuvė",
+                                                                            "Vonios reikmenys",
+                                                                            "Maistas",
+                                                                            "Vaisiai Daržovės",
+                                                                            "Gyvūnai",
+                                                                            "Žaislai",
+                                                                            "Sodas",
+                                                                            "Gamtos reiškiniai",
+                                                                            "Muzikos instrumentai",
+                                                                            "Laisvalaikis",
+                                                                            "Jausmai",
+                                                                            "Profesijos",
+                                                                            "Transporto priemonės",
+                                                                            "Patalpos",
+                                                                            "Veikla",
+                                                                            "Šventės",
+                                                                            "Ypatybės",
+                                                                            "Kryptys",
+                                                                            "Skaičiai",
+                                                                            "Įvairūs",
+                                                                            "Televizijos programos",
+                                                                            "Klausimai"
+																	     }},
+
+																	     {"NO", new[] {
+																	        "Mennesker",
+                                                                            "Kroppsdeler",
+                                                                            "Klær/pers.eiendeler",
+                                                                            "Inventar",
+                                                                            "Kjøkken",
+                                                                            "Bad",
+                                                                            "Mat",
+                                                                            "Frukt/grønnsaker",
+                                                                            "Dyr",
+                                                                            "Leker",
+                                                                            "Hage",
+                                                                            "Vær",
+                                                                            "Musikk",
+                                                                            "Fritid",
+                                                                            "Følelser",
+                                                                            "Yrker",
+                                                                            "Transportmidler",
+                                                                            "Lokaliteter/sted",
+                                                                            "Aktiviteter",
+                                                                            "Høytider",
+                                                                            "Egenskaper",
+                                                                            "Retning/plassering",
+                                                                            "Antall",
+                                                                            "Diverse",
+                                                                            "TV-program",
+                                                                            "Spørreord"
+    																	 
+																	     }},
+
+
+																	     {"PT", new[] {
+
+																		    "Pessoas",
+                                                                            "Partes do Corpo",
+                                                                            "Roupas e objectos pessoais",
+                                                                            "Objectos",
+                                                                            "Cozinha",
+                                                                            "Casa de Banho",
+                                                                            "Comida",
+                                                                            "Frutas e Legumes",
+                                                                            "Animais",
+                                                                            "Brinquedos",
+                                                                            "Jardim",
+                                                                            "O Tempo",
+                                                                            "Música",
+                                                                            "Tempos Livres",
+                                                                            "Emoções",
+                                                                            "Profissão",
+                                                                            "Meios de Transporte",
+                                                                            "Locais",
+                                                                            "Actividades",
+                                                                            "Festividades",
+                                                                            "Características",
+                                                                            "Localização direcção",
+                                                                            "Quantidade",
+                                                                            "Diversos",
+                                                                            "Programas de Televisão",
+                                                                            "Palavras que definem uma pergunta"
+																	     }},
+
+																	     {"RU", new[] {
+    																	 
+																	        "Люди",
+                                                                            "Части тела",
+                                                                            "Личные принадлежности",
+                                                                            "Инвентарь",
+                                                                            "Кухня",
+                                                                            "Ванная",
+                                                                            "Еда",
+                                                                            "Фрукты и овощи",
+                                                                            "Животные",
+                                                                            "Игрушки",
+                                                                            "Сад",
+                                                                            "Явления природы",
+                                                                            "Музыкальные инструменты",
+                                                                            "Досуг",
+                                                                            "Чувства",
+                                                                            "Профессии",
+                                                                            "Транспортные средства",
+                                                                            "Помещения",
+                                                                            "Занятия",
+                                                                            "Праздники",
+                                                                            "Свойства",
+                                                                            "Положение направление",
+                                                                            "Число",
+                                                                            "Разное",
+                                                                            "программа ТВ",
+                                                                            "Вопросительные слова"
+																	     }}
+
+															     };
         }
 
         public string Translate(Category category, Language language) {
