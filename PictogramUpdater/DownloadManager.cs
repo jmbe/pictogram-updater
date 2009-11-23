@@ -141,7 +141,7 @@ namespace PictogramUpdater {
                     LogMessage("Installationen är klar.");
                 } else {
                     /* Fanns tydligen inga pictogram att ladda ner. Kontrollera inloggningsuppgifterna. */
-                    checkLogin(Username, Password);
+                    //checkLogin(Username, Password);
                 }
             } catch (ArgumentException ex) {
                 Console.WriteLine(ex.Message);
