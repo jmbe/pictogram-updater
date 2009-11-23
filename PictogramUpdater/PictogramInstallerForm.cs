@@ -233,10 +233,10 @@ namespace PictogramUpdater {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Form_Paint(object sender, PaintEventArgs e) {
-            e.Graphics.FillRectangle(Brushes.White, new Rectangle(0, 0, this.Width, 50));
-            e.Graphics.DrawString("Pictograminstalleraren", new Font("Arial", 20, FontStyle.Bold), Brushes.SteelBlue, new PointF(10, 10));
+            e.Graphics.FillRectangle(Brushes.White, new Rectangle(0, 0, this.Width, 60));
+            e.Graphics.DrawString("Pictograminstalleraren", new Font("Arial", 25, FontStyle.Bold), Brushes.SteelBlue, new PointF(10, 10));
             
-            e.Graphics.DrawLine(Pens.Black, new Point(0, 50), new Point(this.Width, 50));
+            e.Graphics.DrawLine(Pens.Black, new Point(0, 60), new Point(this.Width, 60));
         }
 
         /// <summary>
