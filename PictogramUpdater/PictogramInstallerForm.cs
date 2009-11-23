@@ -16,6 +16,8 @@ namespace PictogramUpdater {
 
     internal delegate void SetControlEnabledCallback(Control control, bool enabled);
 
+    internal delegate void SetControlVisibleCallback(Control control, bool visible);
+
     internal delegate void LogMessageCallback(string message);
 
     internal delegate void SetLanguageDataSourceCallback(IList source);
@@ -56,6 +58,8 @@ namespace PictogramUpdater {
         /// Laddar ner pictogram som saknas. Avsett att köras i egen tråd.
         /// </summary>
         private void Download() {
+            SetControlVisible(this.installationCompleteLabel, false);
+
             SetControlsEnabled(false);
             
             var language = _languageSelection.Language;
@@ -78,7 +82,7 @@ namespace PictogramUpdater {
             }
 
             if (soundCheckbox.Checked) {
-                LogMessage("Ladda ner ljud...");
+                LogMessage("Laddar ner ljud...");
                 installationManager.Download(soundDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.SOUND,
                                            usernameTextbox.Text, passwordTextbox.Text);
                 _config.CreateOrUpdateWavIni(language, soundDirectoryChooser.InstallPath);
@@ -93,6 +97,7 @@ namespace PictogramUpdater {
             LogMessage("Installationen är klar.");
             SetStatus("Installationen är klar.");
 
+            SetControlVisible(this.installationCompleteLabel, true);
         }
 
         /// <summary>
@@ -168,7 +173,8 @@ namespace PictogramUpdater {
             if (logTextbox.InvokeRequired) {
                 this.logTextbox.Invoke(new LogMessageCallback(LogMessage), new object[] {message});
             } else {
-                logTextbox.Text = message + "\r\n" + logTextbox.Text;
+                logTextbox.AppendText(message + Environment.NewLine);
+                logTextbox.SelectionStart = logTextbox.Text.Length;
             }
         }
 
@@ -193,6 +199,14 @@ namespace PictogramUpdater {
                                                           new object[] {progressBarStyle});
             } else {
                 this.statusProgressBar.ProgressBar.Style = progressBarStyle;
+            }
+        }
+
+        private void SetControlVisible(Control control, bool visible) {
+            if (this.installationCompleteLabel.InvokeRequired) {
+                this.installationCompleteLabel.Invoke(new SetControlVisibleCallback(SetControlVisible), new object[] {control, visible});
+            } else {
+                control.Visible = visible;
             }
         }
 
@@ -412,6 +426,7 @@ namespace PictogramUpdater {
         private void InstallButton_Click(object sender, EventArgs e) {
 
             this.logTextbox.ScrollBars = ScrollBars.Both;
+            this.installationCompleteLabel.Hide();
 
             this._currentWorkingThread = new Thread(new ThreadStart(Download));
             _currentWorkingThread.Start();

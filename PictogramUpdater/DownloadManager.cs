@@ -136,9 +136,9 @@ namespace PictogramUpdater {
                         ProgressChanged(ProgressBarStyle.Blocks, current++, DownloadList.Count);
                     }
 
-                    StatusChanged("Klar");
-                    LogMessage("");
-                    LogMessage("Installationen är klar.");
+                    //StatusChanged("Klar");
+                    //LogMessage("");
+                    //LogMessage("Installationen är klar.");
                 } else {
                     /* Fanns tydligen inga pictogram att ladda ner. Kontrollera inloggningsuppgifterna. */
                     //checkLogin(Username, Password);

@@ -55,10 +55,11 @@ namespace PictogramUpdater
             this.label5 = new System.Windows.Forms.Label();
             this.versionLabel = new System.Windows.Forms.Label();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.installationCompleteLabel = new System.Windows.Forms.Label();
             this.wmfDirectoryChooser = new PictogramUpdater.DirectoryChooser();
             this.plainTextDirectoryChooser = new PictogramUpdater.DirectoryChooser();
             this.soundDirectoryChooser = new PictogramUpdater.DirectoryChooser();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -138,7 +139,7 @@ namespace PictogramUpdater
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(861, 17);
+            this.statusLabel.Size = new System.Drawing.Size(737, 17);
             this.statusLabel.Spring = true;
             this.statusLabel.Text = "Klar";
             this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -173,14 +174,14 @@ namespace PictogramUpdater
             this.soundCheckbox.Text = "Installera ljud";
             this.soundCheckbox.UseVisualStyleBackColor = true;
             // 
-            // clearTextCheckbox
+            // plainTextCheckbox
             // 
             this.plainTextCheckbox.AutoSize = true;
             this.plainTextCheckbox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.plainTextCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.plainTextCheckbox.Location = new System.Drawing.Point(487, 221);
             this.plainTextCheckbox.Margin = new System.Windows.Forms.Padding(0);
-            this.plainTextCheckbox.Name = "clearTextCheckbox";
+            this.plainTextCheckbox.Name = "plainTextCheckbox";
             this.plainTextCheckbox.Size = new System.Drawing.Size(307, 29);
             this.plainTextCheckbox.TabIndex = 14;
             this.plainTextCheckbox.Text = "Installera pictobilder i klartext";
@@ -325,6 +326,27 @@ namespace PictogramUpdater
             this.flowLayoutPanel2.Size = new System.Drawing.Size(136, 20);
             this.flowLayoutPanel2.TabIndex = 25;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(12, 61);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(449, 321);
+            this.pictureBox1.TabIndex = 26;
+            this.pictureBox1.TabStop = false;
+            // 
+            // installationCompleteLabel
+            // 
+            this.installationCompleteLabel.AutoSize = true;
+            this.installationCompleteLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.installationCompleteLabel.ForeColor = System.Drawing.Color.Green;
+            this.installationCompleteLabel.Location = new System.Drawing.Point(508, 471);
+            this.installationCompleteLabel.Name = "installationCompleteLabel";
+            this.installationCompleteLabel.Size = new System.Drawing.Size(285, 33);
+            this.installationCompleteLabel.TabIndex = 27;
+            this.installationCompleteLabel.Text = "Installationen är klar!";
+            this.installationCompleteLabel.Visible = false;
+            // 
             // wmfDirectoryChooser
             // 
             this.wmfDirectoryChooser.DisplayDirectoryInput = false;
@@ -352,21 +374,13 @@ namespace PictogramUpdater
             this.soundDirectoryChooser.Size = new System.Drawing.Size(380, 26);
             this.soundDirectoryChooser.TabIndex = 13;
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(12, 61);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(449, 321);
-            this.pictureBox1.TabIndex = 26;
-            this.pictureBox1.TabStop = false;
-            // 
             // PictogramInstallerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(854, 538);
+            this.Controls.Add(this.installationCompleteLabel);
             this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.overwriteCheckbox);
@@ -436,6 +450,7 @@ namespace PictogramUpdater
         private System.Windows.Forms.Label versionLabel;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label installationCompleteLabel;
     }
 }
 
