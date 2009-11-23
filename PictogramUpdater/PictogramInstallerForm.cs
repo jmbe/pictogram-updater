@@ -328,6 +328,7 @@ namespace PictogramUpdater {
             } else {
                 
                 soundDirectoryChooser.Hide();
+                soundCheckbox.Checked = false;
                 soundCheckbox.Hide();
             }
         }
