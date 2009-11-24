@@ -145,9 +145,6 @@ namespace PictogramUpdater {
             var info = new FileInfo(GetPictoWmfIniFilePath(language));
             info.Create().Close();
             
-
-            info = new FileInfo(GetPictoWavIniFilePath(language));
-            info.Create().Close();
             
         }
 
