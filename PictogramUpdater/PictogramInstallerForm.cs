@@ -20,6 +20,8 @@ namespace PictogramUpdater {
 
     internal delegate void LogMessageCallback(string message);
 
+    internal delegate void LogErrorCallback(string message);
+
     internal delegate void SetLanguageDataSourceCallback(IList source);
 
     internal delegate void SetStatusCallback(string message);
@@ -59,8 +61,20 @@ namespace PictogramUpdater {
         /// </summary>
         private void Download() {
             SetControlVisible(this.installationCompleteLabel, false);
+            ClearDownloadLog("");
 
             SetControlsEnabled(false);
+
+            if (!this.downloadManager.checkLogin(this.usernameTextbox.Text, this.passwordTextbox.Text)) {
+                if (this._authenticationService.UseFreeAccount()) {
+                    ShowError("Kunde inte logga in på servern. Det kan bero på att en ny version av uppdateringsprogrammet har kommit ut. Titta gärna in på http://www.pictogram.se/produkter/ .");
+                } else {
+                    ShowError("Kunde inte logga in på servern. Kontrollera inloggningsuppgifterna.");
+                }
+
+                DownloadFinished();
+                return;
+            }
             
             var language = _languageSelection.Language;
             _config.CreateOrUpdateWmfINI(language, wmfDirectoryChooser.InstallPath, plainTextDirectoryChooser.InstallPath);
@@ -90,14 +104,22 @@ namespace PictogramUpdater {
                 LogMessage("");
             }
 
-            SetControlsEnabled(true);
-            this._currentWorkingThread = null;
+            DownloadFinished();
 
             LogMessage("");
             LogMessage("Installationen är klar.");
             SetStatus("Installationen är klar.");
 
             SetControlVisible(this.installationCompleteLabel, true);
+        }
+
+
+        /// <summary>
+        /// Cleanup after download has finished, whether it finished successfully or not.
+        /// </summary>
+        private void DownloadFinished() {
+            SetControlsEnabled(true);
+            this._currentWorkingThread = null;
         }
 
         /// <summary>
@@ -176,6 +198,20 @@ namespace PictogramUpdater {
                 logTextbox.AppendText(message + Environment.NewLine);
                 logTextbox.SelectionStart = logTextbox.Text.Length;
             }
+        }
+
+        private void ClearDownloadLog(string optionalMessage) {
+            if (logTextbox.InvokeRequired) {
+                this.logTextbox.Invoke(new LogMessageCallback(ClearDownloadLog), new object[] { optionalMessage });
+            } else {
+                logTextbox.Text = optionalMessage == null ? "" : optionalMessage;
+            }
+        }
+
+
+        private void ShowError(string message) {
+            MessageBox.Show(message, "Installationen har avbrutits", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            LogMessage(message);
         }
 
         /// <summary>
