@@ -130,6 +130,8 @@ namespace PictogramUpdater {
         private void InstallationFinishedSuccessfully() {
             SetControlVisible(this.installationCompleteLabel, true);
 
+            /* Set progress bar to 100% when installation is complete. */
+            SetCurrentProgress(ProgressBarStyle.Blocks, 1, 1);
 
             DialogResult result = MessageBox.Show("Installationen är klar. Avsluta programmet?", "Installationen är klar.", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (result == DialogResult.Yes) {
