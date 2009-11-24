@@ -33,6 +33,7 @@
             // installTextLabel
             // 
             this.installTextLabel.AutoSize = true;
+            this.installTextLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.installTextLabel.Location = new System.Drawing.Point(0, 7);
             this.installTextLabel.Margin = new System.Windows.Forms.Padding(0);
             this.installTextLabel.Name = "installTextLabel";

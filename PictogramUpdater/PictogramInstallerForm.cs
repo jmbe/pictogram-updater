@@ -66,14 +66,14 @@ namespace PictogramUpdater {
             _config.CreateOrUpdateWmfINI(language, wmfDirectoryChooser.InstallPath, plainTextDirectoryChooser.InstallPath);
 
 
-            LogMessage("Laddar ner pictobilder...");
+            LogMessage("Letar efter nya pictobilder...");
             installationManager.Download(wmfDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.CODE, usernameTextbox.Text, passwordTextbox.Text);
             LogMessage("Nedladdning av pictobilder klar.");
             LogMessage("");
             
 
             if (plainTextCheckbox.Checked) {
-                LogMessage("Laddar ner pictobilder i klartext...");
+                LogMessage("Letar efter nya pictobilder i klartext...");
                     installationManager.Download(plainTextDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.PLAIN_TEXT,
                                        usernameTextbox.Text, passwordTextbox.Text);
                     LogMessage("Nedladdning av pictobilder i klartext klar.");
@@ -82,7 +82,7 @@ namespace PictogramUpdater {
             }
 
             if (soundCheckbox.Checked) {
-                LogMessage("Laddar ner ljud...");
+                LogMessage("Letar efter nya ljud...");
                 installationManager.Download(soundDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.SOUND,
                                            usernameTextbox.Text, passwordTextbox.Text);
                 _config.CreateOrUpdateWavIni(language, soundDirectoryChooser.InstallPath);
@@ -246,7 +246,7 @@ namespace PictogramUpdater {
             foreach (
                 Control control in
                     new Control[]
-                    {verifyLabel, installButton, updateLinkLabel, overwriteCheckbox, zipButton, getZipUrlButton, wmfDirectoryChooser, soundDirectoryChooser, plainTextDirectoryChooser}) {
+                    {verifyLabel, installButton, updateLinkLabel, overwriteCheckbox, zipButton, getZipUrlButton, wmfDirectoryChooser, soundDirectoryChooser, plainTextDirectoryChooser, languagesComboBox}) {
                 SetControlEnabled(control, enabled);
             }
         }
@@ -273,7 +273,7 @@ namespace PictogramUpdater {
             int topLineY = 60;
 
             e.Graphics.FillRectangle(Brushes.White, new Rectangle(0, 0, this.Width, topLineY));
-            e.Graphics.DrawString("Pictograminstalleraren", new Font("Arial", 25, FontStyle.Bold), Brushes.SteelBlue, new PointF(10, 10));
+            e.Graphics.DrawString("Uppdatering till Bildbas Pictogram 4.0", new Font("Arial", 25, FontStyle.Bold), Brushes.SteelBlue, new PointF(10, 10));
             
             e.Graphics.DrawLine(Pens.LightGray, new Point(0, topLineY), new Point(this.Width, topLineY));
 
@@ -480,9 +480,8 @@ namespace PictogramUpdater {
             this._currentWorkingThread.Start();
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            
-            System.Diagnostics.Process.Start("http://pictoonline.pictogram.se/contact");
+        private void contactLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            System.Diagnostics.Process.Start(contactLink.Text);
         }
 
     }

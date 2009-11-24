@@ -50,9 +50,8 @@ namespace PictogramUpdater
             this.zipButton = new System.Windows.Forms.Button();
             this.getZipUrlButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.contactLink = new System.Windows.Forms.LinkLabel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.label5 = new System.Windows.Forms.Label();
             this.versionLabel = new System.Windows.Forms.Label();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -95,7 +94,7 @@ namespace PictogramUpdater
             this.groupBox1.Size = new System.Drawing.Size(263, 89);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Inloggningsuppgifter";
+            this.groupBox1.Text = "Inloggningsuppgifter till Picto Online";
             // 
             // verifyLabel
             // 
@@ -277,35 +276,25 @@ namespace PictogramUpdater
             this.label4.TabIndex = 11;
             this.label4.Text = "Installera pictobilder";
             // 
-            // linkLabel1
+            // contactLink
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(78, 0);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(193, 13);
-            this.linkLabel1.TabIndex = 22;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "http://pictoonline.pictogram.se/contact";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.contactLink.AutoSize = true;
+            this.contactLink.Location = new System.Drawing.Point(3, 0);
+            this.contactLink.Name = "contactLink";
+            this.contactLink.Size = new System.Drawing.Size(171, 13);
+            this.contactLink.TabIndex = 22;
+            this.contactLink.TabStop = true;
+            this.contactLink.Text = "http://www.pictogram.se/kontakt/";
+            this.contactLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.contactLink_LinkClicked);
             // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.flowLayoutPanel1.Controls.Add(this.label5);
-            this.flowLayoutPanel1.Controls.Add(this.linkLabel1);
+            this.flowLayoutPanel1.Controls.Add(this.contactLink);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 491);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(301, 22);
             this.flowLayoutPanel1.TabIndex = 23;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(69, 13);
-            this.label5.TabIndex = 24;
-            this.label5.Text = "Kontakta oss";
             // 
             // versionLabel
             // 
@@ -400,8 +389,9 @@ namespace PictogramUpdater
             this.Controls.Add(this.plainTextDirectoryChooser);
             this.Controls.Add(this.soundDirectoryChooser);
             this.Controls.Add(this.pictureBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PictogramInstallerForm";
-            this.Text = "Pictograminstalleraren";
+            this.Text = "Uppdatering Bildbas Pictogram";
             this.Load += new System.EventHandler(this.PictogramInstallerForm_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form_Paint);
             this.groupBox1.ResumeLayout(false);
@@ -444,9 +434,8 @@ namespace PictogramUpdater
         private DirectoryChooser plainTextDirectoryChooser;
         private DirectoryChooser soundDirectoryChooser;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel contactLink;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label versionLabel;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.PictureBox pictureBox1;

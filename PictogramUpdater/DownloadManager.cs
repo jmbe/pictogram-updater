@@ -204,7 +204,7 @@ namespace PictogramUpdater {
         private DirectoryInfo CreateTargetDirectory() {
             DirectoryInfo target = new DirectoryInfo(TargetPath.Trim());
             if (target.Exists) {
-                LogMessage("Målkatalogen finns.");
+                //LogMessage("Målkatalogen finns.");
             } else {
                 Directory.CreateDirectory(target.FullName);
                 LogMessage("Skapar ny katalog " + target.FullName + "...");
