@@ -95,11 +95,25 @@ namespace PictogramUpdater {
             profile.RemoveSection("Grupper");
             foreach (var category in categories) {
                 var translation = this.categoryTranslationService.Translate(category, language);
-                profile.SetValue("Grupper", category.Index.ToString(), translation);
-                profile.SetValue(translation, "Antal", "0");
-                profile.SetValue(translation, "Kod", category.Code);
+
+                // [Grupper]1=People
+                safeWriteToProfile(profile, "Grupper", category.Index.ToString(), translation);
+
+                safeWriteToProfile(profile, translation, "Antal", "0");
+                safeWriteToProfile(profile, translation, "Kod", category.Code);
             }
 
+        }
+
+        /// <summary>
+        /// Writes a value only if a previous value does not already exist.
+        /// </summary>
+        private void safeWriteToProfile(Profile profile, string section, string entry, string value) {
+            if (profile.HasEntry(section, entry)) {
+                return;
+            }
+
+            profile.SetValue(section, entry, value);
         }
 
         public void CreateOrUpdateWavIni(Language language, string soundInstallPath) {
