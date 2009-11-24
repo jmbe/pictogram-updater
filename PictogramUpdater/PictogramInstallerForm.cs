@@ -120,9 +120,9 @@ namespace PictogramUpdater {
 
                 InstallationFinishedSuccessfully();
             } catch (UnauthorizedAccessException e) {
-                LogMessage("Installationen misslyckades på grund av att filen inte gick att skriva till. (" + e.Message + ")");
+                LogMessage("Installationen misslyckades på grund av problem att skriva till en fil. (" + e.Message + ")");
             } catch (System.Net.WebException e) {
-                LogMessage("Installationen misslyckades på grund av att servern inte är åtkomstbar. (" + e.Message + ")");
+                LogMessage("Installationen misslyckades på grund av att nedladdningsservern inte gick att nå. (" + e.Message + ")");
             }
 
         }
