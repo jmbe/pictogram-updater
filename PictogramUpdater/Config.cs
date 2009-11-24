@@ -195,9 +195,9 @@ namespace PictogramUpdater {
 
         public void CreatePicWMF(Language language) {
             var templatePath = GetPictoWmfIniFilePath(language);
-            var picWMFPath = GetPictoWmfIniFilePath(null).ToLower();
+            var picWMFPath = GetPictoWmfIniFilePath(null);
             var fileInfo = new FileInfo(templatePath);
-            fileInfo.CopyTo(picWMFPath);
+            fileInfo.CopyTo(picWMFPath, true);
         }
     }
 
