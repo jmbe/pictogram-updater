@@ -6,16 +6,14 @@ using AMS.Profile;
 
 namespace PictogramUpdater {
     internal class AuthenticationService {
-        private readonly Profile _settings;
+
+        private PictoOnIni pictoOnIni;
 
         public AuthenticationService() {
-            var settingsFile = Environment.GetEnvironmentVariable("WINDIR") + @"\PictoOn.ini";;
-            _settings = new Ini(settingsFile);
+            this.pictoOnIni = new PictoOnIni();
         }
 
         public bool IsPictogramLibraryInstalled() {
-
-
             var windowsDir = Environment.GetEnvironmentVariable("WINDIR");
             var file = new FileInfo(windowsDir);
             var dir = new DirectoryInfo(windowsDir);
@@ -23,6 +21,7 @@ namespace PictogramUpdater {
             return files.Length > 0;
         }
 
+        /*
         public Boolean IsPictogramManagerInstalled() {
             var iniFilePath = Environment.GetEnvironmentVariable("WINDIR") + @"\PictogramManager.ini";
             var iniFile = new FileInfo(iniFilePath);
@@ -37,25 +36,75 @@ namespace PictogramUpdater {
             var exeFile = new FileInfo(exeFilePath + @"\PictogramManager.exe");
             return exeFile.Exists;
         }
+        */
+
+
+        public bool RequiresUserAccount() {
+            return !UseFreeAccount();
+        }
+
+        public bool UseFreeAccount() {
+            return IsPictogramLibraryInstalled();
+        }
 
         public String GetUsername() {
-            return IsPictogramManagerInstalled() ? "webservice" : _settings.GetValue("Login", "Owner") as string;
+            return UseFreeAccount() ? "webservice" : this.pictoOnIni.Username;
         }
 
         public String GetPassword() {
-            return IsPictogramManagerInstalled() ? "tbn2wswzcrf4" : _settings.GetValue("Login", "LoginWord") as string;
+            return UseFreeAccount() ? "tbn2wswzcrf4" : this.pictoOnIni.Password;
         }
 
         public void SaveUsername(string username) {
-            if(!IsPictogramManagerInstalled()) {
-                _settings.SetValue("Login", "Owner", username);    
+            if (UseFreeAccount()) {
+                return;
             }
+
+            this.pictoOnIni.Username = username;
+            
         }
 
         public void SavePassword(string password) {
-            if (!IsPictogramManagerInstalled()) {
-                _settings.SetValue("Login", "LoginWord", password);
+            if (UseFreeAccount()) {
+                return;
+            }
+
+            this.pictoOnIni.Password = password;
+            
+        }
+    }
+
+
+    public class PictoOnIni {
+
+        private readonly Profile _settings;
+
+        public PictoOnIni() {
+
+            var settingsFile = Environment.GetEnvironmentVariable("WINDIR") + @"\PictoOn.ini";
+            this._settings = new Ini(settingsFile);
+
+        }
+
+        public string Username {
+            get {
+                return _settings.GetValue("Login", "Owner") as string;
+            }
+
+            set {
+                _settings.SetValue("Login", "Owner", value);    
             }
         }
+
+        public string Password {
+            get {
+                return _settings.GetValue("Login", "LoginWord") as string;
+            }
+
+            set {
+                _settings.SetValue("Login", "LoginWord", value);
+            }
+        }
+
     }
 }
