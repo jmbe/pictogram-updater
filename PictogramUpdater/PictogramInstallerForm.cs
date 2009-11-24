@@ -22,6 +22,8 @@ namespace PictogramUpdater {
 
     internal delegate void LogErrorCallback(string message);
 
+    internal delegate void ExitCallback();
+
     internal delegate void SetLanguageDataSourceCallback(IList source);
 
     internal delegate void SetStatusCallback(string message);
@@ -110,7 +112,26 @@ namespace PictogramUpdater {
             LogMessage("Installationen är klar.");
             SetStatus("Installationen är klar.");
 
+            InstallationFinishedSuccessfully();
+        }
+
+        private void InstallationFinishedSuccessfully() {
             SetControlVisible(this.installationCompleteLabel, true);
+
+
+            DialogResult result = MessageBox.Show("Installationen är klar. Avsluta programmet?", "Installationen är klar.", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes) {
+                Exit();
+            }
+        }
+
+        private void Exit() {
+            if (this.InvokeRequired) {
+                this.Invoke(new ExitCallback(Exit));
+            } else {
+                this.Close();
+            }
+
         }
 
 
