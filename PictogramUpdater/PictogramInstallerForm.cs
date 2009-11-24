@@ -61,42 +61,46 @@ namespace PictogramUpdater {
             SetControlVisible(this.installationCompleteLabel, false);
 
             SetControlsEnabled(false);
+
+            try {
+                var language = _languageSelection.Language;
+                _config.CreateOrUpdateWmfINI(language, wmfDirectoryChooser.InstallPath, plainTextDirectoryChooser.InstallPath);
+
+
+                LogMessage("Letar efter nya pictobilder...");
+                installationManager.Download(wmfDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.CODE, usernameTextbox.Text, passwordTextbox.Text);
+                LogMessage("Nedladdning av pictobilder klar.");
+                LogMessage("");
             
-            var language = _languageSelection.Language;
-            _config.CreateOrUpdateWmfINI(language, wmfDirectoryChooser.InstallPath, plainTextDirectoryChooser.InstallPath);
 
-
-            LogMessage("Letar efter nya pictobilder...");
-            installationManager.Download(wmfDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.CODE, usernameTextbox.Text, passwordTextbox.Text);
-            LogMessage("Nedladdning av pictobilder klar.");
-            LogMessage("");
-            
-
-            if (plainTextCheckbox.Checked) {
-                LogMessage("Letar efter nya pictobilder i klartext...");
+                if (plainTextCheckbox.Checked) {
+                    LogMessage("Letar efter nya pictobilder i klartext...");
                     installationManager.Download(plainTextDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.PLAIN_TEXT,
-                                       usernameTextbox.Text, passwordTextbox.Text);
+                                                 usernameTextbox.Text, passwordTextbox.Text);
                     LogMessage("Nedladdning av pictobilder i klartext klar.");
                     LogMessage("");
             
-            }
+                }
 
-            if (soundCheckbox.Checked) {
-                LogMessage("Letar efter nya ljud...");
-                installationManager.Download(soundDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.SOUND,
-                                           usernameTextbox.Text, passwordTextbox.Text);
-                _config.CreateOrUpdateWavIni(language, soundDirectoryChooser.InstallPath);
-                LogMessage("Nedladdning av ljud klar.");
+                if (soundCheckbox.Checked) {
+                    LogMessage("Letar efter nya ljud...");
+                    installationManager.Download(soundDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.SOUND,
+                                                 usernameTextbox.Text, passwordTextbox.Text);
+                    _config.CreateOrUpdateWavIni(language, soundDirectoryChooser.InstallPath);
+                    LogMessage("Nedladdning av ljud klar.");
+                    LogMessage("");
+                }
+
+                SetControlsEnabled(true);
+                this._currentWorkingThread = null;
+
                 LogMessage("");
-            }
-
-            SetControlsEnabled(true);
-            this._currentWorkingThread = null;
-
-            LogMessage("");
-            LogMessage("Installationen är klar.");
-            SetStatus("Installationen är klar.");
-
+                LogMessage("Installationen är klar.");
+                SetStatus("Installationen är klar.");
+            } catch (UnauthorizedAccessException e) {
+                LogMessage("Installationen misslyckades på grund av att filen inte gick att skriva till. (" + e.Message + ")");
+            } 
+            
             SetControlVisible(this.installationCompleteLabel, true);
         }
 
