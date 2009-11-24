@@ -24,7 +24,11 @@ namespace PictogramUpdater {
         }
 
         private static string GetPictoWmfIniFilePath(Language language) {
-            return Environment.GetEnvironmentVariable("WINDIR") + @"\PicWmf" + language.Code + @".ini";
+            var languageCode = "";
+            if(language != null) {
+                languageCode = language.Code;
+            }
+            return Environment.GetEnvironmentVariable("WINDIR") + @"\PicWmf" + languageCode + @".ini";
         }
 
         private static string GetPictoWavIniFilePath(Language language) {
@@ -173,6 +177,13 @@ namespace PictogramUpdater {
 
             profile = new Ini(GetPictoWavIniFilePath(language));
             profile.SetValue("ProgDir", "Dir", soundInstallPath);
+        }
+
+        public void CreatePicWMF(Language language) {
+            var templatePath = GetPictoWmfIniFilePath(language);
+            var picWMFPath = GetPictoWmfIniFilePath(null).ToLower();
+            var fileInfo = new FileInfo(templatePath);
+            fileInfo.CopyTo(picWMFPath);
         }
     }
 

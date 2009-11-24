@@ -91,6 +91,8 @@ namespace PictogramUpdater {
                     LogMessage("");
                 }
 
+                _config.CreatePicWMF(language);
+
                 SetControlsEnabled(true);
                 this._currentWorkingThread = null;
 
