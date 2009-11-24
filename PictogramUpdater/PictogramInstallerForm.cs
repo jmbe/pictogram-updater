@@ -77,42 +77,54 @@ namespace PictogramUpdater {
                 DownloadFinished();
                 return;
             }
-            
-            var language = _languageSelection.Language;
-            _config.CreateOrUpdateWmfINI(language, wmfDirectoryChooser.InstallPath, plainTextDirectoryChooser.InstallPath);
 
 
-            LogMessage("Letar efter nya pictobilder...");
-            installationManager.Download(wmfDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.CODE, usernameTextbox.Text, passwordTextbox.Text);
-            LogMessage("Nedladdning av pictobilder klar.");
-            LogMessage("");
-            
 
-            if (plainTextCheckbox.Checked) {
-                LogMessage("Letar efter nya pictobilder i klartext...");
+            try {
+                var language = _languageSelection.Language;
+                _config.CreateOrUpdateWmfINI(language, wmfDirectoryChooser.InstallPath, plainTextDirectoryChooser.InstallPath);
+
+
+                LogMessage("Letar efter nya pictobilder...");
+                installationManager.Download(wmfDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.CODE, usernameTextbox.Text, passwordTextbox.Text);
+                LogMessage("Nedladdning av pictobilder klar.");
+                LogMessage("");
+
+
+                if (plainTextCheckbox.Checked) {
+                    LogMessage("Letar efter nya pictobilder i klartext...");
                     installationManager.Download(plainTextDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.PLAIN_TEXT,
-                                       usernameTextbox.Text, passwordTextbox.Text);
+                                                 usernameTextbox.Text, passwordTextbox.Text);
                     LogMessage("Nedladdning av pictobilder i klartext klar.");
                     LogMessage("");
-            
-            }
 
-            if (soundCheckbox.Checked) {
-                LogMessage("Letar efter nya ljud...");
-                installationManager.Download(soundDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.SOUND,
-                                           usernameTextbox.Text, passwordTextbox.Text);
-                _config.CreateOrUpdateWavIni(language, soundDirectoryChooser.InstallPath);
-                LogMessage("Nedladdning av ljud klar.");
+                }
+
+                if (soundCheckbox.Checked) {
+                    LogMessage("Letar efter nya ljud...");
+                    installationManager.Download(soundDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.SOUND,
+                                                 usernameTextbox.Text, passwordTextbox.Text);
+                    _config.CreateOrUpdateWavIni(language, soundDirectoryChooser.InstallPath);
+                    LogMessage("Nedladdning av ljud klar.");
+                    LogMessage("");
+                }
+
+                _config.CreatePicWMF(language);
+
+
+                DownloadFinished();
+
                 LogMessage("");
+                LogMessage("Installationen är klar.");
+                SetStatus("Installationen är klar.");
+
+                InstallationFinishedSuccessfully();
+            } catch (UnauthorizedAccessException e) {
+                LogMessage("Installationen misslyckades på grund av att filen inte gick att skriva till. (" + e.Message + ")");
+            } catch (System.Net.WebException e) {
+                LogMessage("Installationen misslyckades på grund av att servern inte är åtkomstbar. (" + e.Message + ")");
             }
 
-            DownloadFinished();
-
-            LogMessage("");
-            LogMessage("Installationen är klar.");
-            SetStatus("Installationen är klar.");
-
-            InstallationFinishedSuccessfully();
         }
 
         private void InstallationFinishedSuccessfully() {
@@ -203,7 +215,7 @@ namespace PictogramUpdater {
         /// <returns>valt språk</returns>
         private string GetLanguage() {
             if (languagesComboBox.InvokeRequired) {
-                return (string) languagesComboBox.Invoke(new GetLanguageCallback(GetLanguage));
+                return (string)languagesComboBox.Invoke(new GetLanguageCallback(GetLanguage));
             }
             return languagesComboBox.Text;
         }
@@ -214,7 +226,7 @@ namespace PictogramUpdater {
         /// <param name="message">meddelande</param>
         private void LogMessage(string message) {
             if (logTextbox.InvokeRequired) {
-                this.logTextbox.Invoke(new LogMessageCallback(LogMessage), new object[] {message});
+                this.logTextbox.Invoke(new LogMessageCallback(LogMessage), new object[] { message });
             } else {
                 logTextbox.AppendText(message + Environment.NewLine);
                 logTextbox.SelectionStart = logTextbox.Text.Length;
@@ -253,7 +265,7 @@ namespace PictogramUpdater {
         private void SetProgressBarStyle(ProgressBarStyle progressBarStyle) {
             if (this.statusProgressBar.ProgressBar.InvokeRequired) {
                 this.statusProgressBar.ProgressBar.Invoke(new SetProgressStyleCallback(SetProgressBarStyle),
-                                                          new object[] {progressBarStyle});
+                                                          new object[] { progressBarStyle });
             } else {
                 this.statusProgressBar.ProgressBar.Style = progressBarStyle;
             }
@@ -261,7 +273,7 @@ namespace PictogramUpdater {
 
         private void SetControlVisible(Control control, bool visible) {
             if (this.installationCompleteLabel.InvokeRequired) {
-                this.installationCompleteLabel.Invoke(new SetControlVisibleCallback(SetControlVisible), new object[] {control, visible});
+                this.installationCompleteLabel.Invoke(new SetControlVisibleCallback(SetControlVisible), new object[] { control, visible });
             } else {
                 control.Visible = visible;
             }
@@ -276,7 +288,7 @@ namespace PictogramUpdater {
         private void SetCurrentProgress(ProgressBarStyle style, int current, int max) {
             if (this.statusProgressBar.ProgressBar.InvokeRequired) {
                 this.statusProgressBar.ProgressBar.Invoke(new CurrentProgressCallback(SetCurrentProgress),
-                                                          new object[] {style, current, max});
+                                                          new object[] { style, current, max });
             } else {
                 this.statusProgressBar.ProgressBar.Style = style;
                 this.statusProgressBar.ProgressBar.Maximum = max;
@@ -302,8 +314,7 @@ namespace PictogramUpdater {
         private void SetControlsEnabled(bool enabled) {
             foreach (
                 Control control in
-                    new Control[]
-                    {verifyLabel, installButton, updateLinkLabel, overwriteCheckbox, zipButton, getZipUrlButton, wmfDirectoryChooser, soundDirectoryChooser, plainTextDirectoryChooser, languagesComboBox}) {
+                    new Control[] { verifyLabel, installButton, updateLinkLabel, overwriteCheckbox, zipButton, getZipUrlButton, wmfDirectoryChooser, soundDirectoryChooser, plainTextDirectoryChooser, languagesComboBox }) {
                 SetControlEnabled(control, enabled);
             }
         }
@@ -315,7 +326,7 @@ namespace PictogramUpdater {
         /// <param name="enabled"></param>
         public void SetControlEnabled(Control control, bool enabled) {
             if (control.InvokeRequired) {
-                control.Invoke(new SetControlEnabledCallback(SetControlEnabled), new object[] {control, enabled});
+                control.Invoke(new SetControlEnabledCallback(SetControlEnabled), new object[] { control, enabled });
             } else {
                 control.Enabled = enabled;
             }
@@ -331,7 +342,7 @@ namespace PictogramUpdater {
 
             e.Graphics.FillRectangle(Brushes.White, new Rectangle(0, 0, this.Width, topLineY));
             e.Graphics.DrawString("Uppdatering till Bildbas Pictogram 4.0", new Font("Arial", 25, FontStyle.Bold), Brushes.SteelBlue, new PointF(10, 10));
-            
+
             e.Graphics.DrawLine(Pens.LightGray, new Point(0, topLineY), new Point(this.Width, topLineY));
 
             int bottomLineY = topLineY + pictureBox1.Height + 1;
@@ -352,7 +363,7 @@ namespace PictogramUpdater {
             this.logTextbox.ScrollBars = ScrollBars.None;
 
             if (System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed) {
-                this.versionLabel.Text =  "Version " + System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
+                this.versionLabel.Text = "Version " + System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
                 this.versionLabel.Show();
             }
 
@@ -364,7 +375,7 @@ namespace PictogramUpdater {
             /* Ladda sparade inställningar */
             usernameTextbox.Text = _authenticationService.GetUsername();
             passwordTextbox.Text = _authenticationService.GetPassword();
-            
+
 
             /* Installationskatalog för wmf */
             this.wmfDirectoryChooser.InstallPath = _config.GetDefaultPath(_languageSelection.Language);
@@ -380,14 +391,14 @@ namespace PictogramUpdater {
                 groupBox1.Visible = false;
             }
 
-           
+
 
             /* Ladda ner språk */
             languageProvider.LogMessage += LogMessage;
             _currentWorkingThread = new Thread(RefreshLanguages);
             _currentWorkingThread.Start();
 
-            
+
             installationManager.LogMessage += LogMessage;
             installationManager.ProgressChanged += SetCurrentProgress;
             installationManager.StatusChanged += SetStatus;
@@ -419,7 +430,7 @@ namespace PictogramUpdater {
             this._config = new Config(this.categoryRepository, this.categoryTranslationService);
             this.downloadManager = new DownloadManager(this.languageProvider, this.pictosysWebService);
 
-            
+
             this.downloadListManager = new DownloadListManager(this.pictosysWebService);
 
             this.installationManager = new InstallationManager(this._config, this.downloadListManager, this.languageProvider, this.pictosysWebService);
@@ -441,7 +452,7 @@ namespace PictogramUpdater {
                 soundDirectoryChooser.Show();
                 soundCheckbox.Show();
             } else {
-                
+
                 soundDirectoryChooser.Hide();
                 soundCheckbox.Checked = false;
                 soundCheckbox.Hide();
@@ -494,7 +505,7 @@ namespace PictogramUpdater {
         /// <param name="source"></param>
         private void SetLanguageDataSource(IList source) {
             if (languagesComboBox.InvokeRequired) {
-                languagesComboBox.Invoke(new SetLanguageDataSourceCallback(SetLanguageDataSource), new object[] {source});
+                languagesComboBox.Invoke(new SetLanguageDataSourceCallback(SetLanguageDataSource), new object[] { source });
             } else {
                 languagesComboBox.DataSource = source;
                 languagesComboBox.SelectedIndex = languagesComboBox.FindString("Svenska");

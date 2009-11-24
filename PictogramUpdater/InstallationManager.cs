@@ -39,12 +39,7 @@ namespace PictogramUpdater {
             downloadManager.InstallationType = installationType;
 
             LogMessage("Det finns " + downloadList.Count + " nya filer att ladda ner.");
-
-            CurrentWorkingThread = new Thread(new ThreadStart(downloadManager.Download));
-            CurrentWorkingThread.Start();
-            CurrentWorkingThread.Join();
-
-            
+            downloadManager.Download();
 
             if (InstallationType.CODE.Equals(installationType) && downloadList.Count > 0) {
                 LogMessage("Uppdaterar ini-fil");

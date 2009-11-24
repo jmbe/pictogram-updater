@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using AMS.Profile;
 
 namespace PictogramUpdater {
@@ -23,7 +24,11 @@ namespace PictogramUpdater {
         }
 
         private static string GetPictoWmfIniFilePath(Language language) {
-            return Environment.GetEnvironmentVariable("WINDIR") + @"\PicWmf" + language.Code + @".ini";
+            var languageCode = "";
+            if(language != null) {
+                languageCode = language.Code;
+            }
+            return Environment.GetEnvironmentVariable("WINDIR") + @"\PicWmf" + languageCode + @".ini";
         }
 
         private static string GetPictoWavIniFilePath(Language language) {
@@ -67,25 +72,30 @@ namespace PictogramUpdater {
 
             /* WmfIni */
 
-            Profile profile = new Ini(GetPictoWmfIniFilePath(language));
+            var iniFilePath = GetPictoWmfIniFilePath(language);
+            Profile profile = new Ini(iniFilePath);
 
-            profile.SetValue("ProgDir", "Dir", installPath);
-            profile.SetValue("ProgDir", "PlainTextDir", plainTextInstallPath);
+            try {
+                profile.SetValue("ProgDir", "Dir", installPath);
+                profile.SetValue("ProgDir", "PlainTextDir", plainTextInstallPath);
             
-            if (profile.GetValue("ProgDir", "Extension") == null) {
-                profile.SetValue("ProgDir", "Extension", "WMF");
-            }
-            if (profile.GetValue("ProgDir", "langWMF") == null) {
-                profile.SetValue("ProgDir", "langWMF", language.Code);
-            }
-            if (profile.GetValue("ProgDir", "verWMF") == null) {
-                profile.SetValue("ProgDir", "verWMF", "7.0");
-            }
-            if (profile.GetValue("ProgDir", "CD") == null) {
-                profile.SetValue("ProgDir", "CD", "-");
-            }
-            if (profile.GetValue("ProgDir", "IDNAME") == null) {
-                profile.SetValue("ProgDir", "IDNAME", "");
+                if (profile.GetValue("ProgDir", "Extension") == null) {
+                    profile.SetValue("ProgDir", "Extension", "WMF");
+                }
+                if (profile.GetValue("ProgDir", "langWMF") == null) {
+                    profile.SetValue("ProgDir", "langWMF", language.Code);
+                }
+                if (profile.GetValue("ProgDir", "verWMF") == null) {
+                    profile.SetValue("ProgDir", "verWMF", "7.0");
+                }
+                if (profile.GetValue("ProgDir", "CD") == null) {
+                    profile.SetValue("ProgDir", "CD", "-");
+                }
+                if (profile.GetValue("ProgDir", "IDNAME") == null) {
+                    profile.SetValue("ProgDir", "IDNAME", "");
+                }
+            } catch (System.ComponentModel.Win32Exception e) {
+                throw new UnauthorizedAccessException("Access to the path '" + iniFilePath + "' is denied.", e);
             }
 
             //Update categories
@@ -181,6 +191,13 @@ namespace PictogramUpdater {
 
             profile = new Ini(GetPictoWavIniFilePath(language));
             profile.SetValue("ProgDir", "Dir", soundInstallPath);
+        }
+
+        public void CreatePicWMF(Language language) {
+            var templatePath = GetPictoWmfIniFilePath(language);
+            var picWMFPath = GetPictoWmfIniFilePath(null).ToLower();
+            var fileInfo = new FileInfo(templatePath);
+            fileInfo.CopyTo(picWMFPath);
         }
     }
 
