@@ -55,23 +55,19 @@ namespace PictogramUpdater {
             return UseFreeAccount() ? "tbn2wswzcrf4" : this.pictoOnIni.Password;
         }
 
-        public void SaveUsername(string username) {
-            if (UseFreeAccount()) {
+        public void saveAccount(string username, string password) {
+            if (IsFreeAccount(username)) {
                 return;
             }
 
             this.pictoOnIni.Username = username;
-            
-        }
-
-        public void SavePassword(string password) {
-            if (UseFreeAccount()) {
-                return;
-            }
-
             this.pictoOnIni.Password = password;
-            
         }
+
+        private bool IsFreeAccount(string username) {
+            return "webservice".Equals(username);
+        }
+
     }
 
 

@@ -437,8 +437,7 @@ namespace PictogramUpdater {
                 abortDownload();
 
                 /* Spara inställningar */
-                _authenticationService.SaveUsername(usernameTextbox.Text);
-                _authenticationService.SavePassword(passwordTextbox.Text);
+                _authenticationService.saveAccount(usernameTextbox.Text, passwordTextbox.Text);
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);
             }
