@@ -25,26 +25,23 @@ namespace PictogramUpdater {
 
         public void Download(string targetPath, Language language, bool overwrite, InstallationType installationType,
                              string username, string password) {
-            var completeList = _downloadListManager.GetEntriesToInstall(username, password, language, _config);
-            var downloadList = completeList;
 
-            if (!overwrite) {
-                downloadList = _downloadListManager.FilterEntries(_config, language,
-                                                                  downloadList, installationType);
-            }
-
+            
+            DownloadList downloadList = _downloadListManager.GetEntriesToInstall(username, password, language, installationType, overwrite);
+            
+           
             var downloadManager = CreateDownloadManager(targetPath, username, password, language);
 
-            downloadManager.DownloadList = downloadList;
+            downloadManager.DownloadList = downloadList.Missing;
             downloadManager.InstallationType = installationType;
 
-            LogMessage("Det finns " + downloadList.Count + " nya filer att ladda ner.");
+            LogMessage("Det finns " + downloadList.Missing.Count + " nya filer att ladda ner.");
             downloadManager.Download();
 
-            if (InstallationType.CODE.Equals(installationType) && downloadList.Count > 0) {
-                LogMessage("Uppdaterar ini-fil");
-                _config.CommitEntries(language, completeList);
-                LogMessage("Ini-fil uppdaterad");
+            if (InstallationType.CODE.Equals(installationType) && downloadList.Missing.Count > 0) {
+                LogMessage("Uppdaterar ini-fil...");
+                _config.CommitEntries(language, downloadList.All);
+                LogMessage("Ini-fil uppdaterad.");
             }
         }
 

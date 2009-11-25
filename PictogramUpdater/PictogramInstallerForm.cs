@@ -46,7 +46,7 @@ namespace PictogramUpdater {
         private DownloadManager downloadManager;
         private Thread _currentWorkingThread;
         private AuthenticationService _authenticationService;
-        private Config _config;
+        private Config config;
         private LanguageSelection _languageSelection;
         private InstallationManager installationManager;
         private CategoryRepository categoryRepository;
@@ -82,7 +82,7 @@ namespace PictogramUpdater {
 
             try {
                 var language = _languageSelection.Language;
-                _config.CreateOrUpdateWmfINI(language, wmfDirectoryChooser.InstallPath, plainTextDirectoryChooser.InstallPath);
+                config.CreateOrUpdateWmfINI(language, wmfDirectoryChooser.InstallPath, plainTextDirectoryChooser.InstallPath);
 
 
                 LogMessage("Letar efter nya pictobilder...");
@@ -104,12 +104,12 @@ namespace PictogramUpdater {
                     LogMessage("Letar efter nya ljud...");
                     installationManager.Download(soundDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.SOUND,
                                                  usernameTextbox.Text, passwordTextbox.Text);
-                    _config.CreateOrUpdateWavIni(language, soundDirectoryChooser.InstallPath);
+                    config.CreateOrUpdateWavIni(language, soundDirectoryChooser.InstallPath);
                     LogMessage("Nedladdning av ljud klar.");
                     LogMessage("");
                 }
 
-                _config.CreatePicWMF(language);
+                config.CreatePicWMF(language);
 
 
                 DownloadFinished();
@@ -380,13 +380,13 @@ namespace PictogramUpdater {
 
 
             /* Installationskatalog för wmf */
-            this.wmfDirectoryChooser.InstallPath = _config.GetDefaultPath(_languageSelection.Language);
+            this.wmfDirectoryChooser.InstallPath = config.GetDefaultPath(_languageSelection.Language);
 
             /* Plain text install dir*/
-            this.plainTextDirectoryChooser.InstallPath = _config.GetDefaultPlainTextPath(_languageSelection.Language);
+            this.plainTextDirectoryChooser.InstallPath = config.GetDefaultPlainTextPath(_languageSelection.Language);
 
             /* Sound install dir*/
-            this.soundDirectoryChooser.InstallPath = _config.GetDefaultSoundPath(_languageSelection.Language);
+            this.soundDirectoryChooser.InstallPath = config.GetDefaultSoundPath(_languageSelection.Language);
 
 
             if (_authenticationService.IsPictogramLibraryInstalled()) {
@@ -429,24 +429,24 @@ namespace PictogramUpdater {
             this.pictosysWebService = new PictosysWebService();
 
 
-            this._config = new Config(this.categoryRepository, this.categoryTranslationService);
+            this.config = new Config(this.categoryRepository, this.categoryTranslationService);
             this.downloadManager = new DownloadManager(this.languageProvider, this.pictosysWebService);
 
 
-            this.downloadListManager = new DownloadListManager(this.pictosysWebService);
+            this.downloadListManager = new DownloadListManager(this.pictosysWebService, this.config);
 
-            this.installationManager = new InstallationManager(this._config, this.downloadListManager, this.languageProvider, this.pictosysWebService);
+            this.installationManager = new InstallationManager(this.config, this.downloadListManager, this.languageProvider, this.pictosysWebService);
         }
 
         private void LanguageChanged() {
 
-            string wmfPath = _config.GetPictoInstallPath(_languageSelection.Language);
+            string wmfPath = config.GetPictoInstallPath(_languageSelection.Language);
             wmfDirectoryChooser.languageChanged(wmfPath);
 
-            string plainTextPath = _config.GetPictoPlainTextInstallPath(_languageSelection.Language);
+            string plainTextPath = config.GetPictoPlainTextInstallPath(_languageSelection.Language);
             plainTextDirectoryChooser.languageChanged(plainTextPath);
 
-            string soundPath = _config.GetPictoSoundInstallPath(_languageSelection.Language);
+            string soundPath = config.GetPictoSoundInstallPath(_languageSelection.Language);
             soundDirectoryChooser.languageChanged(soundPath);
 
 
