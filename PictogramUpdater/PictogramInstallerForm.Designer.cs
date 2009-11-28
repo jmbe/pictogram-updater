@@ -55,7 +55,6 @@ namespace PictogramUpdater
             this.versionLabel = new System.Windows.Forms.Label();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.installationCompleteLabel = new System.Windows.Forms.Label();
             this.wmfDirectoryChooser = new PictogramUpdater.DirectoryChooser();
             this.plainTextDirectoryChooser = new PictogramUpdater.DirectoryChooser();
             this.soundDirectoryChooser = new PictogramUpdater.DirectoryChooser();
@@ -223,12 +222,12 @@ namespace PictogramUpdater
             // 
             this.logTextbox.BackColor = System.Drawing.Color.White;
             this.logTextbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.logTextbox.Location = new System.Drawing.Point(12, 406);
+            this.logTextbox.Location = new System.Drawing.Point(12, 388);
             this.logTextbox.Multiline = true;
             this.logTextbox.Name = "logTextbox";
             this.logTextbox.ReadOnly = true;
             this.logTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.logTextbox.Size = new System.Drawing.Size(449, 79);
+            this.logTextbox.Size = new System.Drawing.Size(449, 116);
             this.logTextbox.TabIndex = 7;
             this.logTextbox.TabStop = false;
             // 
@@ -279,7 +278,7 @@ namespace PictogramUpdater
             // contactLink
             // 
             this.contactLink.AutoSize = true;
-            this.contactLink.Location = new System.Drawing.Point(3, 0);
+            this.contactLink.Location = new System.Drawing.Point(127, 0);
             this.contactLink.Name = "contactLink";
             this.contactLink.Size = new System.Drawing.Size(171, 13);
             this.contactLink.TabIndex = 22;
@@ -291,7 +290,8 @@ namespace PictogramUpdater
             // 
             this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.Controls.Add(this.contactLink);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 491);
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(548, 491);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(301, 22);
             this.flowLayoutPanel1.TabIndex = 23;
@@ -323,18 +323,6 @@ namespace PictogramUpdater
             this.pictureBox1.Size = new System.Drawing.Size(449, 321);
             this.pictureBox1.TabIndex = 26;
             this.pictureBox1.TabStop = false;
-            // 
-            // installationCompleteLabel
-            // 
-            this.installationCompleteLabel.AutoSize = true;
-            this.installationCompleteLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.installationCompleteLabel.ForeColor = System.Drawing.Color.Green;
-            this.installationCompleteLabel.Location = new System.Drawing.Point(508, 471);
-            this.installationCompleteLabel.Name = "installationCompleteLabel";
-            this.installationCompleteLabel.Size = new System.Drawing.Size(285, 33);
-            this.installationCompleteLabel.TabIndex = 27;
-            this.installationCompleteLabel.Text = "Installationen är klar!";
-            this.installationCompleteLabel.Visible = false;
             // 
             // wmfDirectoryChooser
             // 
@@ -369,7 +357,6 @@ namespace PictogramUpdater
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(854, 538);
-            this.Controls.Add(this.installationCompleteLabel);
             this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.overwriteCheckbox);
@@ -439,7 +426,6 @@ namespace PictogramUpdater
         private System.Windows.Forms.Label versionLabel;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label installationCompleteLabel;
     }
 }
 

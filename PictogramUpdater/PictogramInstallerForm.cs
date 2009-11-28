@@ -62,7 +62,6 @@ namespace PictogramUpdater {
         /// Laddar ner pictogram som saknas. Avsett att köras i egen tråd.
         /// </summary>
         private void Download() {
-            SetControlVisible(this.installationCompleteLabel, false);
             ClearDownloadLog("");
 
             SetControlsEnabled(false);
@@ -128,12 +127,10 @@ namespace PictogramUpdater {
         }
 
         private void InstallationFinishedSuccessfully() {
-            SetControlVisible(this.installationCompleteLabel, true);
-
             /* Set progress bar to 100% when installation is complete. */
             SetCurrentProgress(ProgressBarStyle.Blocks, 1, 1);
 
-            DialogResult result = MessageBox.Show("Installationen är klar. Avsluta programmet?", "Installationen är klar.", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Installationen är klar. Avsluta programmet?", "Uppdatering Bildbas Pictogram", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (result == DialogResult.Yes) {
                 Exit();
             }
@@ -274,8 +271,8 @@ namespace PictogramUpdater {
         }
 
         private void SetControlVisible(Control control, bool visible) {
-            if (this.installationCompleteLabel.InvokeRequired) {
-                this.installationCompleteLabel.Invoke(new SetControlVisibleCallback(SetControlVisible), new object[] { control, visible });
+            if (control.InvokeRequired) {
+                control.Invoke(new SetControlVisibleCallback(SetControlVisible), new object[] { control, visible });
             } else {
                 control.Visible = visible;
             }
@@ -496,7 +493,6 @@ namespace PictogramUpdater {
         private void InstallButton_Click(object sender, EventArgs e) {
 
             this.logTextbox.ScrollBars = ScrollBars.Both;
-            this.installationCompleteLabel.Hide();
 
             this._currentWorkingThread = new Thread(new ThreadStart(Download));
             _currentWorkingThread.Start();
