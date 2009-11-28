@@ -71,7 +71,7 @@ namespace PictogramUpdater {
                 if (this._authenticationService.UseFreeAccount()) {
                     ShowError("Kunde inte logga in på servern. Det kan bero på att en ny version av uppdateringsprogrammet har kommit ut. Titta gärna in på http://www.pictogram.se/produkter/ .");
                 } else {
-                    ShowError("Kunde inte logga in på servern. Kontrollera inloggningsuppgifterna.");
+                    ShowError("Kunde inte logga in på servern. Kontrollera användarnamn och lösenord.");
                 }
 
                 DownloadFinished();
