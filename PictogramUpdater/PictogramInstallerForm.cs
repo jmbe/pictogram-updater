@@ -550,5 +550,9 @@ namespace PictogramUpdater {
             System.Diagnostics.Process.Start(contactLink.Text);
         }
 
+        private void exitLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            this.Close();
+        }
+
     }
 }

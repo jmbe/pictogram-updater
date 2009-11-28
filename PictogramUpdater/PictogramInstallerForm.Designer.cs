@@ -55,6 +55,9 @@ namespace PictogramUpdater
             this.versionLabel = new System.Windows.Forms.Label();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.exitLink = new System.Windows.Forms.LinkLabel();
             this.wmfDirectoryChooser = new PictogramUpdater.DirectoryChooser();
             this.plainTextDirectoryChooser = new PictogramUpdater.DirectoryChooser();
             this.soundDirectoryChooser = new PictogramUpdater.DirectoryChooser();
@@ -63,6 +66,7 @@ namespace PictogramUpdater
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.flowLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // usernameTextbox
@@ -131,13 +135,14 @@ namespace PictogramUpdater
             this.statusStrip.Location = new System.Drawing.Point(0, 516);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(854, 22);
+            this.statusStrip.SizingGrip = false;
             this.statusStrip.TabIndex = 5;
             this.statusStrip.Text = "statusStrip";
             // 
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(737, 17);
+            this.statusLabel.Size = new System.Drawing.Size(706, 17);
             this.statusLabel.Spring = true;
             this.statusLabel.Text = "Klar";
             this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -236,7 +241,7 @@ namespace PictogramUpdater
             this.installButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.installButton.Location = new System.Drawing.Point(508, 420);
             this.installButton.Name = "installButton";
-            this.installButton.Size = new System.Drawing.Size(279, 45);
+            this.installButton.Size = new System.Drawing.Size(164, 45);
             this.installButton.TabIndex = 8;
             this.installButton.Text = "&Installera";
             this.installButton.UseVisualStyleBackColor = true;
@@ -324,6 +329,40 @@ namespace PictogramUpdater
             this.pictureBox1.TabIndex = 26;
             this.pictureBox1.TabStop = false;
             // 
+            // flowLayoutPanel3
+            // 
+            this.flowLayoutPanel3.Controls.Add(this.label5);
+            this.flowLayoutPanel3.Controls.Add(this.exitLink);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(678, 432);
+            this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(125, 33);
+            this.flowLayoutPanel3.TabIndex = 27;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(0, 0);
+            this.label5.Margin = new System.Windows.Forms.Padding(0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(38, 20);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "eller";
+            // 
+            // exitLink
+            // 
+            this.exitLink.AutoSize = true;
+            this.exitLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.exitLink.Location = new System.Drawing.Point(38, 0);
+            this.exitLink.Margin = new System.Windows.Forms.Padding(0);
+            this.exitLink.Name = "exitLink";
+            this.exitLink.Size = new System.Drawing.Size(59, 20);
+            this.exitLink.TabIndex = 1;
+            this.exitLink.TabStop = true;
+            this.exitLink.Text = "avsluta";
+            this.exitLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.exitLink_LinkClicked);
+            // 
             // wmfDirectoryChooser
             // 
             this.wmfDirectoryChooser.DisplayDirectoryInput = false;
@@ -357,6 +396,7 @@ namespace PictogramUpdater
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(854, 538);
+            this.Controls.Add(this.flowLayoutPanel3);
             this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.overwriteCheckbox);
@@ -376,6 +416,7 @@ namespace PictogramUpdater
             this.Controls.Add(this.plainTextDirectoryChooser);
             this.Controls.Add(this.soundDirectoryChooser);
             this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PictogramInstallerForm";
             this.Text = "Uppdatering Bildbas Pictogram";
@@ -390,6 +431,8 @@ namespace PictogramUpdater
             this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.flowLayoutPanel3.ResumeLayout(false);
+            this.flowLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -426,6 +469,9 @@ namespace PictogramUpdater
         private System.Windows.Forms.Label versionLabel;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.LinkLabel exitLink;
     }
 }
 
