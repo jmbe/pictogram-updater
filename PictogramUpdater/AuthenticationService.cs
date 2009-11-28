@@ -21,6 +21,12 @@ namespace PictogramUpdater {
             return files.Length > 0;
         }
 
+        public bool IsPictoOnlineUser {
+            get {
+                return this.pictoOnIni.FileExists;
+            }
+        }
+
         /*
         public Boolean IsPictogramManagerInstalled() {
             var iniFilePath = Environment.GetEnvironmentVariable("WINDIR") + @"\PictogramManager.ini";
@@ -73,32 +79,37 @@ namespace PictogramUpdater {
 
     public class PictoOnIni {
 
-        private readonly Profile _settings;
+        private readonly Profile ini;
+        private FileInfo settingsFile;
 
         public PictoOnIni() {
+            this.settingsFile = new FileInfo(Environment.GetEnvironmentVariable("WINDIR") + @"\PictoOn.ini");
+            this.ini = new Ini(settingsFile.FullName);
+        }
 
-            var settingsFile = Environment.GetEnvironmentVariable("WINDIR") + @"\PictoOn.ini";
-            this._settings = new Ini(settingsFile);
-
+        public bool FileExists {
+            get {
+                return this.settingsFile.Exists;
+            }
         }
 
         public string Username {
             get {
-                return _settings.GetValue("Login", "Owner") as string;
+                return ini.GetValue("Login", "Owner") as string;
             }
 
             set {
-                _settings.SetValue("Login", "Owner", value);    
+                ini.SetValue("Login", "Owner", value);    
             }
         }
 
         public string Password {
             get {
-                return _settings.GetValue("Login", "LoginWord") as string;
+                return ini.GetValue("Login", "LoginWord") as string;
             }
 
             set {
-                _settings.SetValue("Login", "LoginWord", value);
+                ini.SetValue("Login", "LoginWord", value);
             }
         }
 
