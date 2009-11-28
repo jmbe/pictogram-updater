@@ -65,7 +65,7 @@ namespace PictogramUpdater {
             return path ?? GetDefaultSoundPath(language);
         }
 
-        public void CreateOrUpdateWmfINI(Language language, string installPath, string plainTextInstallPath) {
+        public void CreateOrUpdateWmfIni(Language language, string installPath, string plainTextInstallPath) {
             if (!IsPictoWmfInstalled(language)) {
                 CreateNewIniFile(language);
             }
@@ -75,25 +75,18 @@ namespace PictogramUpdater {
             var iniFilePath = GetPictoWmfIniFilePath(language);
             Profile profile = new Ini(iniFilePath);
 
+
             try {
                 profile.SetValue("ProgDir", "Dir", installPath);
+
+                safeWriteToProfile(profile, "ProgDir", "Extension", "WMF");
+                safeWriteToProfile(profile, "ProgDir", "langWMF", language.Code);
+                safeWriteToProfile(profile, "ProgDir", "verWMF", "7.0");
+                safeWriteToProfile(profile, "ProgDir", "CD", "-");
+                safeWriteToProfile(profile, "ProgDir", "IDNAME", "");
+
+                // Place PlainTextDir last in section.
                 profile.SetValue("ProgDir", "PlainTextDir", plainTextInstallPath);
-            
-                if (profile.GetValue("ProgDir", "Extension") == null) {
-                    profile.SetValue("ProgDir", "Extension", "WMF");
-                }
-                if (profile.GetValue("ProgDir", "langWMF") == null) {
-                    profile.SetValue("ProgDir", "langWMF", language.Code);
-                }
-                if (profile.GetValue("ProgDir", "verWMF") == null) {
-                    profile.SetValue("ProgDir", "verWMF", "7.0");
-                }
-                if (profile.GetValue("ProgDir", "CD") == null) {
-                    profile.SetValue("ProgDir", "CD", "-");
-                }
-                if (profile.GetValue("ProgDir", "IDNAME") == null) {
-                    profile.SetValue("ProgDir", "IDNAME", "");
-                }
             } catch (System.ComponentModel.Win32Exception e) {
                 throw new UnauthorizedAccessException("Access to the path '" + iniFilePath + "' is denied.", e);
             }
@@ -102,7 +95,7 @@ namespace PictogramUpdater {
             
             var categories = this.categoryRepository.FindAll();
             profile.SetValue("Grupper", "Antal", categories.Count);
-            profile.RemoveSection("Grupper");
+
             foreach (var category in categories) {
                 var translation = this.categoryTranslationService.Translate(category, language);
 

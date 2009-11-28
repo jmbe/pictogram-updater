@@ -81,7 +81,7 @@ namespace PictogramUpdater {
 
             try {
                 var language = _languageSelection.Language;
-                config.CreateOrUpdateWmfINI(language, wmfDirectoryChooser.InstallPath, plainTextDirectoryChooser.InstallPath);
+                config.CreateOrUpdateWmfIni(language, wmfDirectoryChooser.InstallPath, plainTextDirectoryChooser.InstallPath);
 
 
                 LogMessage("Letar efter nya pictobilder...");
