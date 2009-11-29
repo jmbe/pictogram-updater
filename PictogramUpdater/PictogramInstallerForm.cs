@@ -53,6 +53,7 @@ namespace PictogramUpdater {
         private CategoryTranslationService categoryTranslationService;
         private DownloadListManager downloadListManager;
         private PictosysWebService pictosysWebService;
+        private IniFileFactory iniFileFactory;
 
         public PictogramInstallerForm() {
             InitializeComponent();
@@ -108,7 +109,7 @@ namespace PictogramUpdater {
                     LogMessage("");
                 }
 
-                config.CreatePicWMF(language);
+                config.CreateGenericPicWmfIni(language);
 
 
                 DownloadFinished();
@@ -426,9 +427,10 @@ namespace PictogramUpdater {
             this.pictosysWebService = new PictosysWebService();
 
             this.languageProvider = new LanguageProvider(this.pictosysWebService);
-            
 
-            this.config = new Config(this.categoryRepository, this.categoryTranslationService);
+            this.iniFileFactory = new IniFileFactory();
+
+            this.config = new Config(this.categoryRepository, this.categoryTranslationService, this.iniFileFactory);
             this.downloadManager = new DownloadManager(this.languageProvider, this.pictosysWebService);
 
 
