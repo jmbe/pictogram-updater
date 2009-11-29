@@ -423,9 +423,10 @@ namespace PictogramUpdater {
             this.categoryRepository = new CategoryRepository();
             this.categoryTranslationService = new CategoryTranslationService();
 
-            this.languageProvider = new LanguageProvider();
             this.pictosysWebService = new PictosysWebService();
 
+            this.languageProvider = new LanguageProvider(this.pictosysWebService);
+            
 
             this.config = new Config(this.categoryRepository, this.categoryTranslationService);
             this.downloadManager = new DownloadManager(this.languageProvider, this.pictosysWebService);

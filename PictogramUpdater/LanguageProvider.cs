@@ -14,11 +14,14 @@ namespace PictogramUpdater {
 
         public event LogMessageCallback LogMessage;
 
+        private PictosysWebService pictosysWebService;
+
         /// <summary>
         /// Skapar en ny instans av klassen.
         /// </summary>
-        public LanguageProvider() {
+        public LanguageProvider(PictosysWebService pictosysWebService) {
             languageToLocaleMapping = new Hashtable();
+            this.pictosysWebService = pictosysWebService;
         }
 
         /// <summary>
@@ -40,17 +43,37 @@ namespace PictogramUpdater {
         /// </summary>
         public void RefreshLanguages() {
             try {
-                var service = new PictosysWebService();
-                var languages = service.getSwedishLanguageNames();
+                
+                var languages = pictosysWebService.getSwedishLanguageNames();
                 for (var i = 0; i < languages.Length; i += 2) {
-                    languageToLocaleMapping[languages[i]] = languages[i + 1];
-                    Console.WriteLine(languages[i]);
+                    var languageName = languages[i];
+                    var languageCode =languages[i + 1];
+
+                    
+
+                    if (SkippedLanguageCodes.Contains(languageCode)) {
+                        continue;
+                    }
+    
+                    languageToLocaleMapping[languageName] = languageCode;
                 }
 
             } catch {
                 LogMessage("Kunde inte ansluta till server.");
             }
        }
+
+        private IList<string> SkippedLanguageCodes {
+            get {
+                List<string> skippedLanguagesCodes = new List<string>();
+                skippedLanguagesCodes.Add("lv");
+                skippedLanguagesCodes.Add("lt");
+                skippedLanguagesCodes.Add("pl");
+                skippedLanguagesCodes.Add("ru");
+
+                return skippedLanguagesCodes;
+            }
+        }
 
         /// <summary>
         /// Returnerar en lista med språk.
