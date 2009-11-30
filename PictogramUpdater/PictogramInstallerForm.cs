@@ -68,7 +68,7 @@ namespace PictogramUpdater {
             SetControlsEnabled(false);
 
             if (!this.downloadManager.checkLogin(this.usernameTextbox.Text, this.passwordTextbox.Text)) {
-                if (this._authenticationService.UseFreeAccount()) {
+                if (this._authenticationService.UseFreeAccount) {
                     ShowError("Kunde inte logga in på servern. Det kan bero på att en ny version av uppdateringsprogrammet har kommit ut. Titta gärna in på http://www.pictogram.se/produkter/ .");
                 } else {
                     ShowError("Kunde inte logga in på servern. Kontrollera användarnamn och lösenord.");
@@ -341,7 +341,7 @@ namespace PictogramUpdater {
             int topLineY = 60;
 
             e.Graphics.FillRectangle(Brushes.White, new Rectangle(0, 0, this.Width, topLineY));
-            string header = this._authenticationService.IsPictoOnlineUser ? "Bildbas Pictogram 4.0 - webbversion" : "Uppdatering av Bildbas Pictogram 4.0";
+            string header = this._authenticationService.UseFreeAccount ? "Uppdatering av Bildbas Pictogram 4.0" : "Bildbas Pictogram 4.0 - webbversion";
             e.Graphics.DrawString(header, new Font("Arial", 25, FontStyle.Bold), Brushes.SteelBlue, new PointF(10, 10));
 
             e.Graphics.DrawLine(Pens.LightGray, new Point(0, topLineY), new Point(this.Width, topLineY));

@@ -45,20 +45,24 @@ namespace PictogramUpdater {
         */
 
 
-        public bool RequiresUserAccount() {
-            return !UseFreeAccount();
+        public bool RequiresUserAccount {
+            get {
+                return !UseFreeAccount;
+            }
         }
 
-        public bool UseFreeAccount() {
-            return IsPictogramLibraryInstalled();
+        public bool UseFreeAccount {
+            get {
+                return IsPictogramLibraryInstalled();
+            }
         }
 
         public String GetUsername() {
-            return UseFreeAccount() ? "webservice" : this.pictoOnIni.Username;
+            return UseFreeAccount ? "webservice" : this.pictoOnIni.Username;
         }
 
         public String GetPassword() {
-            return UseFreeAccount() ? "tbn2wswzcrf4" : this.pictoOnIni.Password;
+            return UseFreeAccount ? "tbn2wswzcrf4" : this.pictoOnIni.Password;
         }
 
         public void saveAccount(string username, string password) {
