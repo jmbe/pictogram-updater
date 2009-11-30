@@ -38,7 +38,7 @@ namespace PictogramUpdater {
             LogMessage("Det finns " + downloadList.Missing.Count + " nya filer att ladda ner.");
             downloadManager.Download();
 
-            if (InstallationType.CODE.Equals(installationType) && downloadList.Missing.Count > 0) {
+            if (InstallationType.CODE.Equals(installationType)) {
                 LogMessage("Uppdaterar ini-fil...");
                 _config.CommitEntries(language, downloadList.All);
                 LogMessage("Ini-fil uppdaterad.");
