@@ -13,7 +13,7 @@ namespace PictogramUpdater {
             this.pictoOnIni = new PictoOnIni();
         }
 
-        public bool IsPictogramLibraryInstalled() {
+        private bool IsPictogramLibraryInstalled() {
             var windowsDir = Environment.GetEnvironmentVariable("WINDIR");
             var file = new FileInfo(windowsDir);
             var dir = new DirectoryInfo(windowsDir);
@@ -27,8 +27,8 @@ namespace PictogramUpdater {
             }
         }
 
-        /*
-        public Boolean IsPictogramManagerInstalled() {
+        
+        private Boolean IsPictogramManagerInstalled() {
             var iniFilePath = Environment.GetEnvironmentVariable("WINDIR") + @"\PictogramManager.ini";
             var iniFile = new FileInfo(iniFilePath);
             if (!iniFile.Exists) {
@@ -42,7 +42,7 @@ namespace PictogramUpdater {
             var exeFile = new FileInfo(exeFilePath + @"\PictogramManager.exe");
             return exeFile.Exists;
         }
-        */
+        
 
 
         public bool RequiresUserAccount {

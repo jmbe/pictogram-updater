@@ -388,7 +388,7 @@ namespace PictogramUpdater {
             this.soundDirectoryChooser.InstallPath = config.GetDefaultSoundPath(_languageSelection.Language);
 
 
-            if (_authenticationService.IsPictogramLibraryInstalled()) {
+            if (_authenticationService.UseFreeAccount) {
                 groupBox1.Visible = false;
             }
 
