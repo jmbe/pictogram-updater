@@ -142,7 +142,7 @@ namespace PictogramUpdater
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(706, 17);
+            this.statusLabel.Size = new System.Drawing.Size(737, 17);
             this.statusLabel.Spring = true;
             this.statusLabel.Text = "Klar";
             this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -304,11 +304,11 @@ namespace PictogramUpdater
             // versionLabel
             // 
             this.versionLabel.AutoSize = true;
-            this.versionLabel.Location = new System.Drawing.Point(73, 0);
+            this.versionLabel.Location = new System.Drawing.Point(58, 0);
             this.versionLabel.Name = "versionLabel";
-            this.versionLabel.Size = new System.Drawing.Size(60, 13);
+            this.versionLabel.Size = new System.Drawing.Size(75, 13);
             this.versionLabel.TabIndex = 24;
-            this.versionLabel.Text = "Version 2.0";
+            this.versionLabel.Text = "Version 2.0.43";
             // 
             // flowLayoutPanel2
             // 
