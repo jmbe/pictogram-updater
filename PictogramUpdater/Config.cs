@@ -234,7 +234,13 @@ namespace PictogramUpdater {
     public class PictogramEntry :IComparable<PictogramEntry> {
         private readonly Regex _indexPattern = new Regex(@"\d+$");
 
-        public PictogramEntry(string fullCode, string name) {
+        /// 
+        /// Throws FormatException when incorrectly named filenames are encounted.
+        /// 
+        /// FullCode is expected to be formatted like a30, j1 etc.
+        /// Name is the translation of the image.
+        /// 
+        public PictogramEntry(string fullCode, string name)  {
             FullCode = fullCode;
             Name = name;
             var indexMatch = _indexPattern.Match(fullCode);

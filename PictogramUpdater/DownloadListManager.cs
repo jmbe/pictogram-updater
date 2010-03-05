@@ -57,7 +57,11 @@ namespace PictogramUpdater {
             var sounds = this.pictosysWebService.getAvailableSoundsByLocale(username, password, language.Code.ToLower());
 
             foreach (string code in sounds) {
-                result.Add(new PictogramEntry(code, ""));
+                try {
+                    result.Add(new PictogramEntry(code, ""));
+                } catch (FormatException e) {
+                    /* Ignored. Some incorrect names are expected. */
+                }
             }
 
             return result;
@@ -71,7 +75,12 @@ namespace PictogramUpdater {
             for (var i = 0; i + 1 < phrases.Length; i = i + 2) {
                 var name = phrases[i];
                 var code = phrases[i + 1];
-                result.Add(new PictogramEntry(code, name));
+                try {
+                    result.Add(new PictogramEntry(code, name));
+                } catch (FormatException e) {
+                    /* Ignored. Some incorrect names are expected. */
+                }
+
             }
             return result;
         }
