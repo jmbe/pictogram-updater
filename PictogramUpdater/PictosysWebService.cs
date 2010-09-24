@@ -73,7 +73,7 @@ public partial class PictosysWebService : System.Web.Services.Protocols.SoapHttp
     
     /// <remarks/>
     public PictosysWebService() {
-        this.Url = "http://pictosys.com/pictosys-ejb/WebService";
+        this.Url = "http://www.pictosys.se/soap/pictogram";
     }
     
     /// <remarks/>
