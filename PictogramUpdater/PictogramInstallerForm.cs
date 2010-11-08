@@ -10,6 +10,7 @@ using System.Collections;
 using System.Threading;
 using AMS.Profile;
 using PictogramUpdater;
+using System.Diagnostics;
 
 namespace PictogramUpdater {
     internal delegate void SetProgressStyleCallback(ProgressBarStyle style);
@@ -131,10 +132,26 @@ namespace PictogramUpdater {
             /* Set progress bar to 100% when installation is complete. */
             SetCurrentProgress(ProgressBarStyle.Blocks, 1, 1);
 
-            DialogResult result = MessageBox.Show("Installationen är klar. Avsluta programmet?", "Uppdatering Bildbas Pictogram", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+
+            if (IsPictogramManagerRunning()) {
+                MessageBox.Show("Pictogramhanteraren är igång.  Kom ihåg att starta om Pictogramhanteraren för att se de nya bilderna.", "Starta om Pictogramhanteraren", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            DialogResult result = MessageBox.Show("Installationen är klar. Avsluta uppdateringsprogrammet?", "Uppdatering Bildbas Pictogram", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes) {
                 Exit();
             }
+        }
+
+        private Boolean IsPictogramManagerRunning() {
+            try {
+                return Process.GetProcessesByName("PictogramManager").Length > 0;
+            } catch {
+                /* Ignored - not important */
+            }
+            return false;
+
         }
 
         private void Exit() {
