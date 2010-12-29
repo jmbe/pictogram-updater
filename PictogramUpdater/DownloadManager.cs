@@ -81,9 +81,8 @@ namespace PictogramUpdater {
             StatusChanged("Hämtar pictogram-URL...");
 
             try {
-                PictosysWebService service = new PictosysWebService();
                 string locale = this._languageProvider.GetLocale(languageName);
-                LogMessage(service.getPictogramZipDownloadUrl(username, password, locale));
+                LogMessage(pictosysWebService.getPictogramZipDownloadUrl(username, password, locale));
             } catch (Exception e) {
                 LogMessage(e.Message);
             }
@@ -166,13 +165,11 @@ namespace PictogramUpdater {
                 /* Skapa målkatalog */
                 DirectoryInfo target = CreateTargetDirectory();
 
-                PictosysWebService service = new PictosysWebService();
-
                 BinaryWriter writer = null;
                 try {
                     string file = target.FullName + @"\pict" + language + ".zip";
                     LogMessage("Laddar ner zipfil till " + file + "...");
-                    byte[] buffer = service.downloadPictogramZip(username, password, language.Code);
+                    byte[] buffer = pictosysWebService.downloadPictogramZip(username, password, language.Code);
                     if (buffer.Length > 0) {
                         writer = new BinaryWriter(new FileStream(file, FileMode.OpenOrCreate));
                         writer.Write(buffer);
@@ -223,8 +220,7 @@ namespace PictogramUpdater {
             ProgressChanged(ProgressBarStyle.Marquee, 0, 1);
             bool login = false;
             try {
-                PictosysWebService service = new PictosysWebService();
-                login = service.verifyLogin(username, password);
+                login = pictosysWebService.verifyLogin(username, password);
 
                 if (login) {
                     StatusChanged("Kontouppgifterna är giltiga.");
