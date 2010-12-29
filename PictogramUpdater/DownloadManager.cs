@@ -76,21 +76,6 @@ namespace PictogramUpdater {
 
         public Language Language { get; set; }
 
-        public void DownloadPictogramZipUrl(string username, string password, string languageName) {
-            ProgressChanged(ProgressBarStyle.Continuous, 0, 1);
-            StatusChanged("Hämtar pictogram-URL...");
-
-            try {
-                string locale = this._languageProvider.GetLocale(languageName);
-                LogMessage(pictosysWebService.getPictogramZipDownloadUrl(username, password, locale));
-            } catch (Exception e) {
-                LogMessage(e.Message);
-            }
-
-            ProgressChanged(ProgressBarStyle.Blocks, 0, 1);
-            StatusChanged("Klar");
-
-        }
 
         /// <summary>
         /// Sätter igång nedladdning av pictogrambilder.
@@ -156,44 +141,6 @@ namespace PictogramUpdater {
             }
             return entriesByCode;
         }
-
-        public void DownloadZip(string username, string password, Language language) {
-            ProgressChanged(ProgressBarStyle.Marquee, 0, 1);
-            StatusChanged("Laddar ner pictogramzip...");
-
-            try {
-                /* Skapa målkatalog */
-                DirectoryInfo target = CreateTargetDirectory();
-
-                BinaryWriter writer = null;
-                try {
-                    string file = target.FullName + @"\pict" + language + ".zip";
-                    LogMessage("Laddar ner zipfil till " + file + "...");
-                    byte[] buffer = pictosysWebService.downloadPictogramZip(username, password, language.Code);
-                    if (buffer.Length > 0) {
-                        writer = new BinaryWriter(new FileStream(file, FileMode.OpenOrCreate));
-                        writer.Write(buffer);
-                    } else {
-                        LogMessage("No zipfile for that language exists or insufficient rights.");
-                    }
-                } catch (SoapException e) {
-                    LogMessage("Fel vid nedladdning av zipfil: " + e.Message);
-                } catch (FileNotFoundException e) {
-                    LogMessage("Fel vid nedladdning av zipfil: " + e.Message);
-                } finally {
-                    if (writer != null) {
-                        writer.Close();
-                    }
-                }
-
-
-            } catch (ArgumentException ex) {
-                Console.WriteLine(ex.Message);
-            }
-            ProgressChanged(ProgressBarStyle.Blocks, 0, 1);
-            StatusChanged("Klar");
-        }
-
 
         /// <summary>
         /// Skapar målkatalogen om den inte redan finns.

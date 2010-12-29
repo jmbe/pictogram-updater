@@ -47,8 +47,6 @@ namespace PictogramUpdater
             this.logTextbox = new System.Windows.Forms.TextBox();
             this.installButton = new System.Windows.Forms.Button();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.zipButton = new System.Windows.Forms.Button();
-            this.getZipUrlButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.contactLink = new System.Windows.Forms.LinkLabel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -247,28 +245,6 @@ namespace PictogramUpdater
             this.installButton.UseVisualStyleBackColor = true;
             this.installButton.Click += new System.EventHandler(this.InstallButton_Click);
             // 
-            // zipButton
-            // 
-            this.zipButton.Location = new System.Drawing.Point(269, 1);
-            this.zipButton.Name = "zipButton";
-            this.zipButton.Size = new System.Drawing.Size(85, 23);
-            this.zipButton.TabIndex = 9;
-            this.zipButton.Text = "&Ladda ner zip";
-            this.zipButton.UseVisualStyleBackColor = true;
-            this.zipButton.Visible = false;
-            this.zipButton.Click += new System.EventHandler(this.ZipButton_Click);
-            // 
-            // getZipUrlButton
-            // 
-            this.getZipUrlButton.Location = new System.Drawing.Point(165, 4);
-            this.getZipUrlButton.Name = "getZipUrlButton";
-            this.getZipUrlButton.Size = new System.Drawing.Size(98, 23);
-            this.getZipUrlButton.TabIndex = 10;
-            this.getZipUrlButton.Text = "&Hämta zip-URL";
-            this.getZipUrlButton.UseVisualStyleBackColor = true;
-            this.getZipUrlButton.Visible = false;
-            this.getZipUrlButton.Click += new System.EventHandler(this.GetZipUrlButton_Click);
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -404,9 +380,7 @@ namespace PictogramUpdater
             this.Controls.Add(this.label4);
             this.Controls.Add(this.languagesComboBox);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.getZipUrlButton);
             this.Controls.Add(this.soundCheckbox);
-            this.Controls.Add(this.zipButton);
             this.Controls.Add(this.logTextbox);
             this.Controls.Add(this.plainTextCheckbox);
             this.Controls.Add(this.installButton);
@@ -456,8 +430,6 @@ namespace PictogramUpdater
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.LinkLabel updateLinkLabel;
         private System.Windows.Forms.CheckBox overwriteCheckbox;
-        private System.Windows.Forms.Button zipButton;
-        private System.Windows.Forms.Button getZipUrlButton;
         private System.Windows.Forms.CheckBox plainTextCheckbox;
         private System.Windows.Forms.CheckBox soundCheckbox;
         private DirectoryChooser wmfDirectoryChooser;

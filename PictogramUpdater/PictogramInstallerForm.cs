@@ -173,32 +173,6 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Laddar ner pictogram som zipfil. Avsett att köras i egen tråd.
-        /// </summary>
-        private void DownloadZip() {
-            SetControlsEnabled(false);
-
-            installationManager.DownloadZip(wmfDirectoryChooser.InstallPath, usernameTextbox.Text, passwordTextbox.Text, _languageSelection.Language);
-
-            SetControlsEnabled(true);
-            _currentWorkingThread = null;
-        }
-
-        /// <summary>
-        /// Hämtar url för att ladda ner pictogramzipfil.
-        /// Avsett att köras i egen tråd.
-        /// </summary>
-        private void GetZipUrl() {
-            SetControlsEnabled(false);
-
-            downloadManager.TargetPath = this.wmfDirectoryChooser.InstallPath;
-            downloadManager.DownloadPictogramZipUrl(this.usernameTextbox.Text, this.passwordTextbox.Text, GetLanguage());
-
-            SetControlsEnabled(true);
-            this._currentWorkingThread = null;
-        }
-
-        /// <summary>
         /// Kontrollerar om inloggningsuppgifterna är giltiga. Avsett att köras i egen tråd.
         /// </summary>
         private void CheckLogin() {
@@ -331,7 +305,7 @@ namespace PictogramUpdater {
         private void SetControlsEnabled(bool enabled) {
             foreach (
                 Control control in
-                    new Control[] { verifyLabel, installButton, updateLinkLabel, overwriteCheckbox, zipButton, getZipUrlButton, wmfDirectoryChooser, soundDirectoryChooser, plainTextDirectoryChooser, languagesComboBox }) {
+                    new Control[] { verifyLabel, installButton, updateLinkLabel, overwriteCheckbox, wmfDirectoryChooser, soundDirectoryChooser, plainTextDirectoryChooser, languagesComboBox }) {
                 SetControlEnabled(control, enabled);
             }
         }
@@ -554,16 +528,6 @@ namespace PictogramUpdater {
                 SetStatus("Nedladdning avbruten");
                 SetControlsEnabled(true);
             }
-        }
-
-        private void ZipButton_Click(object sender, EventArgs e) {
-            this._currentWorkingThread = new Thread(new ThreadStart(DownloadZip));
-            _currentWorkingThread.Start();
-        }
-
-        private void GetZipUrlButton_Click(object sender, EventArgs e) {
-            this._currentWorkingThread = new Thread(new ThreadStart(GetZipUrl));
-            this._currentWorkingThread.Start();
         }
 
         private void contactLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {

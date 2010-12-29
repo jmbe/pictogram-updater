@@ -45,11 +45,6 @@ namespace PictogramUpdater {
             }
         }
 
-        public void DownloadZip(string targetPath, string username, string password, Language language) {
-            var downloadManager = CreateDownloadManager(targetPath, username, password, language);
-            downloadManager.DownloadZip(username, password, language);
-        }
-
         private DownloadManager CreateDownloadManager(string targetPath, string username, string password,
                                                    Language language) {
             var downloadManager = new DownloadManager(this.languageProvider, this.pictosysWebService);
