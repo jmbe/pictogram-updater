@@ -420,7 +420,7 @@ namespace PictogramUpdater {
 
             this.pictogramRestService = new PictogramRestService("www-jmbe.pictosys.se");
 
-            this.languageProvider = new LanguageProvider(this.pictosysWebService);
+            this.languageProvider = new LanguageProvider(this.pictogramRestService);
 
             this.iniFileFactory = new IniFileFactory();
 

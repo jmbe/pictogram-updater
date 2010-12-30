@@ -14,14 +14,14 @@ namespace PictogramUpdater {
 
         public event LogMessageCallback LogMessage;
 
-        private PictosysWebService pictosysWebService;
+        private PictogramRestService pictogramRestService;
 
         /// <summary>
         /// Skapar en ny instans av klassen.
         /// </summary>
-        public LanguageProvider(PictosysWebService pictosysWebService) {
+        public LanguageProvider(PictogramRestService pictosysWebService) {
             languageToLocaleMapping = new Hashtable();
-            this.pictosysWebService = pictosysWebService;
+            this.pictogramRestService = pictosysWebService;
         }
 
         /// <summary>
@@ -44,12 +44,10 @@ namespace PictogramUpdater {
         public void RefreshLanguages() {
             try {
                 
-                var languages = pictosysWebService.getSwedishLanguageNames();
-                for (var i = 0; i < languages.Length; i += 2) {
-                    var languageName = languages[i];
-                    var languageCode =languages[i + 1];
-
-                    
+                IList<Language> languages = pictogramRestService.getSwedishLanguageNames();
+                foreach(Language language in languages) {
+                    var languageName = language.Name;
+                    var languageCode = language.Code;
 
                     if (SkippedLanguageCodes.Contains(languageCode)) {
                         continue;

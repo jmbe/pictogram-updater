@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PictogramUpdater {
     internal class LanguageSelection {
-        private Language _language = new Language("SV", "Svenska");
+        private Language _language = new Language("sv", "Svenska");
 
         public event LanguageChangedCallback LanguageChanged;
 
@@ -38,7 +38,9 @@ namespace PictogramUpdater {
         /// Swedish is special since it is the only language which should have sounds enabled.
         /// </summary>
         public bool IsSwedish {
-            get { return "SV".Equals(Code); }
+            get {
+                return "sv".ToLower().Equals(Code.ToLower());
+            }
         }
     }
 }

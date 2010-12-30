@@ -18,12 +18,9 @@ namespace PictogramUpdater {
             dynamic client = createRestClient("/accounts/" + username, RestService.Xml).withCredentials(new NetworkCredential(username, password));
             dynamic operation = client.check();
 
-
-
-
-            if (operation.statusCode == HttpStatusCode.Unauthorized) {
+            if (operation.StatusCode == HttpStatusCode.Unauthorized) {
                 return false;
-            } else if (operation.statusCode == HttpStatusCode.OK) {
+            } else if (operation.StatusCode == HttpStatusCode.OK) {
                 return true;
             }
 
@@ -32,6 +29,23 @@ namespace PictogramUpdater {
 
         private dynamic createRestClient(string path, RestService type) {
             return new RestClient("http://" + hostname + "/rest/pictogram-1.0" + path, type);
+        }
+
+        internal IList<Language> getSwedishLanguageNames() {
+            List<Language> languages = new List<Language>();
+
+            dynamic client = createRestClient("/languages/", RestService.Xml);
+            dynamic operation = client.get();
+
+            if (operation.Error != null) {
+                throw operation.Error as Exception;
+            }
+
+            foreach (dynamic language in operation.Result.SelectAll("language")) {
+                languages.Add(new Language(language.@name, language.@SwedishName));
+            }
+
+            return languages;
         }
     }
 }
