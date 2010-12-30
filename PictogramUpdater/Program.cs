@@ -19,7 +19,7 @@ namespace PictogramUpdater {
 
             try {
                 CreateDesktopIcon();
-            } catch (Exception e) {
+            } catch (Exception) {
                 /* ignored. */
             }
 
