@@ -19,9 +19,9 @@ namespace PictogramUpdater {
         /// <summary>
         /// Skapar en ny instans av klassen.
         /// </summary>
-        public LanguageProvider(PictogramRestService pictosysWebService) {
+        public LanguageProvider(PictogramRestService pictogramRestService) {
             languageToLocaleMapping = new Hashtable();
-            this.pictogramRestService = pictosysWebService;
+            this.pictogramRestService = pictogramRestService;
         }
 
         /// <summary>
