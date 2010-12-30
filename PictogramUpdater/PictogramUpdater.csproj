@@ -22,8 +22,9 @@
     <ManifestCertificateThumbprint>0D8E48E36589E288A95EC63D80320B05963DE1BB</ManifestCertificateThumbprint>
     <ManifestKeyFile>PictogramUpdater_TemporaryKey.pfx</ManifestKeyFile>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <ApplicationIcon>pictogramuppdatering.ico</ApplicationIcon>
+    <TargetFrameworkProfile />
     <PublishUrl>C:\Temp\publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -69,6 +70,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\AMS.Profile.dll</HintPath>
     </Reference>
+    <Reference Include="DynamicRest">
+      <HintPath>lib\DynamicRest.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -113,6 +118,7 @@
     <Compile Include="PictogramInstallerForm.Designer.cs">
       <DependentUpon>PictogramInstallerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PictogramRestService.cs" />
     <Compile Include="PictosysWebService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -142,6 +148,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.config" />
     <None Include="PictogramUpdater_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">

@@ -19,7 +19,7 @@ namespace PictogramUpdater {
     class DownloadManager {
         private readonly LanguageProvider _languageProvider;
         private PictosysWebService pictosysWebService;
-        
+        private PictogramRestService pictogramRestService;        
 
         public event LogMessageCallback LogMessage;
         public event CurrentProgressCallback ProgressChanged;
@@ -29,7 +29,7 @@ namespace PictogramUpdater {
         /// <summary>
         /// Skapar en ny instans av klassen.
         /// </summary>
-        public DownloadManager(LanguageProvider languageProvider, PictosysWebService pictosysWebService) {
+        public DownloadManager(LanguageProvider languageProvider, PictosysWebService pictosysWebService, PictogramRestService pictogramRestService) {
             if (languageProvider == null) {
                 throw new NullReferenceException("Language provider cannot be null");
             }
@@ -40,6 +40,13 @@ namespace PictogramUpdater {
             }
 
             this.pictosysWebService = pictosysWebService;
+
+            if (pictogramRestService == null) {
+                throw new NullReferenceException("Pictogram REST service cannot be null");
+            }
+
+            this.pictogramRestService = pictogramRestService;
+
         }
 
         
@@ -167,7 +174,7 @@ namespace PictogramUpdater {
             ProgressChanged(ProgressBarStyle.Marquee, 0, 1);
             bool login = false;
             try {
-                login = pictosysWebService.verifyLogin(username, password);
+                login = pictogramRestService.verifyLogin(username, password);
 
                 if (login) {
                     StatusChanged("Kontouppgifterna är giltiga.");
@@ -176,6 +183,7 @@ namespace PictogramUpdater {
                 }
             } catch {
                 LogMessage("Kunde inte ansluta till server.");
+                StatusChanged("");
             }
             ProgressChanged(ProgressBarStyle.Blocks, 0, 1);
             return login;

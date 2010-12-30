@@ -13,14 +13,16 @@ namespace PictogramUpdater {
         private readonly DownloadListManager _downloadListManager;
         private LanguageProvider languageProvider;
         private PictosysWebService pictosysWebService;
+        private PictogramRestService pictogramRestService;
 
         public Thread CurrentWorkingThread { get; set; }
 
-        public InstallationManager(Config config, DownloadListManager downloadListManager, LanguageProvider languageProvider, PictosysWebService pictosysWebService) {
+        public InstallationManager(Config config, DownloadListManager downloadListManager, LanguageProvider languageProvider, PictosysWebService pictosysWebService, PictogramRestService pictogramRestService) {
             _config = config;
             _downloadListManager = downloadListManager;
             this.languageProvider = languageProvider;
             this.pictosysWebService = pictosysWebService;
+            this.pictogramRestService = pictogramRestService;
         }
 
         public void Download(string targetPath, Language language, bool overwrite, InstallationType installationType,
@@ -47,7 +49,7 @@ namespace PictogramUpdater {
 
         private DownloadManager CreateDownloadManager(string targetPath, string username, string password,
                                                    Language language) {
-            var downloadManager = new DownloadManager(this.languageProvider, this.pictosysWebService);
+            var downloadManager = new DownloadManager(this.languageProvider, this.pictosysWebService, this.pictogramRestService);
 
             downloadManager.TargetPath = targetPath;
             downloadManager.Username = username;

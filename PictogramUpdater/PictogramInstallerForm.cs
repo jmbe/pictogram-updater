@@ -55,6 +55,7 @@ namespace PictogramUpdater {
         private DownloadListManager downloadListManager;
         private PictosysWebService pictosysWebService;
         private IniFileFactory iniFileFactory;
+        private PictogramRestService pictogramRestService;
 
         public PictogramInstallerForm() {
             InitializeComponent();
@@ -417,17 +418,19 @@ namespace PictogramUpdater {
 
             this.pictosysWebService = new PictosysWebService();
 
+            this.pictogramRestService = new PictogramRestService("www-jmbe.pictosys.se");
+
             this.languageProvider = new LanguageProvider(this.pictosysWebService);
 
             this.iniFileFactory = new IniFileFactory();
 
             this.config = new Config(this.categoryRepository, this.categoryTranslationService, this.iniFileFactory);
-            this.downloadManager = new DownloadManager(this.languageProvider, this.pictosysWebService);
+            this.downloadManager = new DownloadManager(this.languageProvider, this.pictosysWebService, this.pictogramRestService);
 
 
             this.downloadListManager = new DownloadListManager(this.pictosysWebService, this.config);
 
-            this.installationManager = new InstallationManager(this.config, this.downloadListManager, this.languageProvider, this.pictosysWebService);
+            this.installationManager = new InstallationManager(this.config, this.downloadListManager, this.languageProvider, this.pictosysWebService, this.pictogramRestService);
         }
 
         private void LanguageChanged() {
