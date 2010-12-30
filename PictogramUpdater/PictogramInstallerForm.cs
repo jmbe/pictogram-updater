@@ -53,7 +53,7 @@ namespace PictogramUpdater {
         private CategoryRepository categoryRepository;
         private CategoryTranslationService categoryTranslationService;
         private DownloadListManager downloadListManager;
-        private PictosysWebService pictosysWebService;
+        
         private IniFileFactory iniFileFactory;
         private PictogramRestService pictogramRestService;
 
@@ -416,21 +416,19 @@ namespace PictogramUpdater {
             this.categoryRepository = new CategoryRepository();
             this.categoryTranslationService = new CategoryTranslationService();
 
-            this.pictosysWebService = new PictosysWebService();
-
-            this.pictogramRestService = new PictogramRestService("www-jmbe.pictosys.se");
+            this.pictogramRestService = new PictogramRestService("qa.pictosys.se");
 
             this.languageProvider = new LanguageProvider(this.pictogramRestService);
 
             this.iniFileFactory = new IniFileFactory();
 
             this.config = new Config(this.categoryRepository, this.categoryTranslationService, this.iniFileFactory);
-            this.downloadManager = new DownloadManager(this.languageProvider, this.pictosysWebService, this.pictogramRestService);
+            this.downloadManager = new DownloadManager(this.languageProvider, this.pictogramRestService);
 
 
-            this.downloadListManager = new DownloadListManager(this.pictosysWebService, this.config);
+            this.downloadListManager = new DownloadListManager(this.pictogramRestService, this.config);
 
-            this.installationManager = new InstallationManager(this.config, this.downloadListManager, this.languageProvider, this.pictosysWebService, this.pictogramRestService);
+            this.installationManager = new InstallationManager(this.config, this.downloadListManager, this.languageProvider, this.pictogramRestService);
         }
 
         private void LanguageChanged() {

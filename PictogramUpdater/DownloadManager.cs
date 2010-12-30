@@ -18,7 +18,7 @@ namespace PictogramUpdater {
     /// </summary>
     class DownloadManager {
         private readonly LanguageProvider _languageProvider;
-        private PictosysWebService pictosysWebService;
+        
         private PictogramRestService pictogramRestService;        
 
         public event LogMessageCallback LogMessage;
@@ -29,17 +29,11 @@ namespace PictogramUpdater {
         /// <summary>
         /// Skapar en ny instans av klassen.
         /// </summary>
-        public DownloadManager(LanguageProvider languageProvider, PictosysWebService pictosysWebService, PictogramRestService pictogramRestService) {
+        public DownloadManager(LanguageProvider languageProvider, PictogramRestService pictogramRestService) {
             if (languageProvider == null) {
                 throw new NullReferenceException("Language provider cannot be null");
             }
             this._languageProvider = languageProvider;
-
-            if (pictosysWebService == null) {
-                throw new NullReferenceException("Pictosys Web service cannot be null");
-            }
-
-            this.pictosysWebService = pictosysWebService;
 
             if (pictogramRestService == null) {
                 throw new NullReferenceException("Pictogram REST service cannot be null");
@@ -105,22 +99,22 @@ namespace PictogramUpdater {
                         var file = target.FullName + @"\" + fileName;
 
                         LogMessage("Laddar ner " + fileName + "...");
-                        BinaryWriter writer = null;
+                        Stream stream = null;
+                        
                         try {
-                            byte[] buffer;
+                            stream = new FileStream(file, FileMode.OpenOrCreate);
+                            
                             if (Sound) {
-                                buffer = this.pictosysWebService.downloadSound(Username, Password, entry.FullCode, Language.Code.ToLower());
+                                this.pictogramRestService.downloadSound(Username, Password, entry.FullCode, Language.Code.ToLower(), stream);
                             } else {
-                                buffer = this.pictosysWebService.downloadWMF(Username, Password, entry.FullCode, Language.Code);
+                                this.pictogramRestService.downloadWmf(Username, Password, entry.FullCode, Language.Code.ToLower(), stream);
                             }
-
-                            writer = new BinaryWriter(new FileStream(file, FileMode.OpenOrCreate));
-                            writer.Write(buffer);
-                        } catch (SoapException e) {
+                            
+                        } catch (Exception e) {
                             LogMessage("Fel vid nedladdning av " + fileName + ": " + e.Message);
                         } finally {
-                            if (writer != null) {
-                                writer.Close();
+                            if (stream != null) {
+                                stream.Close();
                             }
                         }
                         

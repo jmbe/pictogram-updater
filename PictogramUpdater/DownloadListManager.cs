@@ -5,11 +5,11 @@ using System.IO;
 namespace PictogramUpdater {
     internal class DownloadListManager {
 
-        private PictosysWebService pictosysWebService;
+        private PictogramRestService pictogramRestService;
         private Config config;
 
-        public DownloadListManager(PictosysWebService pictosysWebService, Config config) {
-            this.pictosysWebService = pictosysWebService;
+        public DownloadListManager(PictogramRestService pictogramRestService, Config config) {
+            this.pictogramRestService = pictogramRestService;
             this.config = config;
         }
 
@@ -52,37 +52,13 @@ namespace PictogramUpdater {
         }
 
         private List<PictogramEntry> GetSoundEntries(String username, String password, Language language) {
-            var result = new List<PictogramEntry>();
-
-            var sounds = this.pictosysWebService.getAvailableSoundsByLocale(username, password, language.Code.ToLower());
-
-            foreach (string code in sounds) {
-                try {
-                    result.Add(new PictogramEntry(code, ""));
-                } catch (FormatException e) {
-                    /* Ignored. Some incorrect names are expected. */
-                }
-            }
-
-            return result;
+            List<PictogramEntry> sounds = this.pictogramRestService.getAvailableSoundsByLanguage(language.Code.ToLower());
+            return sounds;
         }
 
         private List<PictogramEntry> GetEntries(string username, string password, Language language) {
-            var result = new List<PictogramEntry>();
-            
-            var phrases = this.pictosysWebService.getPictogramPhrasesByLocale(username, password, language.Code.ToLower());
-
-            for (var i = 0; i + 1 < phrases.Length; i = i + 2) {
-                var name = phrases[i];
-                var code = phrases[i + 1];
-                try {
-                    result.Add(new PictogramEntry(code, name));
-                } catch (FormatException e) {
-                    /* Ignored. Some incorrect names are expected. */
-                }
-
-            }
-            return result;
+            List<PictogramEntry> phrases = this.pictogramRestService.getPictogramPhrasesByLanguage(language.Code.ToLower());
+            return phrases;
         }
 
         private List<PictogramEntry> FilterEntries(Language language,
