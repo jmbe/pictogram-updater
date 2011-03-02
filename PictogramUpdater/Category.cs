@@ -12,7 +12,7 @@ namespace PictogramUpdater {
             _categories = new List<Category>();
 
             //Create all categories, with i, w removed.
-            for (var index = 1; index <= 26; index++) {
+            for (var index = 1; index <= 27; index++) {
                 var code = "";
                 if (index <= 8) {
                     code = ((char)('a' + index - 1)).ToString();
@@ -72,7 +72,8 @@ namespace PictogramUpdater {
 																					     "Högtider", "Egenskaper",
 																					     "Läge riktning", "Antal",
 																					     "Diverse",
-																					     "TV-program", "Frågeord"
+																					     "TV-program", "Frågeord",
+                                                                                         "Återvinning"
 																				     }
 																	     },
 
@@ -103,7 +104,8 @@ namespace PictogramUpdater {
                                                                                 "Numbers",
                                                                                 "Various",
                                                                                 "TV-programs",
-                                                                                "Questions"
+                                                                                "Questions",
+                                                                                "Recycling"
 																	     }
 																	     },
 
@@ -135,7 +137,8 @@ namespace PictogramUpdater {
 																		    "Anzahl",
 																		    "Verschiedenes",
 																		    "Fernsehprogramm",
-																		    "Fragewörter"
+																		    "Fragewörter",
+                                                                            "Recycling"
 																	     }
 																	     },
 
@@ -165,7 +168,8 @@ namespace PictogramUpdater {
 																		    "Liczby",
 																		    "Różne",
 																		    "Programy TV",
-																		    "Pytania"
+																		    "Pytania",
+                                                                            "Recycling"
 																	     }
 																	     },
 
@@ -195,7 +199,8 @@ namespace PictogramUpdater {
 																		    "Antal",
 																		    "Diverse",
 																		    "TV-program",
-																		    "Spørgeord"
+																		    "Spørgeord",
+                                                                            "Recycling"
 																	     }},
 
 																	     {"ES", new [] {
@@ -224,7 +229,8 @@ namespace PictogramUpdater {
 																	        "Cantidad",
 																	        "Varios",
 																	        "Programas televisivos",
-																	        "Interrogativas"
+																	        "Interrogativas",
+                                                                            "Recycling"
     																	 
 																	     }},
 
@@ -255,7 +261,8 @@ namespace PictogramUpdater {
 																		    "Lukumäärä",
 																		    "Sekalaista",
 																		    "TV-ohjelmat",
-																		    "Kysymyssanat"
+																		    "Kysymyssanat",
+                                                                            "Recycling"
     																	 
 																	     }},
 
@@ -286,7 +293,8 @@ namespace PictogramUpdater {
                                                                             "Nombres",
                                                                             "Divers",
                                                                             "Programme de télé",
-                                                                            "Questions"
+                                                                            "Questions",
+                                                                            "Recycling"
     																	 
 																	     }},
 
@@ -316,7 +324,8 @@ namespace PictogramUpdater {
                                                                             "Fjöldi",
                                                                             "Ýmislegt",
                                                                             "Sjónvarpsefni",
-                                                                            "Spurnarorð"
+                                                                            "Spurnarorð",
+                                                                            "Recycling"
     																	 
 																	     }},
 
@@ -348,7 +357,8 @@ namespace PictogramUpdater {
                                                                             "Quantità",
                                                                             "Varie",
                                                                             "Programmi TV",
-                                                                            "Pronomi ed avverbi interrogativi"
+                                                                            "Pronomi ed avverbi interrogativi",
+                                                                            "Recycling"
 																	     }},
 
 																	     {"LE", new[] {
@@ -377,7 +387,8 @@ namespace PictogramUpdater {
                                                                             "Skaitļi",
                                                                             "Dažādi",
                                                                             "TV-programmas",
-                                                                            "Jautājumi"
+                                                                            "Jautājumi",
+                                                                            "Recycling"
 																	     }},
 
 																	     {"LT", new[] {
@@ -406,7 +417,8 @@ namespace PictogramUpdater {
                                                                             "Skaičiai",
                                                                             "Įvairūs",
                                                                             "Televizijos programos",
-                                                                            "Klausimai"
+                                                                            "Klausimai",
+                                                                            "Recycling"
 																	     }},
 
 																	     {"NO", new[] {
@@ -435,7 +447,8 @@ namespace PictogramUpdater {
                                                                             "Antall",
                                                                             "Diverse",
                                                                             "TV-program",
-                                                                            "Spørreord"
+                                                                            "Spørreord",
+                                                                            "Recycling"
     																	 
 																	     }},
 
@@ -467,7 +480,8 @@ namespace PictogramUpdater {
                                                                             "Quantidade",
                                                                             "Diversos",
                                                                             "Programas de Televisão",
-                                                                            "Palavras que definem uma pergunta"
+                                                                            "Palavras que definem uma pergunta",
+                                                                            "Recycling"
 																	     }},
 
 																	     {"RU", new[] {
@@ -497,7 +511,8 @@ namespace PictogramUpdater {
                                                                             "Число",
                                                                             "Разное",
                                                                             "программа ТВ",
-                                                                            "Вопросительные слова"
+                                                                            "Вопросительные слова",
+                                                                            "Recycling"
 																	     }}
 
 															     };
