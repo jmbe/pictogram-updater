@@ -240,9 +240,10 @@ namespace PictogramUpdater {
         /// FullCode is expected to be formatted like a30, j1 etc.
         /// Name is the translation of the image.
         /// 
-        public PictogramEntry(string fullCode, string name)  {
+        public PictogramEntry(string fullCode, string name, DateTime modified)  {
             FullCode = fullCode;
             Name = name;
+            Modified = modified;
             var indexMatch = _indexPattern.Match(fullCode);
             CategoryCode = fullCode.Substring(0, indexMatch.Index);
             Index = Convert.ToInt32(fullCode.Substring(indexMatch.Index));
@@ -250,6 +251,7 @@ namespace PictogramUpdater {
 
         public string FullCode { get; set; }
         public string Name { get; set; }
+        public DateTime Modified { get; set; }
 
         public string CategoryCode { get; private set; }
 

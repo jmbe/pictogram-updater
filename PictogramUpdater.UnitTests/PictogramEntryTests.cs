@@ -9,7 +9,7 @@ namespace PictogramUpdater {
 
         [Test]
         public void ShouldReturnCode() {
-            var entry = new PictogramEntry("a3", "flicka");
+            var entry = new PictogramEntry("a3", "flicka", new DateTime());
             Assert.That(entry.CategoryCode, Is.EqualTo("a"));
         }
     }

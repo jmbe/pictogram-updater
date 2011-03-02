@@ -133,16 +133,6 @@ namespace PictogramUpdater {
             }
         }
 
-        private Dictionary<string, PictogramEntry> GetPictogramEntriesByCode(string[] strings) {
-            var entriesByCode = new Dictionary<string, PictogramEntry>();
-            for (var i = 0; i < strings.Length; i = i + 2 ) {
-                var code = strings[i];
-                var name = strings[i + 1];
-                entriesByCode[code] = new PictogramEntry(code, name);
-            }
-            return entriesByCode;
-        }
-
         /// <summary>
         /// Skapar målkatalogen om den inte redan finns.
         /// </summary>

@@ -4,6 +4,7 @@ using System.Text;
 using DynamicRest;
 using System.Net;
 using System.IO;
+using System.Globalization;
 
 namespace PictogramUpdater {
     class PictogramRestService {
@@ -61,7 +62,8 @@ namespace PictogramUpdater {
 
             foreach (dynamic sound in operation.Result.SelectAll("sound")) {
                 try {
-                    result.Add(new PictogramEntry(sound.@name, ""));
+                    DateTime modified = DateTime.ParseExact(sound.@modified, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    result.Add(new PictogramEntry(sound.@name, "", modified));
                 } catch (FormatException) {
                     /* Ignored. Some incorrect names are expected. */
                 }
@@ -86,7 +88,8 @@ namespace PictogramUpdater {
                 String code = pictogram.@name;
 
                 try {
-                    result.Add(new PictogramEntry(code, text));
+                    DateTime modified = DateTime.ParseExact(pictogram.@modified, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    result.Add(new PictogramEntry(code, text, modified));
                 } catch (FormatException) {
                     /* Ignored. Some incorrect names are expected. */
                 }
