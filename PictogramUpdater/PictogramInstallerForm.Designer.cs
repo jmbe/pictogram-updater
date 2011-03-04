@@ -284,7 +284,7 @@ namespace PictogramUpdater
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(78, 13);
             this.versionLabel.TabIndex = 24;
-            this.versionLabel.Text = "Version 3.0.0.6";
+            this.versionLabel.Text = "Version 3.0.0.7";
             // 
             // flowLayoutPanel2
             // 
