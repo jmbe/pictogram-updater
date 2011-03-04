@@ -22,6 +22,7 @@ namespace PictogramUpdater {
         private PictogramRestService pictogramRestService;        
 
         public event LogMessageCallback LogMessage;
+        public event LogToFileCallback LogToFile;
         public event CurrentProgressCallback ProgressChanged;
         public event SetStatusCallback StatusChanged;
 
@@ -112,6 +113,7 @@ namespace PictogramUpdater {
                             
                         } catch (Exception e) {
                             LogMessage("Fel vid nedladdning av " + fileName + ": " + e.Message);
+                            LogToFile(e.ToString());
                         } finally {
                             if (stream != null) {
                                 stream.Close();
@@ -129,7 +131,7 @@ namespace PictogramUpdater {
                     //checkLogin(Username, Password);
                 }
             } catch (ArgumentException ex) {
-                Console.WriteLine(ex.Message);
+                LogToFile(ex.ToString());
             }
         }
 
@@ -165,9 +167,10 @@ namespace PictogramUpdater {
                 } else {
                     StatusChanged("Kontrollera kontouppgifterna!");
                 }
-            } catch {
+            } catch (Exception e) {
                 LogMessage("Kunde inte ansluta till server.");
                 StatusChanged("");
+                LogToFile(e.ToString());
             }
             ProgressChanged(ProgressBarStyle.Blocks, 0, 1);
             return login;

@@ -13,6 +13,7 @@ namespace PictogramUpdater {
         private Hashtable languageToLocaleMapping;
 
         public event LogMessageCallback LogMessage;
+        public event LogToFileCallback LogToFile;
 
         private PictogramRestService pictogramRestService;
 
@@ -43,7 +44,7 @@ namespace PictogramUpdater {
         /// </summary>
         public void RefreshLanguages() {
             try {
-                
+
                 IList<Language> languages = pictogramRestService.getSwedishLanguageNames();
                 foreach(Language language in languages) {
                     var languageName = language.Name;
@@ -56,8 +57,9 @@ namespace PictogramUpdater {
                     languageToLocaleMapping[languageName] = languageCode;
                 }
 
-            } catch {
-                LogMessage("Kunde inte ansluta till server.");
+            } catch (Exception e) {
+                LogMessage("Kunde inte ansluta till server. (" + e.Message+ ")" );
+                LogToFile(e.ToString());
             }
        }
 

@@ -8,6 +8,9 @@ using System.Globalization;
 
 namespace PictogramUpdater {
     class PictogramRestService {
+
+        public event LogToFileCallback LogTofile;
+
         private string hostname;
 
         public PictogramRestService(String hostname) {
@@ -64,8 +67,9 @@ namespace PictogramUpdater {
                 try {
                     DateTime modified = DateTime.ParseExact(sound.@modified, "yyyy-MM-dd", CultureInfo.InvariantCulture);
                     result.Add(new PictogramEntry(sound.@name, "", modified));
-                } catch (FormatException) {
-                    /* Ignored. Some incorrect names are expected. */
+                } catch (FormatException e) {
+                    /* Some incorrect names are expected. */
+                    LogTofile(e.ToString());
                 }
             }
 
@@ -90,8 +94,9 @@ namespace PictogramUpdater {
                 try {
                     DateTime modified = DateTime.ParseExact(pictogram.@modified, "yyyy-MM-dd", CultureInfo.InvariantCulture);
                     result.Add(new PictogramEntry(code, text, modified));
-                } catch (FormatException) {
-                    /* Ignored. Some incorrect names are expected. */
+                } catch (FormatException e) {
+                    /* Some incorrect names are expected. */
+                    LogTofile(e.ToString());
                 }
             }
 

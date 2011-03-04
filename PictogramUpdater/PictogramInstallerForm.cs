@@ -21,6 +21,8 @@ namespace PictogramUpdater {
 
     internal delegate void LogMessageCallback(string message);
 
+    internal delegate void LogToFileCallback(string message);
+
     internal delegate void LogErrorCallback(string message);
 
     internal delegate void ExitCallback();
@@ -56,6 +58,7 @@ namespace PictogramUpdater {
         
         private IniFileFactory iniFileFactory;
         private PictogramRestService pictogramRestService;
+        private FileLogger fileLogger;
 
         public PictogramInstallerForm() {
             InitializeComponent();
@@ -123,8 +126,10 @@ namespace PictogramUpdater {
                 InstallationFinishedSuccessfully();
             } catch (UnauthorizedAccessException e) {
                 LogMessage("Installationen misslyckades på grund av problem att skriva till en fil. (" + e.Message + ")");
+                LogToFile(e.ToString());
             } catch (System.Net.WebException e) {
                 LogMessage("Installationen misslyckades på grund av att nedladdningsservern inte gick att nå. (" + e.Message + ")");
+                LogToFile(e.ToString());
             }
 
         }
@@ -190,7 +195,7 @@ namespace PictogramUpdater {
         private void RefreshLanguages() {
             SetProgressBarStyle(ProgressBarStyle.Marquee);
             SetControlsEnabled(false);
-            SetStatus("Laddar ner språk...");
+            SetStatus("Laddar ner språklista...");
 
             languageProvider.RefreshLanguages();
             SetLanguageDataSource(languageProvider.Languages);
@@ -222,7 +227,12 @@ namespace PictogramUpdater {
             } else {
                 logTextbox.AppendText(message + Environment.NewLine);
                 logTextbox.SelectionStart = logTextbox.Text.Length;
+                LogToFile("Info: " + message);
             }
+        }
+
+        private void LogToFile(string message) {
+            this.fileLogger.LogToFile(message);
         }
 
         private void ClearDownloadLog(string optionalMessage) {
@@ -236,6 +246,7 @@ namespace PictogramUpdater {
 
         private void ShowError(string message) {
             MessageBox.Show(message, "Installationen har avbrutits", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            LogToFile("Installationen har avbrutits.");
             LogMessage(message);
         }
 
@@ -245,6 +256,7 @@ namespace PictogramUpdater {
         /// <param name="message">meddelande</param>
         private void SetStatus(string message) {
             statusLabel.Text = message;
+            LogToFile("Status: " + message);
         }
 
         /// <summary>
@@ -384,21 +396,24 @@ namespace PictogramUpdater {
                 groupBox1.Visible = false;
             }
 
-
+            LogToFile("Installationen startas " + DateTime.Now.ToString());
 
             /* Ladda ner språk */
             languageProvider.LogMessage += LogMessage;
+            languageProvider.LogToFile += LogToFile;
             _currentWorkingThread = new Thread(RefreshLanguages);
             _currentWorkingThread.Start();
 
 
             installationManager.LogMessage += LogMessage;
+            installationManager.LogToFile += LogToFile;
             installationManager.ProgressChanged += SetCurrentProgress;
             installationManager.StatusChanged += SetStatus;
 
 
             /* Klass att använda för att kommunicera med webservice. */
             downloadManager.LogMessage += LogMessage;
+            downloadManager.LogToFile += LogToFile;
             downloadManager.ProgressChanged += SetCurrentProgress;
             downloadManager.StatusChanged += SetStatus;
 
@@ -409,6 +424,8 @@ namespace PictogramUpdater {
         /// Should be refactored to use proper dependency injection.
         /// </summary>
         private void createDependencyGraph() {
+
+            this.fileLogger = new FileLogger();
 
             this._languageSelection = new LanguageSelection();
             this._authenticationService = new AuthenticationService();
@@ -465,8 +482,11 @@ namespace PictogramUpdater {
 
                 /* Spara inställningar */
                 _authenticationService.saveAccount(usernameTextbox.Text, passwordTextbox.Text);
+
+                LogToFile("Installationen avslutas " + DateTime.Now.ToString());
+
             } catch (Exception ex) {
-                Console.WriteLine(ex.Message);
+                LogToFile(ex.ToString());
             }
         }
 

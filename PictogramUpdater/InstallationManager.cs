@@ -6,6 +6,7 @@ using System.Threading;
 namespace PictogramUpdater {
     internal class InstallationManager {
         public event LogMessageCallback LogMessage;
+        public event LogToFileCallback LogToFile;
         public event CurrentProgressCallback ProgressChanged;
         public event SetStatusCallback StatusChanged;
 
