@@ -433,7 +433,7 @@ namespace PictogramUpdater {
             this.categoryRepository = new CategoryRepository();
             this.categoryTranslationService = new CategoryTranslationService();
 
-            this.pictogramRestService = new PictogramRestService("qa.pictosys.se");
+            this.pictogramRestService = new PictogramRestService("pictoonline.pictogram.se");
 
             this.languageProvider = new LanguageProvider(this.pictogramRestService);
 
