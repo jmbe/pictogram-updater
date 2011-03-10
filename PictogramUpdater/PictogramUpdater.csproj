@@ -18,8 +18,8 @@
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <TargetZone>LocalIntranet</TargetZone>
     <GenerateManifests>true</GenerateManifests>
-    <SignManifests>false</SignManifests>
-    <ManifestCertificateThumbprint>C4232ACF421336FAD94668EB9794E4181DA7D5C7</ManifestCertificateThumbprint>
+    <SignManifests>true</SignManifests>
+    <ManifestCertificateThumbprint>AD7FB3F402A19EAB5F82DF6EA71E75F0E83B36AB</ManifestCertificateThumbprint>
     <ManifestKeyFile>PictogramUpdater_TemporaryKey.pfx</ManifestKeyFile>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -35,13 +35,13 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://pictoonline.pictogram.se/static/update/3.x/</InstallUrl>
+    <InstallUrl>http://pictoonline.pictogram.se/static/update/2.x/</InstallUrl>
     <SupportUrl>http://www.pictogram.se/kontakt/</SupportUrl>
     <ProductName>Uppdatering Bildbas Pictogram</ProductName>
     <PublisherName>Specialpedagogiska skolmyndigheten</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>8</ApplicationRevision>
-    <ApplicationVersion>3.0.0.8</ApplicationVersion>
+    <ApplicationRevision>11</ApplicationRevision>
+    <ApplicationVersion>3.0.0.11</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
