@@ -24,7 +24,8 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <ApplicationIcon>pictogramuppdatering.ico</ApplicationIcon>
-    <TargetFrameworkProfile />
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <PublishUrl>C:\Temp\publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -35,13 +36,13 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://pictoonline.pictogram.se/static/update/2.x/</InstallUrl>
+    <InstallUrl>http://pictoonline.pictogram.se/static/update/3.x/</InstallUrl>
     <SupportUrl>http://www.pictogram.se/kontakt/</SupportUrl>
     <ProductName>Uppdatering Bildbas Pictogram</ProductName>
     <PublisherName>Specialpedagogiska skolmyndigheten</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>11</ApplicationRevision>
-    <ApplicationVersion>3.0.0.11</ApplicationVersion>
+    <ApplicationRevision>14</ApplicationRevision>
+    <ApplicationVersion>3.0.0.14</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
