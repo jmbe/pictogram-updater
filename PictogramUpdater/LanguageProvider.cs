@@ -45,7 +45,7 @@ namespace PictogramUpdater {
         public void RefreshLanguages() {
             try {
 
-                IList<Language> languages = pictogramRestService.getSwedishLanguageNames();
+                IList<Language> languages = pictogramRestService.getForeignLanguageNames();
                 foreach(Language language in languages) {
                     var languageName = language.Name;
                     var languageCode = language.Code;

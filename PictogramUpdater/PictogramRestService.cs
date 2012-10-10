@@ -53,6 +53,24 @@ namespace PictogramUpdater {
             return languages;
         }
 
+        internal IList<Language> getForeignLanguageNames() {
+            List<Language> languages = new List<Language>();
+
+            dynamic client = createRestClient("/languages/", RestService.Xml);
+            dynamic operation = client.get();
+
+            if (operation.Error != null) {
+                throw operation.Error as Exception;
+            }
+
+            foreach (dynamic language in operation.Result.SelectAll("language")) {
+                languages.Add(new Language(language.@name, language.@NativeName));
+            }
+
+            return languages;
+        }
+
+
         internal List<PictogramEntry> getAvailableSoundsByLanguage(string languageCode) {
             List<PictogramEntry> result = new List<PictogramEntry>();
 
