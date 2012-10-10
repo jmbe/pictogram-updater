@@ -192,4 +192,25 @@
 	<data name="newFilesToDownload" xml:space="preserve">
 		<value>nya filer att ladda ner.</value>
 	</data>
+	<data name="downloadingFile" xml:space="preserve">
+		<value>Laddar ner</value>
+	</data>
+	<data name="newFiles" xml:space="preserve">
+		<value>nya filer...</value>
+	</data>
+	<data name="errorDownloadingFile" xml:space="preserve">
+		<value>Fel vid nedladdning av</value>
+	</data>
+	<data name="creatingNewDirectory" xml:space="preserve">
+		<value>Skapar ny katalog</value>
+	</data>
+	<data name="accountDetailsValid" xml:space="preserve">
+		<value>Kontouppgifterna är giltiga.</value>
+	</data>
+	<data name="mustCheckAccountDetails" xml:space="preserve">
+		<value>Kontrollera kontouppgifterna!</value>
+	</data>
+	<data name="couldNotConnectToServer" xml:space="preserve">
+		<value>Kunde inte ansluta till server.</value>
+	</data>
 </root>

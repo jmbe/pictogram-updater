@@ -192,4 +192,28 @@
   <data name="newFilesToDownload" xml:space="preserve">
     <value>new files to download.</value>
   </data>
+  <data name="downloadingFile" xml:space="preserve">
+    <value>Downloading</value>
+  </data>
+  <data name="newFiles" xml:space="preserve">
+    <value>new files...</value>
+  </data>
+  <data name="errorDownloadingFile" xml:space="preserve">
+    <value>Error downloading</value>
+  </data>
+  <data name="creatingNewDirectory" xml:space="preserve">
+    <value>Creating new directory</value>
+  </data>
+  <data name="accountDetailsValid" xml:space="preserve">
+    <value>Account details are valid.</value>
+  </data>
+  <data name="couldNotConnectToServer" xml:space="preserve">
+    <value>Could not connect to server.</value>
+  </data>
+  <data name="mustCheckAccountDetails" xml:space="preserve">
+    <value>Check account details!</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>sd</value>
+  </data>
 </root>

@@ -61,6 +61,15 @@ namespace PictogramUpdater {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account details are valid..
+        /// </summary>
+        internal static string accountDetailsValid {
+            get {
+                return ResourceManager.GetString("accountDetailsValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The update application needs to be run with administrator rights. Windows will now ask you to allow this..
         /// </summary>
         internal static string adminRightsNotice {
@@ -93,6 +102,24 @@ namespace PictogramUpdater {
         internal static string checkingAccountDetails {
             get {
                 return ResourceManager.GetString("checkingAccountDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not connect to server..
+        /// </summary>
+        internal static string couldNotConnectToServer {
+            get {
+                return ResourceManager.GetString("couldNotConnectToServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creating new directory.
+        /// </summary>
+        internal static string creatingNewDirectory {
+            get {
+                return ResourceManager.GetString("creatingNewDirectory", resourceCulture);
             }
         }
         
@@ -133,6 +160,15 @@ namespace PictogramUpdater {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloading.
+        /// </summary>
+        internal static string downloadingFile {
+            get {
+                return ResourceManager.GetString("downloadingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading languages....
         /// </summary>
         internal static string downloadingLanguages {
@@ -156,6 +192,15 @@ namespace PictogramUpdater {
         internal static string errorAdminRights {
             get {
                 return ResourceManager.GetString("errorAdminRights", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error downloading.
+        /// </summary>
+        internal static string errorDownloadingFile {
+            get {
+                return ResourceManager.GetString("errorDownloadingFile", resourceCulture);
             }
         }
         
@@ -232,6 +277,24 @@ namespace PictogramUpdater {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check account details!.
+        /// </summary>
+        internal static string mustCheckAccountDetails {
+            get {
+                return ResourceManager.GetString("mustCheckAccountDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to new files....
+        /// </summary>
+        internal static string newFiles {
+            get {
+                return ResourceManager.GetString("newFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to new files to download..
         /// </summary>
         internal static string newFilesToDownload {
@@ -255,6 +318,15 @@ namespace PictogramUpdater {
         internal static string restartPictogramManager {
             get {
                 return ResourceManager.GetString("restartPictogramManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sd.
+        /// </summary>
+        internal static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         

@@ -84,7 +84,7 @@ namespace PictogramUpdater {
         /// </summary>
         public void Download() {
             ProgressChanged(ProgressBarStyle.Continuous, 0, 1);
-            StatusChanged("Laddar ner " + DownloadList.Count + " nya filer...");
+            StatusChanged(TextResources.downloadingFile + " " + DownloadList.Count + " " + TextResources.newFiles);
 
             try {
                 /* Skapa målkatalog */
@@ -99,7 +99,7 @@ namespace PictogramUpdater {
                         var fileName = entry.ToFilename(InstallationType);
                         var file = target.FullName + @"\" + fileName;
 
-                        LogMessage("Laddar ner " + fileName + "...");
+                        LogMessage(TextResources.downloadingFile + " " + fileName + "...");
                         Stream stream = null;
                         
                         try {
@@ -112,7 +112,7 @@ namespace PictogramUpdater {
                             }
                             
                         } catch (Exception e) {
-                            LogMessage("Fel vid nedladdning av " + fileName + ": " + e.Message);
+                            LogMessage(TextResources.errorDownloadingFile + " " + fileName + ": " + e.Message);
                             LogToFile(e.ToString());
                         } finally {
                             if (stream != null) {
@@ -144,7 +144,7 @@ namespace PictogramUpdater {
                 //LogMessage("Målkatalogen finns.");
             } else {
                 Directory.CreateDirectory(target.FullName);
-                LogMessage("Skapar ny katalog " + target.FullName + "...");
+                LogMessage(TextResources.creatingNewDirectory +  " " + target.FullName + "...");
             }
             return target;
         }
@@ -163,12 +163,12 @@ namespace PictogramUpdater {
                 login = pictogramRestService.verifyLogin(username, password);
 
                 if (login) {
-                    StatusChanged("Kontouppgifterna är giltiga.");
+                    StatusChanged(TextResources.accountDetailsValid);
                 } else {
-                    StatusChanged("Kontrollera kontouppgifterna!");
+                    StatusChanged(TextResources.mustCheckAccountDetails);
                 }
             } catch (Exception e) {
-                LogMessage("Kunde inte ansluta till server.");
+                LogMessage(TextResources.couldNotConnectToServer);
                 StatusChanged("");
                 LogToFile(e.ToString());
             }
