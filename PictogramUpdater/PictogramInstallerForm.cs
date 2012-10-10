@@ -11,6 +11,7 @@ using System.Threading;
 using AMS.Profile;
 using PictogramUpdater;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace PictogramUpdater {
     internal delegate void SetProgressStyleCallback(ProgressBarStyle style);
@@ -59,8 +60,10 @@ namespace PictogramUpdater {
         private IniFileFactory iniFileFactory;
         private PictogramRestService pictogramRestService;
         private FileLogger fileLogger;
+        private CultureInfo culture;
 
-        public PictogramInstallerForm() {
+        public PictogramInstallerForm(CultureInfo culture) {
+            this.culture = culture;
             InitializeComponent();
         }
 
@@ -90,14 +93,14 @@ namespace PictogramUpdater {
                 config.CreateOrUpdateWmfIni(language, wmfDirectoryChooser.InstallPath, plainTextDirectoryChooser.InstallPath);
 
 
-                LogMessage("Letar efter nya pictobilder...");
+                LogMessage(TextResources.lookingForNewImages);
                 installationManager.Download(wmfDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.CODE, usernameTextbox.Text, passwordTextbox.Text);
-                LogMessage("Nedladdning av pictobilder klar.");
+                LogMessage(TextResources.downloadComplete);
                 LogMessage("");
 
 
                 if (plainTextCheckbox.Checked) {
-                    LogMessage("Letar efter nya pictobilder i klartext...");
+                    LogMessage(TextResources.lookingForNewImagesWithText);
                     installationManager.Download(plainTextDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.PLAIN_TEXT,
                                                  usernameTextbox.Text, passwordTextbox.Text);
                     LogMessage("Nedladdning av pictobilder i klartext klar.");
@@ -106,11 +109,11 @@ namespace PictogramUpdater {
                 }
 
                 if (soundCheckbox.Checked) {
-                    LogMessage("Letar efter nya ljud...");
+                    LogMessage(TextResources.lookingForNewSounds);
                     installationManager.Download(soundDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.SOUND,
                                                  usernameTextbox.Text, passwordTextbox.Text);
                     config.CreateOrUpdateWavIni(language, soundDirectoryChooser.InstallPath);
-                    LogMessage("Nedladdning av ljud klar.");
+                    LogMessage(TextResources.downloadSoundsComplete);
                     LogMessage("");
                 }
 
@@ -120,15 +123,15 @@ namespace PictogramUpdater {
                 DownloadFinished();
 
                 LogMessage("");
-                LogMessage("Installationen är klar.");
-                SetStatus("Installationen är klar.");
+                LogMessage(TextResources.installationComplete);
+                SetStatus(TextResources.installationComplete);
 
                 InstallationFinishedSuccessfully();
             } catch (UnauthorizedAccessException e) {
-                LogMessage("Installationen misslyckades på grund av problem att skriva till en fil. (" + e.Message + ")");
+                LogMessage(TextResources.failedFileAccess +  "(" + e.Message + ")");
                 LogToFile(e.ToString());
             } catch (System.Net.WebException e) {
-                LogMessage("Installationen misslyckades på grund av att nedladdningsservern inte gick att nå. (" + e.Message + ")");
+                LogMessage(TextResources.failedNetworkAccess + "(" + e.Message + ")");
                 LogToFile(e.ToString());
             }
 
@@ -141,10 +144,10 @@ namespace PictogramUpdater {
 
 
             if (IsPictogramManagerRunning()) {
-                MessageBox.Show("Pictogramhanteraren är igång.  Kom ihåg att starta om Pictogramhanteraren för att se de nya bilderna.", "Starta om Pictogramhanteraren", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(TextResources.warningPictogramManagerRunning, TextResources.restartPictogramManager, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
-            DialogResult result = MessageBox.Show("Installationen är klar. Avsluta uppdateringsprogrammet?", "Uppdatering Bildbas Pictogram", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show(TextResources.dialogInstallationCompleteExit, TextResources.dialogExitTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes) {
                 Exit();
             }
@@ -183,7 +186,7 @@ namespace PictogramUpdater {
         /// </summary>
         private void CheckLogin() {
             SetControlsEnabled(false);
-            SetStatus("Kontrollerar kontouppgifter...");
+            SetStatus(TextResources.checkingAccountDetails);
             downloadManager.checkLogin(this.usernameTextbox.Text, this.passwordTextbox.Text);
             SetControlsEnabled(true);
             this._currentWorkingThread = null;
@@ -195,12 +198,12 @@ namespace PictogramUpdater {
         private void RefreshLanguages() {
             SetProgressBarStyle(ProgressBarStyle.Marquee);
             SetControlsEnabled(false);
-            SetStatus("Laddar ner språklista...");
+            SetStatus(TextResources.downloadingLanguages);
 
             languageProvider.RefreshLanguages();
             SetLanguageDataSource(languageProvider.Languages);
 
-            SetStatus("Redo");
+            SetStatus(TextResources.ready);
             SetControlsEnabled(true);
             SetProgressBarStyle(ProgressBarStyle.Blocks);
             this._currentWorkingThread = null;
@@ -245,8 +248,8 @@ namespace PictogramUpdater {
 
 
         private void ShowError(string message) {
-            MessageBox.Show(message, "Installationen har avbrutits", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            LogToFile("Installationen har avbrutits.");
+            MessageBox.Show(message, TextResources.installationAborted, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            LogToFile(TextResources.installationAborted);
             LogMessage(message);
         }
 
@@ -360,6 +363,7 @@ namespace PictogramUpdater {
         /// </summary>
         private void VerifyLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             this._currentWorkingThread = new Thread(CheckLogin);
+            this._currentWorkingThread.CurrentUICulture = this.culture;
             this._currentWorkingThread.Start();
         }
 
@@ -402,6 +406,7 @@ namespace PictogramUpdater {
             languageProvider.LogMessage += LogMessage;
             languageProvider.LogToFile += LogToFile;
             _currentWorkingThread = new Thread(RefreshLanguages);
+            this._currentWorkingThread.CurrentUICulture = this.culture;
             _currentWorkingThread.Start();
 
 
@@ -497,6 +502,7 @@ namespace PictogramUpdater {
         /// <param name="e"></param>
         private void UpdateLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             this._currentWorkingThread = new Thread(new ThreadStart(RefreshLanguages));
+            this._currentWorkingThread.CurrentUICulture = this.culture;
             _currentWorkingThread.Start();
         }
 
@@ -510,6 +516,7 @@ namespace PictogramUpdater {
             this.logTextbox.ScrollBars = ScrollBars.Both;
 
             this._currentWorkingThread = new Thread(new ThreadStart(Download));
+            this._currentWorkingThread.CurrentUICulture = this.culture;
             _currentWorkingThread.Start();
         }
 
@@ -546,7 +553,7 @@ namespace PictogramUpdater {
             }
             if (this._currentWorkingThread != null) {
                 this._currentWorkingThread.Abort();
-                SetStatus("Nedladdning avbruten");
+                SetStatus(TextResources.downloadAborted);
                 SetControlsEnabled(true);
             }
         }

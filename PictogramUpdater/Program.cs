@@ -25,20 +25,21 @@ namespace PictogramUpdater {
                 /* ignored. */
             }
 
+            CultureInfo inputLanguage = System.Windows.Forms.InputLanguage.CurrentInputLanguage.Culture;
+            //inputLanguage = new CultureInfo("sv");
+            //inputLanguage = new CultureInfo("de");
+            Thread.CurrentThread.CurrentUICulture = inputLanguage;
+
             if (!IsAdmin() && IsXpOrNewer()) {
 
-                DialogResult result = MessageBox.Show("Uppdateringsprogrammet kräver administratörsrättigheter för att installera bilderna. Windows kommer nu att fråga dig om du vill tillåta detta.", "Administratörsrättigheter", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                DialogResult result = MessageBox.Show(TextResources.adminRightsNotice, TextResources.adminRightsTitle, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                 if (result == DialogResult.Cancel) {
                     return;
                 }
 
                 runAsAdmin();
             } else {
-                CultureInfo inputLanguage = System.Windows.Forms.InputLanguage.CurrentInputLanguage.Culture;
-                //inputLanguage = new CultureInfo("sv");
-                //inputLanguage = new CultureInfo("de");
-                Thread.CurrentThread.CurrentUICulture = inputLanguage;
-                Application.Run(new PictogramInstallerForm());
+                Application.Run(new PictogramInstallerForm(inputLanguage));
             }
         }
 
@@ -66,7 +67,7 @@ namespace PictogramUpdater {
             try {
                 Process.Start(procInfo);
             } catch (Exception ex) {
-                MessageBox.Show("Programmet kunde inte startas. Var vänlig kontakta oss. (" + ex.Message + ")", "Programmet kan inte startas");
+                MessageBox.Show(TextResources.errorAdminRights + "(" + ex.Message + ")", TextResources.canNotStart);
             }
         }
 

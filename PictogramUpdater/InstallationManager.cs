@@ -36,13 +36,13 @@ namespace PictogramUpdater {
             downloadManager.DownloadList = downloadList.Missing;
             downloadManager.InstallationType = installationType;
 
-            LogMessage("Det finns " + downloadList.Missing.Count + " nya filer att ladda ner.");
+            LogMessage(TextResources.thereAre + " " + downloadList.Missing.Count + " " + TextResources.newFilesToDownload);
             downloadManager.Download();
 
             if (InstallationType.CODE.Equals(installationType)) {
-                LogMessage("Uppdaterar ini-fil...");
+                LogMessage(TextResources.updatingIniFile);
                 _config.CommitEntries(language, downloadList.All);
-                LogMessage("Ini-fil uppdaterad.");
+                LogMessage(TextResources.iniFileUpdated);
             }
         }
 
