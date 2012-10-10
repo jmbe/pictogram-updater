@@ -5,6 +5,8 @@ using System.Deployment.Application;
 using System.Reflection;
 using System.Security.Principal;
 using System.Diagnostics;
+using System.Threading;
+using System.Globalization;
 
 namespace PictogramUpdater {
     static class Program {
@@ -32,6 +34,10 @@ namespace PictogramUpdater {
 
                 runAsAdmin();
             } else {
+                CultureInfo inputLanguage = System.Windows.Forms.InputLanguage.CurrentInputLanguage.Culture;
+                //inputLanguage = new CultureInfo("sv");
+                //inputLanguage = new CultureInfo("de");
+                Thread.CurrentThread.CurrentUICulture = inputLanguage;
                 Application.Run(new PictogramInstallerForm());
             }
         }

@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DirectoryChooserInput));
             this.directoryOkButton = new System.Windows.Forms.Button();
             this.directoryBrowseButton = new System.Windows.Forms.Button();
             this.directoryTextbox = new System.Windows.Forms.TextBox();
@@ -31,45 +32,36 @@
             // 
             // directoryOkButton
             // 
-            this.directoryOkButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.directoryOkButton.Location = new System.Drawing.Point(291, 1);
+            resources.ApplyResources(this.directoryOkButton, "directoryOkButton");
             this.directoryOkButton.Name = "directoryOkButton";
-            this.directoryOkButton.Size = new System.Drawing.Size(34, 23);
-            this.directoryOkButton.TabIndex = 30;
-            this.directoryOkButton.Text = "OK";
             this.directoryOkButton.UseVisualStyleBackColor = true;
             this.directoryOkButton.Click += new System.EventHandler(this.directoryOkButton_Click);
             // 
             // directoryBrowseButton
             // 
-            this.directoryBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.directoryBrowseButton.Location = new System.Drawing.Point(210, 0);
+            resources.ApplyResources(this.directoryBrowseButton, "directoryBrowseButton");
             this.directoryBrowseButton.Name = "directoryBrowseButton";
-            this.directoryBrowseButton.Size = new System.Drawing.Size(75, 23);
-            this.directoryBrowseButton.TabIndex = 29;
-            this.directoryBrowseButton.Text = "&Bläddra ...";
             this.directoryBrowseButton.UseVisualStyleBackColor = true;
             this.directoryBrowseButton.Click += new System.EventHandler(this.directoryBrowseButton_Click);
             // 
             // directoryTextbox
             // 
-            this.directoryTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.directoryTextbox.Location = new System.Drawing.Point(0, 3);
+            resources.ApplyResources(this.directoryTextbox, "directoryTextbox");
             this.directoryTextbox.Name = "directoryTextbox";
-            this.directoryTextbox.Size = new System.Drawing.Size(204, 20);
-            this.directoryTextbox.TabIndex = 28;
             this.directoryTextbox.TextChanged += new System.EventHandler(this.directoryTextbox_TextChanged);
+            // 
+            // folderBrowserDialog
+            // 
+            resources.ApplyResources(this.folderBrowserDialog, "folderBrowserDialog");
             // 
             // DirectoryChooserInput
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.directoryOkButton);
             this.Controls.Add(this.directoryBrowseButton);
             this.Controls.Add(this.directoryTextbox);
             this.Name = "DirectoryChooserInput";
-            this.Size = new System.Drawing.Size(380, 26);
             this.VisibleChanged += new System.EventHandler(this.DirectoryChooserInput_VisibleChanged);
             this.ResumeLayout(false);
             this.PerformLayout();

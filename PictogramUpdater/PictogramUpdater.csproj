@@ -138,12 +138,21 @@
       <DependentUpon>DirectoryChooserInfo.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="DirectoryChooserInfo.sv.resx">
+      <DependentUpon>DirectoryChooserInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DirectoryChooserInput.resx">
       <DependentUpon>DirectoryChooserInput.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="DirectoryChooserInput.sv.resx">
+      <DependentUpon>DirectoryChooserInput.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PictogramInstallerForm.resx">
       <SubType>Designer</SubType>
+      <DependentUpon>PictogramInstallerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PictogramInstallerForm.sv.resx">
       <DependentUpon>PictogramInstallerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
