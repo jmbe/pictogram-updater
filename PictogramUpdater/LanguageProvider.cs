@@ -10,7 +10,14 @@ namespace PictogramUpdater {
     /// Klass för att hantera språk.
     /// </summary>
     class LanguageProvider {
+        /// <summary>
+        /// Maps Svenska -> SV
+        /// </summary>
         private Hashtable languageToLocaleMapping;
+        /// <summary>
+        /// Maps sv -> Svenska (key is always lowercase)
+        /// </summary>
+        private Hashtable codeToDisplayNameMapping;
 
         public event LogMessageCallback LogMessage;
         public event LogToFileCallback LogToFile;
@@ -22,6 +29,7 @@ namespace PictogramUpdater {
         /// </summary>
         public LanguageProvider(PictogramRestService pictogramRestService) {
             languageToLocaleMapping = new Hashtable();
+            codeToDisplayNameMapping = new Hashtable();
             this.pictogramRestService = pictogramRestService;
         }
 
@@ -37,6 +45,16 @@ namespace PictogramUpdater {
             }
             return "";
             
+        }
+
+        public String getNativeName(string languageCode) {
+            if (codeToDisplayNameMapping.ContainsKey(languageCode)) {
+                var name = codeToDisplayNameMapping[languageCode] as string;
+                if (name != null) {
+                    return name;
+                }
+            }
+            return "";
         }
 
         /// <summary>
@@ -55,6 +73,7 @@ namespace PictogramUpdater {
                     }
     
                     languageToLocaleMapping[languageName] = languageCode;
+                    codeToDisplayNameMapping[languageCode.ToLower()] = languageName;
                 }
 
             } catch (Exception e) {
