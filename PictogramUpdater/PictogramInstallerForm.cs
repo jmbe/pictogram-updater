@@ -530,6 +530,13 @@ namespace PictogramUpdater {
             } else {
                 languagesComboBox.DataSource = source;
                 languagesComboBox.SelectedIndex = languagesComboBox.FindString("Svenska");
+
+                String name = this.languageProvider.getNativeName(this.culture.TwoLetterISOLanguageName);
+                int index =languagesComboBox.FindString(name);
+
+                if (index > 0) {
+                    languagesComboBox.SelectedIndex = index;
+                }
             }
         }
 
