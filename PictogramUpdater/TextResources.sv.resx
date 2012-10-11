@@ -213,4 +213,13 @@
 	<data name="couldNotConnectToServer" xml:space="preserve">
 		<value>Kunde inte ansluta till server.</value>
 	</data>
+	<data name="inPlainText" xml:space="preserve">
+		<value>klartext</value>
+	</data>
+	<data name="cdHeader" xml:space="preserve">
+		<value>Uppdatering av Bildbas Pictogram 4.0</value>
+	</data>
+	<data name="webbHeader" xml:space="preserve">
+		<value>Bildbas Pictogram 4.0 - webbversion</value>
+	</data>
 </root>

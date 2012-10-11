@@ -97,6 +97,15 @@ namespace PictogramUpdater {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update for Pictogram 4.0.
+        /// </summary>
+        internal static string cdHeader {
+            get {
+                return ResourceManager.GetString("cdHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Verifying account details....
         /// </summary>
         internal static string checkingAccountDetails {
@@ -232,6 +241,15 @@ namespace PictogramUpdater {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to plain text.
+        /// </summary>
+        internal static string inPlainText {
+            get {
+                return ResourceManager.GetString("inPlainText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installation has been aborted.
         /// </summary>
         internal static string installationAborted {
@@ -322,15 +340,6 @@ namespace PictogramUpdater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to sd.
-        /// </summary>
-        internal static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to There are.
         /// </summary>
         internal static string thereAre {
@@ -354,6 +363,15 @@ namespace PictogramUpdater {
         internal static string warningPictogramManagerRunning {
             get {
                 return ResourceManager.GetString("warningPictogramManagerRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Picto Online Update.
+        /// </summary>
+        internal static string webbHeader {
+            get {
+                return ResourceManager.GetString("webbHeader", resourceCulture);
             }
         }
     }

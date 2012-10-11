@@ -213,7 +213,13 @@
   <data name="mustCheckAccountDetails" xml:space="preserve">
     <value>Check account details!</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value>sd</value>
+  <data name="cdHeader" xml:space="preserve">
+    <value>Update for Pictogram 4.0</value>
+  </data>
+  <data name="inPlainText" xml:space="preserve">
+    <value>plain text</value>
+  </data>
+  <data name="webbHeader" xml:space="preserve">
+    <value>Picto Online Update</value>
   </data>
 </root>

@@ -58,7 +58,7 @@ namespace PictogramUpdater {
                 }
 
             } catch (Exception e) {
-                LogMessage("Kunde inte ansluta till server.");
+                LogMessage(TextResources.couldNotConnectToServer);
                 LogToFile(e.ToString());
             }
        }

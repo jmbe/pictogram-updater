@@ -348,7 +348,7 @@ namespace PictogramUpdater {
             int topLineY = 60;
 
             e.Graphics.FillRectangle(Brushes.White, new Rectangle(0, 0, this.Width, topLineY));
-            string header = this._authenticationService.UseFreeAccount ? "Uppdatering av Bildbas Pictogram 4.0" : "Bildbas Pictogram 4.0 - webbversion";
+            string header = this._authenticationService.UseFreeAccount ? TextResources.cdHeader : TextResources.webbHeader;
             e.Graphics.DrawString(header, new Font("Arial", 25, FontStyle.Bold), Brushes.SteelBlue, new PointF(10, 10));
 
             e.Graphics.DrawLine(Pens.LightGray, new Point(0, topLineY), new Point(this.Width, topLineY));
