@@ -241,7 +241,7 @@ namespace PictogramUpdater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to plain text.
+        ///   Looks up a localized string similar to in plain text.
         /// </summary>
         internal static string inPlainText {
             get {

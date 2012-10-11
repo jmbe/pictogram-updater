@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-	<!-- 
+  <!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,167 +59,167 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-		<xsd:element name="root" msdata:IsDataSet="true">
-			<xsd:complexType>
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="metadata">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" />
-							</xsd:sequence>
-							<xsd:attribute name="name" use="required" type="xsd:string" />
-							<xsd:attribute name="type" type="xsd:string" />
-							<xsd:attribute name="mimetype" type="xsd:string" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="assembly">
-						<xsd:complexType>
-							<xsd:attribute name="alias" type="xsd:string" />
-							<xsd:attribute name="name" type="xsd:string" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="data">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="resheader">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" />
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:schema>
-	<resheader name="resmimetype">
-		<value>text/microsoft-resx</value>
-	</resheader>
-	<resheader name="version">
-		<value>2.0</value>
-	</resheader>
-	<resheader name="reader">
-		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<resheader name="writer">
-		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<data name="lookingForNewImages" xml:space="preserve">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="lookingForNewImages" xml:space="preserve">
     <value>Letar efter nya pictobilder...</value>
   </data>
-	<data name="downloadComplete" xml:space="preserve">
+  <data name="downloadComplete" xml:space="preserve">
     <value>Nedladdning av pictobilder klar.</value>
   </data>
-	<data name="lookingForNewImagesWithText" xml:space="preserve">
+  <data name="lookingForNewImagesWithText" xml:space="preserve">
     <value>Letar efter nya pictobilder i klartext...</value>
   </data>
-	<data name="lookingForNewSounds" xml:space="preserve">
+  <data name="lookingForNewSounds" xml:space="preserve">
     <value>Letar efter nya ljud...</value>
   </data>
-	<data name="downloadSoundsComplete" xml:space="preserve">
+  <data name="downloadSoundsComplete" xml:space="preserve">
     <value>Nedladdning av ljud klar.</value>
   </data>
-	<data name="installationComplete" xml:space="preserve">
+  <data name="installationComplete" xml:space="preserve">
     <value>Installationen är klar.</value>
   </data>
-	<data name="failedFileAccess" xml:space="preserve">
+  <data name="failedFileAccess" xml:space="preserve">
     <value>Installationen misslyckades på grund av problem att skriva till en fil.</value>
   </data>
-	<data name="failedNetworkAccess" xml:space="preserve">
+  <data name="failedNetworkAccess" xml:space="preserve">
     <value>Installationen misslyckades på grund av att nedladdningsservern inte gick att nå.</value>
   </data>
-	<data name="warningPictogramManagerRunning" xml:space="preserve">
+  <data name="warningPictogramManagerRunning" xml:space="preserve">
     <value>Pictogramhanteraren är igång.  Kom ihåg att starta om Pictogramhanteraren för att se de nya bilderna.</value>
   </data>
-	<data name="restartPictogramManager" xml:space="preserve">
+  <data name="restartPictogramManager" xml:space="preserve">
     <value>Starta om Pictogramhanteraren</value>
   </data>
-	<data name="dialogInstallationCompleteExit" xml:space="preserve">
+  <data name="dialogInstallationCompleteExit" xml:space="preserve">
     <value>Installationen är klar. Avsluta uppdateringsprogrammet?</value>
   </data>
-	<data name="dialogExitTitle" xml:space="preserve">
+  <data name="dialogExitTitle" xml:space="preserve">
     <value>Uppdatering Bildbas Pictogram</value>
   </data>
-	<data name="checkingAccountDetails" xml:space="preserve">
+  <data name="checkingAccountDetails" xml:space="preserve">
     <value>Kontrollerar kontouppgifter...</value>
   </data>
-	<data name="downloadingLanguages" xml:space="preserve">
+  <data name="downloadingLanguages" xml:space="preserve">
     <value>Laddar ner språklista...</value>
   </data>
-	<data name="ready" xml:space="preserve">
+  <data name="ready" xml:space="preserve">
     <value>Redo</value>
   </data>
-	<data name="installationAborted" xml:space="preserve">
+  <data name="installationAborted" xml:space="preserve">
     <value>Installationen har avbrutits</value>
   </data>
-	<data name="downloadAborted" xml:space="preserve">
+  <data name="downloadAborted" xml:space="preserve">
     <value>Nedladdning avbruten</value>
   </data>
-	<data name="adminRightsNotice" xml:space="preserve">
-		<value>Uppdateringsprogrammet kräver administratörsrättigheter för att installera bilderna. Windows kommer nu att fråga dig om du vill tillåta detta.</value>
-	</data>
-	<data name="adminRightsTitle" xml:space="preserve">
-		<value>Administratörsrättigheter</value>
-	</data>
-	<data name="errorAdminRights" xml:space="preserve">
-		<value>Programmet kunde inte startas. Var vänlig kontakta oss.</value>
-	</data>
-	<data name="canNotStart" xml:space="preserve">
-		<value>Programmet kan inte startas</value>
-	</data>
-	<data name="updatingIniFile" xml:space="preserve">
-		<value>Uppdaterar ini-fil...</value>
-	</data>
-	<data name="iniFileUpdated" xml:space="preserve">
-		<value>Ini-fil uppdaterad.</value>
-	</data>
-	<data name="thereAre" xml:space="preserve">
-		<value>Det finns</value>
-	</data>
-	<data name="newFilesToDownload" xml:space="preserve">
-		<value>nya filer att ladda ner.</value>
-	</data>
-	<data name="downloadingFile" xml:space="preserve">
-		<value>Laddar ner</value>
-	</data>
-	<data name="newFiles" xml:space="preserve">
-		<value>nya filer...</value>
-	</data>
-	<data name="errorDownloadingFile" xml:space="preserve">
-		<value>Fel vid nedladdning av</value>
-	</data>
-	<data name="creatingNewDirectory" xml:space="preserve">
-		<value>Skapar ny katalog</value>
-	</data>
-	<data name="accountDetailsValid" xml:space="preserve">
-		<value>Kontouppgifterna är giltiga.</value>
-	</data>
-	<data name="mustCheckAccountDetails" xml:space="preserve">
-		<value>Kontrollera kontouppgifterna!</value>
-	</data>
-	<data name="couldNotConnectToServer" xml:space="preserve">
-		<value>Kunde inte ansluta till server.</value>
-	</data>
-	<data name="inPlainText" xml:space="preserve">
-		<value>klartext</value>
-	</data>
-	<data name="cdHeader" xml:space="preserve">
-		<value>Uppdatering av Bildbas Pictogram 4.0</value>
-	</data>
-	<data name="webbHeader" xml:space="preserve">
-		<value>Bildbas Pictogram 4.0 - webbversion</value>
-	</data>
+  <data name="adminRightsNotice" xml:space="preserve">
+    <value>Uppdateringsprogrammet kräver administratörsrättigheter för att installera bilderna. Windows kommer nu att fråga dig om du vill tillåta detta.</value>
+  </data>
+  <data name="adminRightsTitle" xml:space="preserve">
+    <value>Administratörsrättigheter</value>
+  </data>
+  <data name="errorAdminRights" xml:space="preserve">
+    <value>Programmet kunde inte startas. Var vänlig kontakta oss.</value>
+  </data>
+  <data name="canNotStart" xml:space="preserve">
+    <value>Programmet kan inte startas</value>
+  </data>
+  <data name="updatingIniFile" xml:space="preserve">
+    <value>Uppdaterar ini-fil...</value>
+  </data>
+  <data name="iniFileUpdated" xml:space="preserve">
+    <value>Ini-fil uppdaterad.</value>
+  </data>
+  <data name="thereAre" xml:space="preserve">
+    <value>Det finns</value>
+  </data>
+  <data name="newFilesToDownload" xml:space="preserve">
+    <value>nya filer att ladda ner.</value>
+  </data>
+  <data name="downloadingFile" xml:space="preserve">
+    <value>Laddar ner</value>
+  </data>
+  <data name="newFiles" xml:space="preserve">
+    <value>nya filer...</value>
+  </data>
+  <data name="errorDownloadingFile" xml:space="preserve">
+    <value>Fel vid nedladdning av</value>
+  </data>
+  <data name="creatingNewDirectory" xml:space="preserve">
+    <value>Skapar ny katalog</value>
+  </data>
+  <data name="accountDetailsValid" xml:space="preserve">
+    <value>Kontouppgifterna är giltiga.</value>
+  </data>
+  <data name="mustCheckAccountDetails" xml:space="preserve">
+    <value>Kontrollera kontouppgifterna!</value>
+  </data>
+  <data name="couldNotConnectToServer" xml:space="preserve">
+    <value>Kunde inte ansluta till server.</value>
+  </data>
+  <data name="inPlainText" xml:space="preserve">
+    <value>i klartext</value>
+  </data>
+  <data name="cdHeader" xml:space="preserve">
+    <value>Uppdatering av Bildbas Pictogram 4.0</value>
+  </data>
+  <data name="webbHeader" xml:space="preserve">
+    <value>Bildbas Pictogram 4.0 - webbversion</value>
+  </data>
 </root>

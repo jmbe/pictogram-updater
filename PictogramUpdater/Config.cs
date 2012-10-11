@@ -137,7 +137,7 @@ namespace PictogramUpdater {
         }
 
         public string GetDefaultPlainTextPath(Language language) {
-            return @"C:\Picto\Wmf" + language.Code.ToUpper() + " i " + TextResources.inPlainText;
+            return @"C:\Picto\Wmf" + language.Code.ToUpper() + " " + TextResources.inPlainText;
         }
 
         public string GetDefaultSoundPath(Language language) {
