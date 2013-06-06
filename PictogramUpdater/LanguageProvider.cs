@@ -65,15 +65,7 @@ namespace PictogramUpdater {
 
                 IList<Language> languages = pictogramRestService.getForeignLanguageNames();
                 foreach(Language language in languages) {
-                    var languageName = language.Name;
-                    var languageCode = language.Code;
-
-                    if (SkippedLanguageCodes.Contains(languageCode)) {
-                        continue;
-                    }
-    
-                    languageToLocaleMapping[languageName] = languageCode;
-                    codeToDisplayNameMapping[languageCode.ToLower()] = languageName;
+                    AddLanguage(language);
                 }
 
             } catch (Exception e) {
@@ -81,6 +73,18 @@ namespace PictogramUpdater {
                 LogToFile(e.ToString());
             }
        }
+
+        private void AddLanguage(Language language) {
+            var languageName = language.Name;
+            var languageCode = language.Code;
+
+            if (SkippedLanguageCodes.Contains(languageCode)) {
+                return;
+            }
+
+            languageToLocaleMapping[languageName] = languageCode;
+            codeToDisplayNameMapping[languageCode.ToLower()] = languageName;
+        }
 
         private IList<string> SkippedLanguageCodes {
             get {
