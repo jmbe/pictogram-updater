@@ -85,6 +85,7 @@ namespace PictogramUpdater {
         private IList<string> SkippedLanguageCodes {
             get {
                 List<string> skippedLanguagesCodes = new List<string>();
+                /* Skip some languages because their translations cannot be written properly to an ISO-8859-1 ini file. */
                 skippedLanguagesCodes.Add("lv");
                 skippedLanguagesCodes.Add("lt");
                 skippedLanguagesCodes.Add("pl");
