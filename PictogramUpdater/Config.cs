@@ -233,6 +233,7 @@ namespace PictogramUpdater {
 
     public class PictogramEntry :IComparable<PictogramEntry> {
         private readonly Regex _indexPattern = new Regex(@"\d+$");
+        private readonly Regex removeInvalidChars = new Regex(String.Format("[{0}]", Regex.Escape(new string(Path.GetInvalidFileNameChars()))), RegexOptions.Singleline | RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
         /// 
         /// Throws FormatException when incorrectly named filenames are encounted.
@@ -264,11 +265,17 @@ namespace PictogramUpdater {
             }
 
             if (InstallationType.PLAIN_TEXT.Equals(installationType)) {
-                return Name.Trim() + ".wmf";
+                return LegalFilename + ".wmf";
             }
 
             // InstallationType.CODE
             return FullCode + ".wmf";
+        }
+
+        private string LegalFilename {
+            get {
+                return removeInvalidChars.Replace(Name.Trim(), "");
+            }
         }
 
         public int CompareTo(PictogramEntry other) {
