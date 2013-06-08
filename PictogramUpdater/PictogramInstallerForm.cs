@@ -94,7 +94,11 @@ namespace PictogramUpdater {
 
 
                 LogMessage(TextResources.lookingForNewImages);
-                installationManager.Download(wmfDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.CODE, usernameTextbox.Text, passwordTextbox.Text);
+                if (language.IsTextless) {
+                    installationManager.Download(wmfDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.TEXTLESS, usernameTextbox.Text, passwordTextbox.Text);
+                } else {
+                    installationManager.Download(wmfDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.CODE, usernameTextbox.Text, passwordTextbox.Text);
+                }
                 LogMessage(TextResources.downloadComplete);
                 LogMessage("");
 
