@@ -82,16 +82,24 @@ namespace PictogramUpdater {
             Profile profile = picWmf.ToIni();
 
             try {
-                profile.SetValue("ProgDir", "Dir", installPath);
+                if (!language.IsTextless) {
+                    profile.SetValue("ProgDir", "Dir", installPath);
+                }
 
                 safeWriteToProfile(profile, "ProgDir", "Extension", "WMF");
-                safeWriteToProfile(profile, "ProgDir", "langWMF", language.Code);
+                if (!language.IsTextless) {
+                    safeWriteToProfile(profile, "ProgDir", "langWMF", language.Code);
+                }
                 safeWriteToProfile(profile, "ProgDir", "verWMF", "7.0");
                 safeWriteToProfile(profile, "ProgDir", "CD", "-");
                 safeWriteToProfile(profile, "ProgDir", "IDNAME", "");
 
                 // Place PlainTextDir last in section.
-                profile.SetValue("ProgDir", "PlainTextDir", plainTextInstallPath);
+                if (!language.IsTextless) {
+                    profile.SetValue("ProgDir", "PlainTextDir", plainTextInstallPath);
+                } else {
+                    profile.SetValue("ProgDir", "TextlessDir", installPath);
+                }
             } catch (System.ComponentModel.Win32Exception e) {
                 throw new UnauthorizedAccessException("Access to the path '" + picWmf.Path + "' is denied.", e);
             }
@@ -240,7 +248,7 @@ namespace PictogramUpdater {
     public class IniFileFactory {
         public PicIni CreatePictoWmfIni(Language language) {
             var languageCode = "";
-            if (language != null) {
+            if (language != null && !language.IsTextless) {
                 languageCode = language.Code;
             }
             var path = Environment.GetEnvironmentVariable("WINDIR") + @"\PicWmf" + languageCode + @".ini";
