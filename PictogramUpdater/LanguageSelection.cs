@@ -42,5 +42,11 @@ namespace PictogramUpdater {
                 return "sv".ToLower().Equals(Code.ToLower());
             }
         }
+
+        public bool IsTextless {
+            get {
+                return "xx".Equals(Code.ToLower());
+            }
+        }
     }
 }
