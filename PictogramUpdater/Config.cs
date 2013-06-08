@@ -82,7 +82,9 @@ namespace PictogramUpdater {
             Profile profile = picWmf.ToIni();
 
             try {
-                profile.SetValue("ProgDir", "Dir", language.IsTextless ? GetPictoInstallPath(language) : installPath);
+                if (!language.IsTextless) {
+                    profile.SetValue("ProgDir", "Dir", installPath);
+                }
 
                 safeWriteToProfile(profile, "ProgDir", "Extension", "WMF");
                 if (!language.IsTextless) {
