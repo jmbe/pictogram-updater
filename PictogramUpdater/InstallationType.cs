@@ -6,6 +6,7 @@ namespace PictogramUpdater {
     public enum InstallationType {
         CODE,
         PLAIN_TEXT,
-        SOUND
+        SOUND,
+        TEXTLESS
     }
 }
