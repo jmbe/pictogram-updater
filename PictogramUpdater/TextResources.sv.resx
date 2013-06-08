@@ -222,6 +222,15 @@
   <data name="webbHeader" xml:space="preserve">
     <value>Bildbas Pictogram 4.0 - webbversion</value>
   </data>
+  <data name="downloadPlainTextComplete" xml:space="preserve">
+    <value>Nedladdning av pictobilder i klartext klar.</value>
+  </data>
+  <data name="errorDownloadNew" xml:space="preserve">
+    <value>Kunde inte logga in på servern. Det kan bero på att en ny version av uppdateringsprogrammet har kommit ut. Titta gärna in på http://www.pictogram.se/produkter/ .</value>
+  </data>
+  <data name="errorLoginFailed" xml:space="preserve">
+    <value>Kunde inte logga in på servern. Kontrollera användarnamn och lösenord.</value>
+  </data>
   <data name="noText" xml:space="preserve">
     <value>Ingen text</value>
   </data>

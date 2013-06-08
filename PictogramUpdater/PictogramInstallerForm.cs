@@ -77,9 +77,11 @@ namespace PictogramUpdater {
 
             if (!this.downloadManager.checkLogin(this.usernameTextbox.Text, this.passwordTextbox.Text)) {
                 if (this._authenticationService.UseFreeAccount) {
-                    ShowError("Kunde inte logga in på servern. Det kan bero på att en ny version av uppdateringsprogrammet har kommit ut. Titta gärna in på http://www.pictogram.se/produkter/ .");
+                    /* "Please download new version." */
+                    ShowError(TextResources.errorDownloadNew);
                 } else {
-                    ShowError("Kunde inte logga in på servern. Kontrollera användarnamn och lösenord.");
+                    /* "Check username and password" */
+                    ShowError(TextResources.errorLoginFailed);
                 }
 
                 DownloadFinished();
@@ -107,7 +109,8 @@ namespace PictogramUpdater {
                     LogMessage(TextResources.lookingForNewImagesWithText);
                     installationManager.Download(plainTextDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.PLAIN_TEXT,
                                                  usernameTextbox.Text, passwordTextbox.Text);
-                    LogMessage("Nedladdning av pictobilder i klartext klar.");
+                    /* "Nedladdning av pictobilder i klartext klar." */
+                    LogMessage(TextResources.downloadPlainTextComplete);
                     LogMessage("");
 
                 }

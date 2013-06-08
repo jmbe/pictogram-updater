@@ -187,6 +187,15 @@ namespace PictogramUpdater {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloading plain text images complete..
+        /// </summary>
+        internal static string downloadPlainTextComplete {
+            get {
+                return ResourceManager.GetString("downloadPlainTextComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sound download complete.
         /// </summary>
         internal static string downloadSoundsComplete {
@@ -210,6 +219,24 @@ namespace PictogramUpdater {
         internal static string errorDownloadingFile {
             get {
                 return ResourceManager.GetString("errorDownloadingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not log in to server. Please check if a new version of the update program is available at http://www.pictogram.se/produkter/ ..
+        /// </summary>
+        internal static string errorDownloadNew {
+            get {
+                return ResourceManager.GetString("errorDownloadNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not connect to server. Please check username and password..
+        /// </summary>
+        internal static string errorLoginFailed {
+            get {
+                return ResourceManager.GetString("errorLoginFailed", resourceCulture);
             }
         }
         
