@@ -28,6 +28,10 @@ namespace PictogramUpdater {
 
 
         private string GetPictoInstallPath(Language language) {
+            if (language.IsTextless) {
+                return GetTextLessInstallPath();
+            }
+
             Profile settings = this.iniFileFactory.CreatePictoWmfIni(language).ToIni();
             var path = settings.GetValue("ProgDir", "Dir") as string;
             return path ?? GetDefaultPath(language);
@@ -39,13 +43,22 @@ namespace PictogramUpdater {
             return path ?? GetDefaultPlainTextPath(language);
         }
 
+        private String GetTextLessInstallPath() {
+            Profile settings = this.iniFileFactory.CreatePictoWmfIni(null).ToIni();
+            var path = settings.GetValue("ProgDir", "TextlessDir") as string;
+            return path ?? GetDefaultTextlessDir();
+        }
+
         public string getInstallPathForLanguage(Language language, InstallationType installationType) {
             switch (installationType) {
                 case InstallationType.PLAIN_TEXT:
                     return GetPictoPlainTextInstallPath(language);
                 case InstallationType.SOUND:
                     return GetPictoSoundInstallPath(language);
+                case InstallationType.TEXTLESS:
+                    /* fall-through */
                 case InstallationType.CODE:
+                    /* fall-through */
                 default:
                     return GetPictoInstallPath(language);
             }
@@ -146,6 +159,10 @@ namespace PictogramUpdater {
 
         public string GetDefaultPlainTextPath(Language language) {
             return @"C:\Picto\Wmf" + language.Code.ToUpper() + " " + TextResources.inPlainText;
+        }
+
+        private string GetDefaultTextlessDir() {
+            return @"C:\Picto\Wmf";
         }
 
         public string GetDefaultSoundPath(Language language) {
