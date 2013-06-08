@@ -455,13 +455,13 @@ namespace PictogramUpdater {
 
         private void LanguageChanged() {
 
-            string wmfPath = config.GetPictoInstallPath(_languageSelection.Language);
+            string wmfPath = config.getInstallPathForLanguage(_languageSelection.Language, InstallationType.CODE);
             wmfDirectoryChooser.languageChanged(wmfPath);
 
-            string plainTextPath = config.GetPictoPlainTextInstallPath(_languageSelection.Language);
+            string plainTextPath = config.getInstallPathForLanguage(_languageSelection.Language, InstallationType.PLAIN_TEXT);
             plainTextDirectoryChooser.languageChanged(plainTextPath);
 
-            string soundPath = config.GetPictoSoundInstallPath(_languageSelection.Language);
+            string soundPath = config.getInstallPathForLanguage(_languageSelection.Language, InstallationType.SOUND);
             soundDirectoryChooser.languageChanged(soundPath);
 
 

@@ -27,13 +27,13 @@ namespace PictogramUpdater {
 
 
 
-        public string GetPictoInstallPath(Language language) {
+        private string GetPictoInstallPath(Language language) {
             Profile settings = this.iniFileFactory.CreatePictoWmfIni(language).ToIni();
             var path = settings.GetValue("ProgDir", "Dir") as string;
             return path ?? GetDefaultPath(language);
         }
 
-        public string GetPictoPlainTextInstallPath(Language language) {
+        private string GetPictoPlainTextInstallPath(Language language) {
             Profile settings = this.iniFileFactory.CreatePictoWmfIni(language).ToIni();
             var path = settings.GetValue("ProgDir", "PlainTextDir") as string;
             return path ?? GetDefaultPlainTextPath(language);
@@ -45,6 +45,7 @@ namespace PictogramUpdater {
                     return GetPictoPlainTextInstallPath(language);
                 case InstallationType.SOUND:
                     return GetPictoSoundInstallPath(language);
+                case InstallationType.CODE:
                 default:
                     return GetPictoInstallPath(language);
             }
