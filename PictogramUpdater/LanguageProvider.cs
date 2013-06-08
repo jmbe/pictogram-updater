@@ -105,11 +105,14 @@ namespace PictogramUpdater {
         /// </summary>
         public IList Languages {
             get {
-                var result = new string[languageToLocaleMapping.Keys.Count];
-                var i = 0;
+                List<string> result = new List<string>();
+
                 foreach (string language in languageToLocaleMapping.Keys) {
-                    result[i++] = language;
+                    result.Add(language);
                 }
+
+                result.Sort();
+
                 return result;
             }
         }
