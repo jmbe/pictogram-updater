@@ -474,6 +474,15 @@ namespace PictogramUpdater {
                 soundCheckbox.Checked = false;
                 soundCheckbox.Hide();
             }
+
+            if (!_languageSelection.Language.IsTextless) {
+                plainTextDirectoryChooser.Show();
+                plainTextCheckbox.Show();
+            } else {
+                plainTextDirectoryChooser.Hide();
+                plainTextCheckbox.Checked = false;
+                plainTextCheckbox.Hide();
+            }
         }
 
         /// <summary>
