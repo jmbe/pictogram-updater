@@ -98,6 +98,11 @@ namespace PictogramUpdater {
 
             string languageCode = language.Code.ToLower();
 
+            if (language.IsTextless) {
+                /* Get Swedish list, since ws does not support not providing any language. */
+                languageCode = "sv";
+            }
+
             List<PictogramEntry> result = new List<PictogramEntry>();
 
             dynamic client = createRestClient("/languages/" + languageCode + "/pictograms/", RestService.Xml);
