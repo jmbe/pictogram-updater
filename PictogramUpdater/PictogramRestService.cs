@@ -94,7 +94,9 @@ namespace PictogramUpdater {
             return result;
         }
 
-        internal List<PictogramEntry> getPictogramPhrasesByLanguage(string languageCode) {
+        internal List<PictogramEntry> getPictogramPhrasesByLanguage(Language language) {
+
+            string languageCode = language.Code.ToLower();
 
             List<PictogramEntry> result = new List<PictogramEntry>();
 

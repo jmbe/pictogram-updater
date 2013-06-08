@@ -57,7 +57,7 @@ namespace PictogramUpdater {
         }
 
         private List<PictogramEntry> GetEntries(string username, string password, Language language) {
-            List<PictogramEntry> phrases = this.pictogramRestService.getPictogramPhrasesByLanguage(language.Code.ToLower());
+            List<PictogramEntry> phrases = this.pictogramRestService.getPictogramPhrasesByLanguage(language);
             return phrases;
         }
 
