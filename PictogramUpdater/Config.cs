@@ -83,8 +83,16 @@ namespace PictogramUpdater {
                 throw new UnauthorizedAccessException("Access to the path '" + picWmf.Path + "' is denied.", e);
             }
 
-            //Update categories
-            
+            UpdateCategories(profile, language);
+
+        }
+
+        private void UpdateCategories(Profile profile, Language language) {
+            if (language.IsTextless) {
+                return;
+            }
+
+
             var categories = this.categoryRepository.FindAll();
             profile.SetValue("Grupper", "Antal", categories.Count);
 
@@ -97,7 +105,6 @@ namespace PictogramUpdater {
                 safeWriteToProfile(profile, translation, "Antal", "0");
                 safeWriteToProfile(profile, translation, "Kod", category.Code);
             }
-
         }
 
         /// <summary>
