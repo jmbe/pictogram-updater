@@ -64,10 +64,11 @@ namespace PictogramUpdater {
             try {
 
                 IList<Language> languages = pictogramRestService.getForeignLanguageNames();
-                foreach(Language language in languages) {
+                foreach (Language language in languages) {
                     AddLanguage(language);
                 }
 
+                AddLanguage(new Language("xx", "(" + TextResources.noText + ")"));
             } catch (Exception e) {
                 LogMessage(TextResources.couldNotConnectToServer);
                 LogToFile(e.ToString());

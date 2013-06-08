@@ -222,4 +222,7 @@
   <data name="webbHeader" xml:space="preserve">
     <value>Picto Online Update</value>
   </data>
+  <data name="noText" xml:space="preserve">
+    <value>No text</value>
+  </data>
 </root>
