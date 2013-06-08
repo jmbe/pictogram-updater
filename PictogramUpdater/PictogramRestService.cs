@@ -124,9 +124,13 @@ namespace PictogramUpdater {
         }
 
 
-        internal void downloadWmf(string Username, string Password, string pictogramCode, string languageCode, Stream output) {
+        internal void downloadWmf(string Username, string Password, string pictogramCode, string languageCode, InstallationType installationType, Stream output) {
             /* "96" is the size, not pictogram id. */
-            dynamic client = createRestClient("/languages/" + languageCode + "/pictograms/" + pictogramCode + "/images/96.wmf", RestService.Binary).withCredentials(new NetworkCredential(Username, Password));
+            string url = "/languages/" + languageCode + "/pictograms/" + pictogramCode + "/images/96.wmf";
+            if (InstallationType.TEXTLESS.Equals(installationType)) {
+                url += "?textless=true";
+            }
+            dynamic client = createRestClient(url, RestService.Binary).withCredentials(new NetworkCredential(Username, Password));
 
             dynamic operation = client.get();
 
