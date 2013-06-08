@@ -82,9 +82,7 @@ namespace PictogramUpdater {
             Profile profile = picWmf.ToIni();
 
             try {
-                if (!language.IsTextless) {
-                    profile.SetValue("ProgDir", "Dir", installPath);
-                }
+                profile.SetValue("ProgDir", "Dir", language.IsTextless ? GetPictoInstallPath(language) : installPath);
 
                 safeWriteToProfile(profile, "ProgDir", "Extension", "WMF");
                 if (!language.IsTextless) {
@@ -97,9 +95,10 @@ namespace PictogramUpdater {
                 // Place PlainTextDir last in section.
                 if (!language.IsTextless) {
                     profile.SetValue("ProgDir", "PlainTextDir", plainTextInstallPath);
-                } else {
-                    profile.SetValue("ProgDir", "TextlessDir", installPath);
                 }
+
+                profile.SetValue("ProgDir", "TextlessDir", language.IsTextless ? installPath : GetTextLessInstallPath());
+
             } catch (System.ComponentModel.Win32Exception e) {
                 throw new UnauthorizedAccessException("Access to the path '" + picWmf.Path + "' is denied.", e);
             }
