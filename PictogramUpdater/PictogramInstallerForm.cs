@@ -328,7 +328,7 @@ namespace PictogramUpdater {
         private void SetControlsEnabled(bool enabled) {
             foreach (
                 Control control in
-                    new Control[] { verifyLabel, installButton, updateLinkLabel, overwriteCheckbox, wmfDirectoryChooser, soundDirectoryChooser, plainTextDirectoryChooser, languagesComboBox }) {
+                    new Control[] { verifyLabel, installButton, overwriteCheckbox, wmfDirectoryChooser, soundDirectoryChooser, plainTextDirectoryChooser, languagesComboBox }) {
                 SetControlEnabled(control, enabled);
             }
         }
@@ -509,17 +509,6 @@ namespace PictogramUpdater {
             } catch (Exception ex) {
                 LogToFile(ex.ToString());
             }
-        }
-
-        /// <summary>
-        /// Hanterar klick på uppdateringslänken. Laddar ner giltiga språk.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UpdateLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            this._currentWorkingThread = new Thread(new ThreadStart(RefreshLanguages));
-            this._currentWorkingThread.CurrentUICulture = this.culture;
-            _currentWorkingThread.Start();
         }
 
         /// <summary>

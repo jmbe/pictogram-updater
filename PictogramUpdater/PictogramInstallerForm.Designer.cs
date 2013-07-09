@@ -41,7 +41,6 @@ namespace PictogramUpdater
             this.overwriteCheckbox = new System.Windows.Forms.CheckBox();
             this.soundCheckbox = new System.Windows.Forms.CheckBox();
             this.plainTextCheckbox = new System.Windows.Forms.CheckBox();
-            this.updateLinkLabel = new System.Windows.Forms.LinkLabel();
             this.languagesComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.logTextbox = new System.Windows.Forms.TextBox();
@@ -144,13 +143,6 @@ namespace PictogramUpdater
             resources.ApplyResources(this.plainTextCheckbox, "plainTextCheckbox");
             this.plainTextCheckbox.Name = "plainTextCheckbox";
             this.plainTextCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // updateLinkLabel
-            // 
-            resources.ApplyResources(this.updateLinkLabel, "updateLinkLabel");
-            this.updateLinkLabel.Name = "updateLinkLabel";
-            this.updateLinkLabel.TabStop = true;
-            this.updateLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.UpdateLinkLabel_LinkClicked);
             // 
             // languagesComboBox
             // 
@@ -270,7 +262,6 @@ namespace PictogramUpdater
             this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.overwriteCheckbox);
-            this.Controls.Add(this.updateLinkLabel);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.languagesComboBox);
             this.Controls.Add(this.label1);
@@ -320,7 +311,6 @@ namespace PictogramUpdater
         private System.Windows.Forms.ComboBox languagesComboBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
-        private System.Windows.Forms.LinkLabel updateLinkLabel;
         private System.Windows.Forms.CheckBox overwriteCheckbox;
         private System.Windows.Forms.CheckBox plainTextCheckbox;
         private System.Windows.Forms.CheckBox soundCheckbox;
