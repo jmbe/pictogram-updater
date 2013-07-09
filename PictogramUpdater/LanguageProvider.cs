@@ -13,11 +13,11 @@ namespace PictogramUpdater {
         /// <summary>
         /// Maps Svenska -> SV
         /// </summary>
-        private Hashtable languageToLocaleMapping;
+        private Dictionary<string, string> languageToLocaleMapping;
         /// <summary>
         /// Maps sv -> Svenska (key is always lowercase)
         /// </summary>
-        private Hashtable codeToDisplayNameMapping;
+        private Dictionary<string, string> codeToDisplayNameMapping;
 
         public event LogMessageCallback LogMessage;
         public event LogToFileCallback LogToFile;
@@ -28,8 +28,8 @@ namespace PictogramUpdater {
         /// Skapar en ny instans av klassen.
         /// </summary>
         public LanguageProvider(PictogramRestService pictogramRestService) {
-            languageToLocaleMapping = new Hashtable();
-            codeToDisplayNameMapping = new Hashtable();
+            languageToLocaleMapping = new Dictionary<string, string>();
+            codeToDisplayNameMapping = new Dictionary<string, string>();
             this.pictogramRestService = pictogramRestService;
         }
 
