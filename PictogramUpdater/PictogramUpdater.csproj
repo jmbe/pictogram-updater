@@ -93,6 +93,7 @@
   <ItemGroup>
     <Compile Include="AuthenticationService.cs" />
     <Compile Include="Category.cs" />
+    <Compile Include="ImageFormat.cs" />
     <Compile Include="FileLogger.cs" />
     <Compile Include="InstallationType.cs" />
     <Compile Include="DirectoryChooser.cs">
