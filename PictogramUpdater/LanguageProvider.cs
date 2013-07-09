@@ -103,7 +103,7 @@ namespace PictogramUpdater {
         /// <summary>
         /// Returnerar en lista med språk.
         /// </summary>
-        public IList Languages {
+        public IList<string> Languages {
             get {
                 List<string> result = new List<string>();
 

@@ -28,7 +28,7 @@ namespace PictogramUpdater {
 
     internal delegate void ExitCallback();
 
-    internal delegate void SetLanguageDataSourceCallback(IList source);
+    internal delegate void SetLanguageDataSourceCallback(IList<string> source);
 
     internal delegate void SetStatusCallback(string message);
 
@@ -529,7 +529,7 @@ namespace PictogramUpdater {
         /// Metod för att sätta val för språk på ett trådsäkert sätt.
         /// </summary>
         /// <param name="source"></param>
-        private void SetLanguageDataSource(IList source) {
+        private void SetLanguageDataSource(IList<string> source) {
             if (languagesComboBox.InvokeRequired) {
                 languagesComboBox.Invoke(new SetLanguageDataSourceCallback(SetLanguageDataSource), new object[] { source });
             } else {
