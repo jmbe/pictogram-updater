@@ -4,16 +4,51 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace PictogramUpdater {
-    internal class LanguageSelection {
+    public class LanguageSelection {
         private Language _language = new Language("sv", "Svenska");
+        private ImageFormat imageFormat = new ImageFormat("wmf", "wmf"); // todo get from provider
 
-        public event LanguageChangedCallback LanguageChanged;
+        internal event LanguageChangedCallback LanguageChanged;
+
+        private void onChange() {
+            if (LanguageChanged != null) {
+                LanguageChanged.Invoke();
+            }
+        }
 
         public Language Language {
             get { return _language; }
             set {
                 _language = value;
-                LanguageChanged.Invoke();
+                onChange();
+            }
+        }
+
+        public ImageFormat ImageFormat {
+            get {
+                return this.imageFormat;
+            }
+            set {
+                this.imageFormat = value;
+                onChange();
+            }
+        }
+
+        public string CapitalizedExtension {
+            get {
+                return imageFormat.CapitalizedExtension;
+            }
+        }
+
+        public string LanguageCode {
+            get {
+                return Language.Code.ToUpper();
+            }
+        }
+
+        public bool IsVectorFormat {
+            get {
+                return imageFormat.IsVectorFormat;
             }
         }
     }

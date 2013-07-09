@@ -50,6 +50,7 @@ namespace PictogramUpdater {
         /// </summary>
         public bool OverwriteExistingFiles { get; set; }
         public InstallationType InstallationType{ get; set; }
+        public LanguageSelection LanguageSelection { get; set; }
 
         public bool PlainText {
             get {
@@ -96,7 +97,7 @@ namespace PictogramUpdater {
                     foreach (var entry in DownloadList) {
 
 
-                        var fileName = entry.ToFilename(InstallationType);
+                        var fileName = entry.ToFilename(InstallationType, LanguageSelection);
                         var file = target.FullName + @"\" + fileName;
 
                         LogMessage(TextResources.downloadingFile + " " + fileName + "...");
@@ -108,7 +109,7 @@ namespace PictogramUpdater {
                             if (Sound) {
                                 this.pictogramRestService.downloadSound(Username, Password, entry.FullCode, Language.Code.ToLower(), stream);
                             } else {
-                                this.pictogramRestService.downloadWmf(Username, Password, entry.FullCode, Language.Code.ToLower(), InstallationType, stream);
+                                this.pictogramRestService.downloadWmf(Username, Password, entry.FullCode, Language.Code.ToLower(), InstallationType, LanguageSelection, stream);
                             }
                             
                         } catch (Exception e) {

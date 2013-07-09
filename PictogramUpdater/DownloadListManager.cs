@@ -13,11 +13,11 @@ namespace PictogramUpdater {
             this.config = config;
         }
 
-        public DownloadList GetEntriesToInstall(string username, string password, Language language, InstallationType installationType, bool overwrite) {
+        public DownloadList GetEntriesToInstall(string username, string password, LanguageSelection selection, InstallationType installationType, bool overwrite) {
 
-            List<PictogramEntry> all = GetCompleteList(username, password, language, installationType);
+            List<PictogramEntry> all = GetCompleteList(username, password, selection.Language, installationType);
 
-            var missing = overwrite ? all : FilterEntries(language, all, installationType);
+            var missing = overwrite ? all : FilterEntries(selection, all, installationType);
 
             return new DownloadList(all, missing);
         }
@@ -61,15 +61,15 @@ namespace PictogramUpdater {
             return phrases;
         }
 
-        private List<PictogramEntry> FilterEntries(Language language,
+        private List<PictogramEntry> FilterEntries(LanguageSelection selection,
                                                           IEnumerable<PictogramEntry> entries, InstallationType installationType) {
 
-            string installPath = this.config.getInstallPathForLanguage(language, installationType);
+            string installPath = this.config.getInstallPathForLanguage(selection, installationType);
             
             var newEntries = new List<PictogramEntry>();
 
             foreach (var entry in entries) {
-                var fileName = entry.ToFilename(installationType);
+                var fileName = entry.ToFilename(installationType, selection);
 
                 var fileInfo = new FileInfo(installPath + @"\" + fileName);
                 if (!fileInfo.Exists || fileInfo.Length == 0  || fileInfo.LastWriteTime.CompareTo(entry.Modified) < 0) {

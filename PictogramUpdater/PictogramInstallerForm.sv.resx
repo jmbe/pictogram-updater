@@ -124,9 +124,6 @@
   <data name="label2.Text" xml:space="preserve">
     <value>Användarnamn</value>
   </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Inloggningsuppgifter för Picto Online</value>
-  </data>
   <data name="verifyLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>57, 13</value>
   </data>
@@ -138,6 +135,9 @@
   </data>
   <data name="label3.Text" xml:space="preserve">
     <value>Lösenord</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Inloggningsuppgifter för Picto Online</value>
   </data>
   <data name="overwriteCheckbox.Size" type="System.Drawing.Size, System.Drawing">
     <value>147, 17</value>
@@ -157,11 +157,11 @@
   <data name="plainTextCheckbox.Text" xml:space="preserve">
     <value>Installera pictobilder i klartext</value>
   </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 25</value>
+  <data name="languageLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 25</value>
   </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Välj språk</value>
+  <data name="languageLabel.Text" xml:space="preserve">
+    <value>Språk</value>
   </data>
   <data name="installButton.Text" xml:space="preserve">
     <value>&amp;Installera</value>
@@ -171,12 +171,6 @@
   </data>
   <data name="label4.Text" xml:space="preserve">
     <value>Installera pictobilder</value>
-  </data>
-  <data name="versionLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>55, 0</value>
-  </data>
-  <data name="versionLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 13</value>
   </data>
   <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -3138,6 +3132,12 @@
   </data>
   <data name="exitLink.Text" xml:space="preserve">
     <value>avsluta</value>
+  </data>
+  <data name="formatLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>108, 25</value>
+  </data>
+  <data name="formatLabel.Text" xml:space="preserve">
+    <value>Bildformat</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

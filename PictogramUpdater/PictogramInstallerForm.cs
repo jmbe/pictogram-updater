@@ -61,6 +61,7 @@ namespace PictogramUpdater {
         private PictogramRestService pictogramRestService;
         private FileLogger fileLogger;
         private CultureInfo culture;
+        private ImageFormatProvider imageFormatProvider;
 
         public PictogramInstallerForm(CultureInfo culture) {
             this.culture = culture;
@@ -92,14 +93,14 @@ namespace PictogramUpdater {
 
             try {
                 var language = _languageSelection.Language;
-                config.CreateOrUpdateWmfIni(language, wmfDirectoryChooser.InstallPath, plainTextDirectoryChooser.InstallPath);
+                config.CreateOrUpdateWmfIni(_languageSelection, wmfDirectoryChooser.InstallPath, plainTextDirectoryChooser.InstallPath);
 
 
                 LogMessage(TextResources.lookingForNewImages);
                 if (language.IsTextless) {
-                    installationManager.Download(wmfDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.TEXTLESS, usernameTextbox.Text, passwordTextbox.Text);
+                    installationManager.Download(wmfDirectoryChooser.InstallPath, _languageSelection, overwriteCheckbox.Checked, InstallationType.TEXTLESS, usernameTextbox.Text, passwordTextbox.Text);
                 } else {
-                    installationManager.Download(wmfDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.CODE, usernameTextbox.Text, passwordTextbox.Text);
+                    installationManager.Download(wmfDirectoryChooser.InstallPath, _languageSelection, overwriteCheckbox.Checked, InstallationType.CODE, usernameTextbox.Text, passwordTextbox.Text);
                 }
                 LogMessage(TextResources.downloadComplete);
                 LogMessage("");
@@ -107,7 +108,7 @@ namespace PictogramUpdater {
 
                 if (plainTextCheckbox.Checked) {
                     LogMessage(TextResources.lookingForNewImagesWithText);
-                    installationManager.Download(plainTextDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.PLAIN_TEXT,
+                    installationManager.Download(plainTextDirectoryChooser.InstallPath, _languageSelection, overwriteCheckbox.Checked, InstallationType.PLAIN_TEXT,
                                                  usernameTextbox.Text, passwordTextbox.Text);
                     /* "Nedladdning av pictobilder i klartext klar." */
                     LogMessage(TextResources.downloadPlainTextComplete);
@@ -117,14 +118,14 @@ namespace PictogramUpdater {
 
                 if (soundCheckbox.Checked) {
                     LogMessage(TextResources.lookingForNewSounds);
-                    installationManager.Download(soundDirectoryChooser.InstallPath, language, overwriteCheckbox.Checked, InstallationType.SOUND,
+                    installationManager.Download(soundDirectoryChooser.InstallPath, _languageSelection, overwriteCheckbox.Checked, InstallationType.SOUND,
                                                  usernameTextbox.Text, passwordTextbox.Text);
                     config.CreateOrUpdateWavIni(language, soundDirectoryChooser.InstallPath);
                     LogMessage(TextResources.downloadSoundsComplete);
                     LogMessage("");
                 }
 
-                config.CreateGenericPicWmfIni(language);
+                config.CreateGenericPicWmfIni(_languageSelection);
 
 
                 DownloadFinished();
@@ -328,7 +329,7 @@ namespace PictogramUpdater {
         private void SetControlsEnabled(bool enabled) {
             foreach (
                 Control control in
-                    new Control[] { verifyLabel, installButton, overwriteCheckbox, wmfDirectoryChooser, soundDirectoryChooser, plainTextDirectoryChooser, languagesComboBox }) {
+                    new Control[] { verifyLabel, installButton, overwriteCheckbox, wmfDirectoryChooser, soundDirectoryChooser, plainTextDirectoryChooser, languagesComboBox, formatComboBox }) {
                 SetControlEnabled(control, enabled);
             }
         }
@@ -394,10 +395,10 @@ namespace PictogramUpdater {
 
 
             /* Installationskatalog för wmf */
-            this.wmfDirectoryChooser.InstallPath = config.GetDefaultPath(_languageSelection.Language);
+            this.wmfDirectoryChooser.InstallPath = config.GetDefaultPath(_languageSelection);
 
             /* Plain text install dir*/
-            this.plainTextDirectoryChooser.InstallPath = config.GetDefaultPlainTextPath(_languageSelection.Language);
+            this.plainTextDirectoryChooser.InstallPath = config.GetDefaultPlainTextPath(_languageSelection);
 
             /* Sound install dir*/
             this.soundDirectoryChooser.InstallPath = config.GetDefaultSoundPath(_languageSelection.Language);
@@ -430,6 +431,8 @@ namespace PictogramUpdater {
             downloadManager.StatusChanged += SetStatus;
 
             _languageSelection.LanguageChanged += LanguageChanged;
+
+            SetFormatsDataSource(this.imageFormatProvider.Formats);
         }
 
         /// <summary>
@@ -445,7 +448,7 @@ namespace PictogramUpdater {
             this.categoryRepository = new CategoryRepository();
             this.categoryTranslationService = new CategoryTranslationService();
 
-            this.pictogramRestService = new PictogramRestService("pictoonline.pictogram.se");
+            this.pictogramRestService = new PictogramRestService("www.pictogram.se");
 
             this.languageProvider = new LanguageProvider(this.pictogramRestService);
 
@@ -458,17 +461,19 @@ namespace PictogramUpdater {
             this.downloadListManager = new DownloadListManager(this.pictogramRestService, this.config);
 
             this.installationManager = new InstallationManager(this.config, this.downloadListManager, this.languageProvider, this.pictogramRestService);
+
+            this.imageFormatProvider = new ImageFormatProvider();
         }
 
         private void LanguageChanged() {
 
-            string wmfPath = config.getInstallPathForLanguage(_languageSelection.Language, InstallationType.CODE);
+            string wmfPath = config.getInstallPathForLanguage(_languageSelection, InstallationType.CODE);
             wmfDirectoryChooser.languageChanged(wmfPath);
 
-            string plainTextPath = config.getInstallPathForLanguage(_languageSelection.Language, InstallationType.PLAIN_TEXT);
+            string plainTextPath = config.getInstallPathForLanguage(_languageSelection, InstallationType.PLAIN_TEXT);
             plainTextDirectoryChooser.languageChanged(plainTextPath);
 
-            string soundPath = config.getInstallPathForLanguage(_languageSelection.Language, InstallationType.SOUND);
+            string soundPath = config.getInstallPathForLanguage(_languageSelection, InstallationType.SOUND);
             soundDirectoryChooser.languageChanged(soundPath);
 
 
@@ -545,9 +550,21 @@ namespace PictogramUpdater {
             }
         }
 
+        private void SetFormatsDataSource(IList<ImageFormat> source) {
+            formatComboBox.DisplayMember = "Display";
+            formatComboBox.ValueMember = null; // use actual ImageFormat as value
+
+            formatComboBox.DataSource = source;
+        }
+
         private void LanguageComboBox_Change(object sender, EventArgs e) {
             var languageName = languagesComboBox.SelectedItem as string;
             _languageSelection.Language = new Language(languageProvider.GetLocale(languageName), languageName);
+        }
+
+        private void formatComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            ImageFormat format = formatComboBox.SelectedItem as ImageFormat;
+            _languageSelection.ImageFormat = format;
         }
 
         /// <summary>

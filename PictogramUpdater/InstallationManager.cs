@@ -24,24 +24,25 @@ namespace PictogramUpdater {
             this.pictogramRestService = pictogramRestService;
         }
 
-        public void Download(string targetPath, Language language, bool overwrite, InstallationType installationType,
+        public void Download(string targetPath, LanguageSelection selection, bool overwrite, InstallationType installationType,
                              string username, string password) {
 
             
-            DownloadList downloadList = _downloadListManager.GetEntriesToInstall(username, password, language, installationType, overwrite);
+            DownloadList downloadList = _downloadListManager.GetEntriesToInstall(username, password, selection, installationType, overwrite);
             
            
-            var downloadManager = CreateDownloadManager(targetPath, username, password, language);
+            var downloadManager = CreateDownloadManager(targetPath, username, password, selection.Language);
 
             downloadManager.DownloadList = downloadList.Missing;
             downloadManager.InstallationType = installationType;
+            downloadManager.LanguageSelection = selection;
 
             LogMessage(TextResources.thereAre + " " + downloadList.Missing.Count + " " + TextResources.newFilesToDownload);
             downloadManager.Download();
 
             if (InstallationType.CODE.Equals(installationType)) {
                 LogMessage(TextResources.updatingIniFile);
-                _config.CommitEntries(language, downloadList.All);
+                _config.CommitEntries(selection, downloadList.All);
                 LogMessage(TextResources.iniFileUpdated);
             }
         }
@@ -56,6 +57,7 @@ namespace PictogramUpdater {
             downloadManager.Language = language;
 
             downloadManager.LogMessage += LogMessage;
+            downloadManager.LogToFile += LogToFile;
             downloadManager.ProgressChanged += ProgressChanged;
             downloadManager.StatusChanged += StatusChanged;
             return downloadManager;

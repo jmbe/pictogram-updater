@@ -128,10 +128,16 @@ namespace PictogramUpdater {
             return result;
         }
 
+        internal void downloadWmf(string Username, string Password, string pictogramCode, string languageCode, InstallationType installationType, LanguageSelection selection, Stream output) {
 
-        internal void downloadWmf(string Username, string Password, string pictogramCode, string languageCode, InstallationType installationType, Stream output) {
-            /* "96" is the size, not pictogram id. */
-            string url = "/languages/" + languageCode + "/pictograms/" + pictogramCode + "/images/96.wmf";
+            int size = 500;
+
+            if (selection.IsVectorFormat) {
+                size = 96;
+            }
+
+            string url = "/languages/" + languageCode + "/pictograms/" + pictogramCode + "/images/" + size + "." + selection.ImageFormat.Extension;
+
             if (InstallationType.TEXTLESS.Equals(installationType)) {
                 url += "?textless=true";
             }

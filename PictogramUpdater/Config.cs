@@ -20,47 +20,48 @@ namespace PictogramUpdater {
             this.iniFileFactory = iniFileFactory;
         }
 
-        public bool IsPictoWmfInstalled(Language language) {
-            var picWmf = this.iniFileFactory.CreatePictoWmfIni(language);
+        public bool IsPictoWmfInstalled(LanguageSelection selection) {
+            var picWmf = this.iniFileFactory.CreatePictoWmfIni(selection);
             return picWmf.Exists;
         }
 
 
 
-        private string GetPictoInstallPath(Language language) {
+        private string GetPictoInstallPath(LanguageSelection selection) {
+            Language language = selection.Language;
             if (language.IsTextless) {
-                return GetTextLessInstallPath();
+                return GetTextLessInstallPath(selection);
             }
 
-            Profile settings = this.iniFileFactory.CreatePictoWmfIni(language).ToIni();
+            Profile settings = this.iniFileFactory.CreatePictoWmfIni(selection).ToIni();
             var path = settings.GetValue("ProgDir", "Dir") as string;
-            return path ?? GetDefaultPath(language);
+            return path ?? GetDefaultPath(selection);
         }
 
-        private string GetPictoPlainTextInstallPath(Language language) {
-            Profile settings = this.iniFileFactory.CreatePictoWmfIni(language).ToIni();
+        private string GetPictoPlainTextInstallPath(LanguageSelection selection) {
+            Profile settings = this.iniFileFactory.CreatePictoWmfIni(selection).ToIni();
             var path = settings.GetValue("ProgDir", "PlainTextDir") as string;
-            return path ?? GetDefaultPlainTextPath(language);
+            return path ?? GetDefaultPlainTextPath(selection);
         }
 
-        private String GetTextLessInstallPath() {
-            Profile settings = this.iniFileFactory.CreatePictoWmfIni(null).ToIni();
+        private String GetTextLessInstallPath(LanguageSelection selection) {
+            Profile settings = this.iniFileFactory.CreatePictoWmfIni(selection).ToIni();
             var path = settings.GetValue("ProgDir", "TextlessDir") as string;
-            return path ?? GetDefaultTextlessDir();
+            return path ?? GetDefaultTextlessDir(selection);
         }
 
-        public string getInstallPathForLanguage(Language language, InstallationType installationType) {
+        public string getInstallPathForLanguage(LanguageSelection selection, InstallationType installationType) {
             switch (installationType) {
                 case InstallationType.PLAIN_TEXT:
-                    return GetPictoPlainTextInstallPath(language);
+                    return GetPictoPlainTextInstallPath(selection);
                 case InstallationType.SOUND:
-                    return GetPictoSoundInstallPath(language);
+                    return GetPictoSoundInstallPath(selection.Language);
                 case InstallationType.TEXTLESS:
                     /* fall-through */
                 case InstallationType.CODE:
                     /* fall-through */
                 default:
-                    return GetPictoInstallPath(language);
+                    return GetPictoInstallPath(selection);
             }
 
         }
@@ -71,14 +72,15 @@ namespace PictogramUpdater {
             return path ?? GetDefaultSoundPath(language);
         }
 
-        public void CreateOrUpdateWmfIni(Language language, string installPath, string plainTextInstallPath) {
-            if (!IsPictoWmfInstalled(language)) {
-                CreateNewIniFile(language);
+        public void CreateOrUpdateWmfIni(LanguageSelection selection, string installPath, string plainTextInstallPath) {
+            Language language = selection.Language;
+            if (!IsPictoWmfInstalled(selection)) {
+                CreateNewIniFile(selection);
             }
 
             /* WmfIni */
 
-            PicIni picWmf = this.iniFileFactory.CreatePictoWmfIni(language);
+            PicIni picWmf = this.iniFileFactory.CreatePictoWmfIni(selection);
             Profile profile = picWmf.ToIni();
 
             try {
@@ -86,11 +88,14 @@ namespace PictogramUpdater {
                     profile.SetValue("ProgDir", "Dir", installPath);
                 }
 
-                safeWriteToProfile(profile, "ProgDir", "Extension", "WMF");
+                /* Extension in ini file should be all upper case. */
+                string extension = selection.ImageFormat.AllCapsExtension;
+
+                safeWriteToProfile(profile, "ProgDir", "Extension", extension);
                 if (!language.IsTextless) {
-                    safeWriteToProfile(profile, "ProgDir", "langWMF", language.Code);
+                    safeWriteToProfile(profile, "ProgDir", "lang" + extension, language.Code);
                 }
-                safeWriteToProfile(profile, "ProgDir", "verWMF", "7.0");
+                safeWriteToProfile(profile, "ProgDir", "ver" + extension, "7.0");
                 safeWriteToProfile(profile, "ProgDir", "CD", "-");
                 safeWriteToProfile(profile, "ProgDir", "IDNAME", "");
 
@@ -99,7 +104,7 @@ namespace PictogramUpdater {
                     profile.SetValue("ProgDir", "PlainTextDir", plainTextInstallPath);
                 }
 
-                profile.SetValue("ProgDir", "TextlessDir", language.IsTextless ? installPath : GetTextLessInstallPath());
+                profile.SetValue("ProgDir", "TextlessDir", language.IsTextless ? installPath : GetTextLessInstallPath(selection));
 
             } catch (System.ComponentModel.Win32Exception e) {
                 throw new UnauthorizedAccessException("Access to the path '" + picWmf.Path + "' is denied.", e);
@@ -155,31 +160,32 @@ namespace PictogramUpdater {
             }
         }
 
-        private void CreateNewIniFile(Language language) {
-            var info = this.iniFileFactory.CreatePictoWmfIni(language).ToFileInfo();
+        private void CreateNewIniFile(LanguageSelection selection) {
+            var info = this.iniFileFactory.CreatePictoWmfIni(selection).ToFileInfo();
             info.Create().Close();
             
             
         }
 
-        public string GetDefaultPath(Language language) {
-            return @"C:\Picto\Wmf" + language.Code.ToUpper();
+        public string GetDefaultPath(LanguageSelection selection) {
+            return @"C:\Picto\" + selection.CapitalizedExtension + selection.LanguageCode; ;
         }
 
-        public string GetDefaultPlainTextPath(Language language) {
-            return @"C:\Picto\Wmf" + language.Code.ToUpper() + " " + TextResources.inPlainText;
+        public string GetDefaultPlainTextPath(LanguageSelection selection) {
+            return @"C:\Picto\" + selection.ImageFormat.CapitalizedExtension + selection.LanguageCode + " " + TextResources.inPlainText;
         }
 
-        private string GetDefaultTextlessDir() {
-            return @"C:\Picto\Wmf";
+        private string GetDefaultTextlessDir(LanguageSelection selection) {
+            return @"C:\Picto\" + selection.CapitalizedExtension;
         }
 
         public string GetDefaultSoundPath(Language language) {
             return @"C:\Picto\Wav" + language.Code.ToUpper();
         }
 
-        public void CommitEntries(Language language, List<PictogramEntry> entries) {
-            Profile profile = this.iniFileFactory.CreatePictoWmfIni(language).ToIni();
+        public void CommitEntries(LanguageSelection selection, List<PictogramEntry> entries) {
+            Profile profile = this.iniFileFactory.CreatePictoWmfIni(selection).ToIni();
+            Language language = selection.Language;
             Console.WriteLine("Commiting " + entries.Count + " Entries");
 
             var categoryCounts = new Dictionary<Category, int>();
@@ -203,12 +209,15 @@ namespace PictogramUpdater {
         /// A generic picwmf.ini (without language in the name) is required for Pictogram Manager.
         /// </summary>
         /// <param name="language"></param>
-        public void CreateGenericPicWmfIni(Language language) {
-            var iniFile = this.iniFileFactory.CreatePictoWmfIni(language).ToFileInfo();
-            var picWmfGeneric = this.iniFileFactory.CreatePictoWmfIni(null).ToFileInfo();
+        public void CreateGenericPicWmfIni(LanguageSelection selection) {
+            var iniFile = this.iniFileFactory.CreatePictoWmfIni(selection).ToFileInfo();
+            var withoutLanguage = new LanguageSelection();
+            withoutLanguage.ImageFormat = selection.ImageFormat;
+            withoutLanguage.Language = null;
+            var picWmfGeneric = this.iniFileFactory.CreatePictoWmfIni(withoutLanguage).ToFileInfo();
 
             /* Only overwrite the generic file with the Swedish file, or create new file in any language. */
-            if (language.IsSwedish || !picWmfGeneric.Exists) {
+            if (selection.Language.IsSwedish || !picWmfGeneric.Exists) {
                 iniFile.CopyTo(picWmfGeneric.FullName, true);
             }
         }
@@ -247,12 +256,13 @@ namespace PictogramUpdater {
     }
 
     public class IniFileFactory {
-        public PicIni CreatePictoWmfIni(Language language) {
+         public PicIni CreatePictoWmfIni(LanguageSelection selection) {
             var languageCode = "";
+            Language language = selection.Language;
             if (language != null && !language.IsTextless) {
                 languageCode = language.Code;
             }
-            var path = Environment.GetEnvironmentVariable("WINDIR") + @"\PicWmf" + languageCode + @".ini";
+            var path = Environment.GetEnvironmentVariable("WINDIR") + @"\Pic" + selection.ImageFormat.CapitalizedExtension + languageCode + @".ini";
             return new PicIni(path);
         }
 
@@ -292,18 +302,18 @@ namespace PictogramUpdater {
 
         public int Index { get; private set; }
 
-        public string ToFilename(InstallationType installationType) {
+        public string ToFilename(InstallationType installationType, LanguageSelection selection) {
 
             if (InstallationType.SOUND.Equals(installationType)) {
                 return FullCode + ".wav";
             }
 
             if (InstallationType.PLAIN_TEXT.Equals(installationType)) {
-                return LegalFilename + ".wmf";
+                return LegalFilename + "." + selection.ImageFormat.Extension;
             }
 
             // InstallationType.CODE
-            return FullCode + ".wmf";
+            return FullCode + "." + selection.ImageFormat.Extension;
         }
 
         private string LegalFilename {
