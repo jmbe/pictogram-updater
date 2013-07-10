@@ -234,7 +234,6 @@ namespace PictogramUpdater {
         public void CommitEntries(LanguageSelection selection, List<PictogramEntry> entries) {
             Profile profile = this.iniFileFactory.CreatePictoWmfIni(selection).ToIni();
             Language language = selection.Language;
-            Console.WriteLine("Commiting " + entries.Count + " Entries");
 
             var categoryCounts = new Dictionary<Category, int>();
             foreach (var entry in entries) {
