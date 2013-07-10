@@ -66,6 +66,54 @@ namespace PictogramUpdater {
 
         }
 
+        public bool NeedsRefresh(LanguageSelection selection, InstallationType installationType) {
+            string key = GetLastRefreshKey(selection, installationType);
+
+            Profile settings = this.iniFileFactory.GetPictoIniFile(selection, installationType).ToIni();
+
+            string unparsed = settings.GetValue("ProgDir", key) as string;
+
+            if (string.IsNullOrEmpty(unparsed)) {
+                return true;
+            }
+
+            try {
+                DateTimeOffset dto = DateTimeOffset.Parse(unparsed);
+
+                /* Set to later date to force refresh at a later time. */
+                DateTimeOffset cutoff = DateTimeOffset.Parse("2013-07-10 21:00:00 +02:00");
+                if (dto.CompareTo(cutoff) < 0) {
+                    return true;
+                }
+
+            } catch (FormatException) {
+                return true;
+            }
+
+            return false;
+        }
+
+        public void UpdateRefresh(LanguageSelection selection, InstallationType installationType, DateTimeOffset refreshedAt) {
+            string key = GetLastRefreshKey(selection, installationType);
+            Profile settings = this.iniFileFactory.GetPictoIniFile(selection, installationType).ToIni();
+            settings.SetValue("ProgDir", key, refreshedAt);
+        }
+
+        private string GetLastRefreshKey(LanguageSelection selection, InstallationType installationType) {
+            switch (installationType) {
+                case InstallationType.PLAIN_TEXT:
+                    return "PlainTextRefresh";
+                case InstallationType.TEXTLESS:
+                    return "TextlessRefresh";
+                case InstallationType.SOUND:
+                    return "SoundRefresh";
+                case InstallationType.CODE:
+                /* fall-through */
+                default:
+                    return "DirRefresh";
+            }
+        }
+
         public string GetPictoSoundInstallPath(Language language) {
             Profile settings = this.iniFileFactory.GetPictoWavIniFilePath(language).ToIni();
             var path = settings.GetValue("ProgDir", "Dir") as string;
@@ -210,15 +258,21 @@ namespace PictogramUpdater {
         /// </summary>
         /// <param name="language"></param>
         public void CreateGenericPicWmfIni(LanguageSelection selection) {
-            var iniFile = this.iniFileFactory.CreatePictoWmfIni(selection).ToFileInfo();
+            PicIni picIni = this.iniFileFactory.CreatePictoWmfIni(selection);
             var withoutLanguage = new LanguageSelection();
             withoutLanguage.ImageFormat = selection.ImageFormat;
             withoutLanguage.Language = null;
-            var picWmfGeneric = this.iniFileFactory.CreatePictoWmfIni(withoutLanguage).ToFileInfo();
+            PicIni picGeneric = this.iniFileFactory.CreatePictoWmfIni(withoutLanguage);
+            var picGenericFile = picGeneric.ToFileInfo();
+
+            /* Rescue some values from file that will be overwritten */
+            if (picGenericFile.Exists ) {
+                picIni.ToIni().SetValue("ProgDir", "TextlessRefresh", picGeneric.ToIni().GetValue("ProgDir", "TextlessRefresh", ""));
+            }
 
             /* Only overwrite the generic file with the Swedish file, or create new file in any language. */
-            if (selection.Language.IsSwedish || !picWmfGeneric.Exists) {
-                iniFile.CopyTo(picWmfGeneric.FullName, true);
+            if (selection.Language.IsSwedish || !picGenericFile.Exists) {
+                picIni.ToFileInfo().CopyTo(picGenericFile.FullName, true);
             }
         }
     }
@@ -271,6 +325,14 @@ namespace PictogramUpdater {
             var path =  Environment.GetEnvironmentVariable("WINDIR") + @"\PicWav" + language.Code + @".ini";
 
             return new PicIni(path);
+        }
+
+        public PicIni GetPictoIniFile(LanguageSelection selection, InstallationType installationType) {
+            if (InstallationType.SOUND.Equals(installationType)) {
+                return GetPictoWavIniFilePath(selection.Language);
+            } else {
+                return CreatePictoWmfIni(selection);
+            }
         }
 
     }

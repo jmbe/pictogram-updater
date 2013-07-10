@@ -27,10 +27,11 @@ namespace PictogramUpdater {
         public void Download(string targetPath, LanguageSelection selection, bool overwrite, InstallationType installationType,
                              string username, string password) {
 
-            
-            DownloadList downloadList = _downloadListManager.GetEntriesToInstall(username, password, selection, installationType, overwrite);
-            
-           
+            bool refresh = _config.NeedsRefresh(selection, installationType);
+            DateTimeOffset refreshedAt = DateTimeOffset.Now;
+
+            DownloadList downloadList = _downloadListManager.GetEntriesToInstall(username, password, selection, installationType, overwrite || refresh);
+
             var downloadManager = CreateDownloadManager(targetPath, username, password, selection.Language);
 
             downloadManager.DownloadList = downloadList.Missing;
@@ -44,6 +45,10 @@ namespace PictogramUpdater {
                 LogMessage(TextResources.updatingIniFile);
                 _config.CommitEntries(selection, downloadList.All);
                 LogMessage(TextResources.iniFileUpdated);
+            }
+
+            if (refresh) {
+                _config.UpdateRefresh(selection, installationType, refreshedAt);
             }
         }
 
