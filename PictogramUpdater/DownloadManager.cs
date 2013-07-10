@@ -109,7 +109,7 @@ namespace PictogramUpdater {
                             if (Sound) {
                                 this.pictogramRestService.downloadSound(Username, Password, entry.FullCode, Language.Code.ToLower(), stream);
                             } else {
-                                this.pictogramRestService.downloadWmf(Username, Password, entry.FullCode, Language.Code.ToLower(), InstallationType, LanguageSelection, stream);
+                                this.pictogramRestService.downloadImage(Username, Password, entry.FullCode, Language.Code.ToLower(), InstallationType, LanguageSelection, stream);
                             }
                             
                         } catch (Exception e) {

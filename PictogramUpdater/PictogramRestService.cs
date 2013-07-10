@@ -128,7 +128,7 @@ namespace PictogramUpdater {
             return result;
         }
 
-        internal void downloadWmf(string Username, string Password, string pictogramCode, string languageCode, InstallationType installationType, LanguageSelection selection, Stream output) {
+        internal void downloadImage(string Username, string Password, string pictogramCode, string languageCode, InstallationType installationType, LanguageSelection selection, Stream output) {
 
             int size = 500;
 
