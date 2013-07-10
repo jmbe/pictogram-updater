@@ -96,22 +96,21 @@ namespace PictogramUpdater {
                     var current = 0;
                     foreach (var entry in DownloadList) {
 
-
                         var fileName = entry.ToFilename(InstallationType, LanguageSelection);
-                        var file = target.FullName + @"\" + fileName;
+                        string path = target.FullName + @"\" + fileName;
 
                         LogMessage(TextResources.downloadingFile + " " + fileName + "...");
                         Stream stream = null;
-                        
+
                         try {
-                            stream = new FileStream(file, FileMode.OpenOrCreate);
-                            
+                            stream = new FileStream(path, FileMode.OpenOrCreate);
+
                             if (Sound) {
                                 this.pictogramRestService.downloadSound(Username, Password, entry.FullCode, Language.Code.ToLower(), stream);
                             } else {
                                 this.pictogramRestService.downloadImage(Username, Password, entry.FullCode, Language.Code.ToLower(), InstallationType, LanguageSelection, stream);
                             }
-                            
+
                         } catch (Exception e) {
                             LogMessage(TextResources.errorDownloadingFile + " " + fileName + ": " + e.Message);
                             LogToFile(e.ToString());
@@ -120,7 +119,9 @@ namespace PictogramUpdater {
                                 stream.Close();
                             }
                         }
-                        
+
+                        File.SetLastWriteTime(path, entry.Modified);
+
                         ProgressChanged(ProgressBarStyle.Blocks, current++, DownloadList.Count);
                     }
 
