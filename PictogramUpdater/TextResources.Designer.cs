@@ -358,6 +358,15 @@ namespace PictogramUpdater {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PictogramManager.
+        /// </summary>
+        internal static string pictogramManager {
+            get {
+                return ResourceManager.GetString("pictogramManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ready.
         /// </summary>
         internal static string ready {

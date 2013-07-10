@@ -234,4 +234,7 @@
   <data name="noText" xml:space="preserve">
     <value>Ingen text</value>
   </data>
+  <data name="pictogramManager" xml:space="preserve">
+    <value>Pictogramhanteraren</value>
+  </data>
 </root>

@@ -10,7 +10,7 @@ namespace PictogramUpdater {
             get {
                 IList<ImageFormat> result = new List<ImageFormat>();
 
-                result.Add(new ImageFormat("wmf", "WMF (Pictogramhanteraren)"));
+                result.Add(new ImageFormat("wmf", "WMF ("+ TextResources.pictogramManager +")"));
                 result.Add(new ImageFormat("png", "PNG"));
                 result.Add(new ImageFormat("jpg", "JPEG"));
                 result.Add(new ImageFormat("svg", "SVG"));
