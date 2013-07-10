@@ -83,7 +83,8 @@ namespace PictogramUpdater {
 
             foreach (dynamic sound in operation.Result.SelectAll("sound")) {
                 try {
-                    DateTime modified = DateTime.ParseExact(sound.@modified, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    DateTimeOffset dto = DateTimeOffset.Parse(sound.@modified);
+                    DateTime modified = dto.DateTime;
                     result.Add(new PictogramEntry(sound.@name, "", modified));
                 } catch (FormatException e) {
                     /* Some incorrect names are expected. */
@@ -117,7 +118,8 @@ namespace PictogramUpdater {
                 String code = pictogram.@name;
 
                 try {
-                    DateTime modified = DateTime.ParseExact(pictogram.@modified, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    DateTimeOffset dto = DateTimeOffset.Parse(pictogram.@modified);
+                    DateTime modified = dto.DateTime;
                     result.Add(new PictogramEntry(code, text, modified));
                 } catch (FormatException e) {
                     /* Some incorrect names are expected. */
