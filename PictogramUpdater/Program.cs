@@ -28,6 +28,8 @@ namespace PictogramUpdater {
             CultureInfo inputLanguage = System.Windows.Forms.InputLanguage.CurrentInputLanguage.Culture;
             //inputLanguage = new CultureInfo("sv");
             //inputLanguage = new CultureInfo("de");
+            //inputLanguage = new CultureInfo("et");
+            //inputLanguage = new CultureInfo("en");
             Thread.CurrentThread.CurrentUICulture = inputLanguage;
 
             if (!IsAdmin() && IsXpOrNewer()) {

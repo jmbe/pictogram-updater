@@ -519,7 +519,13 @@ namespace PictogramUpdater {
         }
 
         public string Translate(Category category, Language language) {
-            return _translations[language.Code][category.Index - 1];
+            var translations = _translations["UK"];
+            try {
+                translations = _translations[language.Code];
+            } catch (KeyNotFoundException) {
+                /* ignored - use English category names instead */
+            }
+            return translations[category.Index - 1];
         }
     }
 
