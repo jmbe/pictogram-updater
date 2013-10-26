@@ -85,7 +85,7 @@ namespace PictogramUpdater {
                 try {
                     DateTimeOffset dto = DateTimeOffset.Parse(sound.@modified);
                     DateTime modified = dto.DateTime;
-                    result.Add(new PictogramEntry(sound.@name, "", modified));
+                    result.Add(new PictogramEntry(sound.@name, "", "", modified));
                 } catch (FormatException e) {
                     /* Some incorrect names are expected. */
                     LogTofile(e.ToString());
@@ -114,13 +114,15 @@ namespace PictogramUpdater {
             }
 
             foreach (dynamic pictogram in operation.Result.SelectAll("pictogram")) {
-                String text = pictogram.SelectAll("translation")[0].@text;
+                dynamic translation = pictogram.SelectAll("translation")[0];
+                String discriminator = translation.@discriminator;
+                String text = translation.@text;
                 String code = pictogram.@name;
 
                 try {
                     DateTimeOffset dto = DateTimeOffset.Parse(pictogram.@modified);
                     DateTime modified = dto.DateTime;
-                    result.Add(new PictogramEntry(code, text, modified));
+                    result.Add(new PictogramEntry(code, text, discriminator, modified));
                 } catch (FormatException e) {
                     /* Some incorrect names are expected. */
                     LogTofile(e.ToString());
