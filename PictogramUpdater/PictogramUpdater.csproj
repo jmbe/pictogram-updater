@@ -121,6 +121,7 @@
     <Compile Include="ISettingsPersistence.cs" />
     <Compile Include="LanguageProvider.cs" />
     <Compile Include="DownloadManager.cs" />
+    <Compile Include="PictogramEntry.cs" />
     <Compile Include="PictogramInstallerForm.cs">
       <SubType>Form</SubType>
     </Compile>
