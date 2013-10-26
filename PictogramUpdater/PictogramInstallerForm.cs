@@ -20,6 +20,8 @@ namespace PictogramUpdater {
 
     internal delegate void SetControlVisibleCallback(Control control, bool visible);
 
+    internal delegate void SetTextCallback(string text);
+
     internal delegate void LogMessageCallback(string message);
 
     internal delegate void LogToFileCallback(string message);
@@ -266,8 +268,12 @@ namespace PictogramUpdater {
         /// </summary>
         /// <param name="message">meddelande</param>
         private void SetStatus(string message) {
-            statusLabel.Text = message;
-            LogToFile("Status: " + message);
+            if (this.statusStrip.InvokeRequired) {
+                this.statusStrip.Invoke(new SetTextCallback(SetStatus), new object[] { message });
+            } else {
+                statusLabel.Text = message;
+                LogToFile("Status: " + message);
+            }
         }
 
         /// <summary>
