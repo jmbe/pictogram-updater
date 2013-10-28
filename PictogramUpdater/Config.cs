@@ -35,19 +35,32 @@ namespace PictogramUpdater {
 
             Profile settings = this.iniFileFactory.CreatePictoWmfIni(selection).ToIni();
             var path = settings.GetValue("ProgDir", "Dir") as string;
-            return path ?? GetDefaultPath(selection);
+
+            if (string.IsNullOrWhiteSpace(path)) {
+                return GetDefaultPath(selection);
+            }
+
+            return path;
         }
 
         private string GetPictoPlainTextInstallPath(LanguageSelection selection) {
             Profile settings = this.iniFileFactory.CreatePictoWmfIni(selection).ToIni();
             var path = settings.GetValue("ProgDir", "PlainTextDir") as string;
-            return path ?? GetDefaultPlainTextPath(selection);
+            if (string.IsNullOrWhiteSpace(path)) {
+                return GetDefaultPlainTextPath(selection);
+            }
+
+            return path;
         }
 
         public String GetTextLessInstallPath(LanguageSelection selection) {
             Profile settings = this.iniFileFactory.CreatePictoWmfIni(selection).ToIni();
             var path = settings.GetValue("ProgDir", "TextlessDir") as string;
-            return path ?? GetDefaultTextlessDir(selection);
+            if (string.IsNullOrWhiteSpace(path)) {
+                return GetDefaultTextlessDir(selection);
+            }
+
+            return path;
         }
 
         public string getInstallPathForLanguage(LanguageSelection selection, InstallationType installationType) {
@@ -117,7 +130,11 @@ namespace PictogramUpdater {
         public string GetPictoSoundInstallPath(Language language) {
             Profile settings = this.iniFileFactory.GetPictoWavIniFilePath(language).ToIni();
             var path = settings.GetValue("ProgDir", "Dir") as string;
-            return path ?? GetDefaultSoundPath(language);
+            if (string.IsNullOrWhiteSpace(path)) {
+                return GetDefaultSoundPath(language);
+            }
+
+            return path;
         }
 
         public void CreateOrUpdateWmfIni(LanguageSelection selection, string installPath, string plainTextInstallPath) {
