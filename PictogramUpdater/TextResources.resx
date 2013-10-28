@@ -237,4 +237,13 @@
   <data name="pictogramManager" xml:space="preserve">
     <value>PictogramManager</value>
   </data>
+  <data name="withoutText" xml:space="preserve">
+    <value>without text</value>
+  </data>
+  <data name="downloadTextlessComplete" xml:space="preserve">
+    <value>Downloading images without text complete.</value>
+  </data>
+  <data name="lookingForNewImagesWithoutText" xml:space="preserve">
+    <value>Looking for new images without text...</value>
+  </data>
 </root>

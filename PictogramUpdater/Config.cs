@@ -44,7 +44,7 @@ namespace PictogramUpdater {
             return path ?? GetDefaultPlainTextPath(selection);
         }
 
-        private String GetTextLessInstallPath(LanguageSelection selection) {
+        public String GetTextLessInstallPath(LanguageSelection selection) {
             Profile settings = this.iniFileFactory.CreatePictoWmfIni(selection).ToIni();
             var path = settings.GetValue("ProgDir", "TextlessDir") as string;
             return path ?? GetDefaultTextlessDir(selection);
@@ -57,7 +57,7 @@ namespace PictogramUpdater {
                 case InstallationType.SOUND:
                     return GetPictoSoundInstallPath(selection.Language);
                 case InstallationType.TEXTLESS:
-                    /* fall-through */
+                    return GetTextLessInstallPath(selection);
                 case InstallationType.CODE:
                     /* fall-through */
                 default:
@@ -224,7 +224,12 @@ namespace PictogramUpdater {
         }
 
         private string GetDefaultTextlessDir(LanguageSelection selection) {
-            return @"C:\Picto\" + selection.CapitalizedExtension;
+            string language = "";
+            if (!selection.Language.IsTextless) {
+                language = selection.LanguageCode;
+            }
+
+            return @"C:\Picto\" + selection.CapitalizedExtension + language + " " + TextResources.withoutText;
         }
 
         public string GetDefaultSoundPath(Language language) {
@@ -265,8 +270,10 @@ namespace PictogramUpdater {
             var picGenericFile = picGeneric.ToFileInfo();
 
             /* Rescue some values from file that will be overwritten */
-            if (picGenericFile.Exists ) {
-                picIni.ToIni().SetValue("ProgDir", "TextlessRefresh", picGeneric.ToIni().GetValue("ProgDir", "TextlessRefresh", ""));
+            if (picGenericFile.Exists) {
+                Ini ini = picIni.ToIni();
+                ini.SetValue("ProgDir", "TextlessRefresh", picGeneric.ToIni().GetValue("ProgDir", "TextlessRefresh", ""));
+                ini.SetValue("ProgDir", "TextlessDir", picGeneric.ToIni().GetValue("ProgDir", "TextlessDir", ""));
             }
 
             /* Only overwrite the generic file with the Swedish file, or create new file in any language. */

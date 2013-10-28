@@ -41,10 +41,10 @@ namespace PictogramUpdater {
     internal delegate void LanguageChangedCallback();
 
     /// <summary>
-    /// Innehåller metoder som har med användargränssnittet att göra.
+    /// Innehï¿½ller metoder som har med anvï¿½ndargrï¿½nssnittet att gï¿½ra.
     /// 
-    /// Många metoder har att göra med att kunna anropa kontroller på ett 
-    /// trådsäkert sätt. Information angående det finns på 
+    /// Mï¿½nga metoder har att gï¿½ra med att kunna anropa kontroller pï¿½ ett 
+    /// trï¿½dsï¿½kert sï¿½tt. Information angï¿½ende det finns pï¿½ 
     /// http://msdn2.microsoft.com/en-us/library/ms171728.aspx.
     /// </summary>
     public partial class PictogramInstallerForm : Form {
@@ -71,7 +71,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Laddar ner pictogram som saknas. Avsett att köras i egen tråd.
+        /// Laddar ner pictogram som saknas. Avsett att kï¿½ras i egen trï¿½d.
         /// </summary>
         private void Download() {
             ClearDownloadLog("");
@@ -116,6 +116,13 @@ namespace PictogramUpdater {
                     LogMessage(TextResources.downloadPlainTextComplete);
                     LogMessage("");
 
+                }
+
+                if (textlessCheckBox.Checked) {
+                    LogMessage(TextResources.lookingForNewImagesWithoutText);
+                    installationManager.Download(textlessDirectoryChooser.InstallPath, _languageSelection, overwriteCheckbox.Checked, InstallationType.TEXTLESS, usernameTextbox.Text, passwordTextbox.Text);
+                    LogMessage(TextResources.downloadTextlessComplete);
+                    LogMessage("");
                 }
 
                 if (soundCheckbox.Checked) {
@@ -192,7 +199,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Kontrollerar om inloggningsuppgifterna är giltiga. Avsett att köras i egen tråd.
+        /// Kontrollerar om inloggningsuppgifterna ï¿½r giltiga. Avsett att kï¿½ras i egen trï¿½d.
         /// </summary>
         private void CheckLogin() {
             SetControlsEnabled(false);
@@ -203,7 +210,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Hämtar giltiga språk och fyller språklistan med dem. Avsett att köras i egen tråd.
+        /// Hï¿½mtar giltiga sprï¿½k och fyller sprï¿½klistan med dem. Avsett att kï¿½ras i egen trï¿½d.
         /// </summary>
         private void RefreshLanguages() {
             SetProgressBarStyle(ProgressBarStyle.Marquee);
@@ -220,9 +227,9 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Metod för att hämta valt språk på ett trådsäkert sätt.
+        /// Metod fï¿½r att hï¿½mta valt sprï¿½k pï¿½ ett trï¿½dsï¿½kert sï¿½tt.
         /// </summary>
-        /// <returns>valt språk</returns>
+        /// <returns>valt sprï¿½k</returns>
         private string GetLanguage() {
             if (languagesComboBox.InvokeRequired) {
                 return (string)languagesComboBox.Invoke(new GetLanguageCallback(GetLanguage));
@@ -231,7 +238,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Skriver ut ett meddelande i loggen på ett trådsäkert sätt.
+        /// Skriver ut ett meddelande i loggen pï¿½ ett trï¿½dsï¿½kert sï¿½tt.
         /// </summary>
         /// <param name="message">meddelande</param>
         private void LogMessage(string message) {
@@ -264,7 +271,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Anger meddelande att visa i statusfältet.
+        /// Anger meddelande att visa i statusfï¿½ltet.
         /// </summary>
         /// <param name="message">meddelande</param>
         private void SetStatus(string message) {
@@ -277,8 +284,8 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Metod för att ändra en progressbars style på ett 
-        /// trådsäkert sätt.
+        /// Metod fï¿½r att ï¿½ndra en progressbars style pï¿½ ett 
+        /// trï¿½dsï¿½kert sï¿½tt.
         /// 
         /// 
         /// </summary>
@@ -301,7 +308,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Metod för att sätta egenskaper för progressbar på ett trådsäkert sätt.
+        /// Metod fï¿½r att sï¿½tta egenskaper fï¿½r progressbar pï¿½ ett trï¿½dsï¿½kert sï¿½tt.
         /// </summary>
         /// <param name="style"></param>
         /// <param name="current"></param>
@@ -329,19 +336,19 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Hjälpmetod för att aktivera eller inaktivera många kontroller i taget.
+        /// Hjï¿½lpmetod fï¿½r att aktivera eller inaktivera mï¿½nga kontroller i taget.
         /// </summary>
         /// <param name="enabled"></param>
         private void SetControlsEnabled(bool enabled) {
             foreach (
                 Control control in
-                    new Control[] { verifyLabel, installButton, overwriteCheckbox, wmfDirectoryChooser, soundDirectoryChooser, plainTextDirectoryChooser, languagesComboBox, formatComboBox }) {
+                    new Control[] { verifyLabel, installButton, overwriteCheckbox, wmfDirectoryChooser, soundDirectoryChooser, plainTextDirectoryChooser, textlessDirectoryChooser, languagesComboBox, formatComboBox }) {
                 SetControlEnabled(control, enabled);
             }
         }
 
         /// <summary>
-        /// Metod för att aktivera eller inaktiver en kontroll på ett trådsäkert sätt.
+        /// Metod fï¿½r att aktivera eller inaktiver en kontroll pï¿½ ett trï¿½dsï¿½kert sï¿½tt.
         /// </summary>
         /// <param name="control"></param>
         /// <param name="enabled"></param>
@@ -354,7 +361,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Ritar ut grafik på formuläret.
+        /// Ritar ut grafik pï¿½ formulï¿½ret.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -372,8 +379,8 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Hanterar klick på "Kontrollera"-knappen. Kontrollerar att
-        /// kontouppgifterna är giltiga.
+        /// Hanterar klick pï¿½ "Kontrollera"-knappen. Kontrollerar att
+        /// kontouppgifterna ï¿½r giltiga.
         /// </summary>
         private void VerifyLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             this._currentWorkingThread = new Thread(CheckLogin);
@@ -390,17 +397,17 @@ namespace PictogramUpdater {
                 this.versionLabel.Show();
             }
 
-            /* Handler för när formuläret stängs */
+            /* Handler fï¿½r nï¿½r formulï¿½ret stï¿½ngs */
             Closing += PictogramInstallerForm_Closing;
 
             createDependencyGraph();
 
-            /* Ladda sparade inställningar */
+            /* Ladda sparade instï¿½llningar */
             usernameTextbox.Text = _authenticationService.GetUsername();
             passwordTextbox.Text = _authenticationService.GetPassword();
 
 
-            /* Installationskatalog för wmf */
+            /* Installationskatalog fï¿½r wmf */
             this.wmfDirectoryChooser.InstallPath = config.GetDefaultPath(_languageSelection);
 
             /* Plain text install dir*/
@@ -409,6 +416,8 @@ namespace PictogramUpdater {
             /* Sound install dir*/
             this.soundDirectoryChooser.InstallPath = config.GetDefaultSoundPath(_languageSelection.Language);
 
+            /* Textless install dir */
+            this.textlessDirectoryChooser.InstallPath = config.GetTextLessInstallPath(_languageSelection);
 
             if (_authenticationService.UseFreeAccount) {
                 groupBox1.Visible = false;
@@ -416,7 +425,7 @@ namespace PictogramUpdater {
 
             LogToFile("Installationen startas " + DateTime.Now.ToString());
 
-            /* Ladda ner språk */
+            /* Ladda ner sprï¿½k */
             languageProvider.LogMessage += LogMessage;
             languageProvider.LogToFile += LogToFile;
             _currentWorkingThread = new Thread(RefreshLanguages);
@@ -430,7 +439,7 @@ namespace PictogramUpdater {
             installationManager.StatusChanged += SetStatus;
 
 
-            /* Klass att använda för att kommunicera med webservice. */
+            /* Klass att anvï¿½nda fï¿½r att kommunicera med webservice. */
             downloadManager.LogMessage += LogMessage;
             downloadManager.LogToFile += LogToFile;
             downloadManager.ProgressChanged += SetCurrentProgress;
@@ -482,6 +491,8 @@ namespace PictogramUpdater {
             string soundPath = config.getInstallPathForLanguage(_languageSelection, InstallationType.SOUND);
             soundDirectoryChooser.languageChanged(soundPath);
 
+            string textlessPath = config.getInstallPathForLanguage(_languageSelection, InstallationType.TEXTLESS);
+            textlessDirectoryChooser.languageChanged(textlessPath);
 
             if (_languageSelection.Language.IsSwedish) {
                 soundDirectoryChooser.Show();
@@ -496,15 +507,21 @@ namespace PictogramUpdater {
             if (!_languageSelection.Language.IsTextless) {
                 plainTextDirectoryChooser.Show();
                 plainTextCheckbox.Show();
+                textlessDirectoryChooser.Show();
+                textlessCheckBox.Show();
             } else {
                 plainTextDirectoryChooser.Hide();
                 plainTextCheckbox.Checked = false;
                 plainTextCheckbox.Hide();
+
+                textlessDirectoryChooser.Hide();
+                textlessCheckBox.Checked = false;
+                textlessCheckBox.Hide();
             }
         }
 
         /// <summary>
-        /// Hanterar att formuläret stängs. Stänger av arbetstråden och sparar inställningar.
+        /// Hanterar att formulï¿½ret stï¿½ngs. Stï¿½nger av arbetstrï¿½den och sparar instï¿½llningar.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -512,7 +529,7 @@ namespace PictogramUpdater {
             try {
                 abortDownload();
 
-                /* Spara inställningar */
+                /* Spara instï¿½llningar */
                 _authenticationService.saveAccount(usernameTextbox.Text, passwordTextbox.Text);
 
                 LogToFile("Installationen avslutas " + DateTime.Now.ToString());
@@ -523,7 +540,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Hanterar klick på installationsknappen. Sätter igång nedladdning.
+        /// Hanterar klick pï¿½ installationsknappen. Sï¿½tter igï¿½ng nedladdning.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -537,7 +554,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Metod för att sätta val för språk på ett trådsäkert sätt.
+        /// Metod fï¿½r att sï¿½tta val fï¿½r sprï¿½k pï¿½ ett trï¿½dsï¿½kert sï¿½tt.
         /// </summary>
         /// <param name="source"></param>
         private void SetLanguageDataSource(IList<string> source) {
@@ -574,7 +591,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Hanterar klick på progressbaren. Avbryter nedladdning om sådan pågår.
+        /// Hanterar klick pï¿½ progressbaren. Avbryter nedladdning om sï¿½dan pï¿½gï¿½r.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

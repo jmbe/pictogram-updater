@@ -237,4 +237,13 @@
   <data name="pictogramManager" xml:space="preserve">
     <value>Pictogramhanteraren</value>
   </data>
+  <data name="withoutText" xml:space="preserve">
+    <value>utan text</value>
+  </data>
+  <data name="downloadTextlessComplete" xml:space="preserve">
+    <value>Nedladdning av bilder utan text klar.</value>
+  </data>
+  <data name="lookingForNewImagesWithoutText" xml:space="preserve">
+    <value>Letar efter nya pictobilder utan text...</value>
+  </data>
 </root>

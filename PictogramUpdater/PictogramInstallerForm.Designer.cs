@@ -57,6 +57,8 @@ namespace PictogramUpdater
             this.exitLink = new System.Windows.Forms.LinkLabel();
             this.formatComboBox = new System.Windows.Forms.ComboBox();
             this.formatLabel = new System.Windows.Forms.Label();
+            this.textlessCheckBox = new System.Windows.Forms.CheckBox();
+            this.textlessDirectoryChooser = new PictogramUpdater.DirectoryChooser();
             this.wmfDirectoryChooser = new PictogramUpdater.DirectoryChooser();
             this.plainTextDirectoryChooser = new PictogramUpdater.DirectoryChooser();
             this.soundDirectoryChooser = new PictogramUpdater.DirectoryChooser();
@@ -80,12 +82,12 @@ namespace PictogramUpdater
             // 
             // groupBox1
             // 
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.verifyLabel);
             this.groupBox1.Controls.Add(this.passwordTextbox);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.usernameTextbox);
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             // 
@@ -109,23 +111,23 @@ namespace PictogramUpdater
             // 
             // statusStrip
             // 
+            resources.ApplyResources(this.statusStrip, "statusStrip");
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel,
             this.statusProgressBar});
-            resources.ApplyResources(this.statusStrip, "statusStrip");
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.SizingGrip = false;
             // 
             // statusLabel
             // 
-            this.statusLabel.Name = "statusLabel";
             resources.ApplyResources(this.statusLabel, "statusLabel");
+            this.statusLabel.Name = "statusLabel";
             this.statusLabel.Spring = true;
             // 
             // statusProgressBar
             // 
-            this.statusProgressBar.Name = "statusProgressBar";
             resources.ApplyResources(this.statusProgressBar, "statusProgressBar");
+            this.statusProgressBar.Name = "statusProgressBar";
             this.statusProgressBar.Click += new System.EventHandler(this.StatusProgressBar_Click);
             // 
             // overwriteCheckbox
@@ -148,9 +150,9 @@ namespace PictogramUpdater
             // 
             // languagesComboBox
             // 
+            resources.ApplyResources(this.languagesComboBox, "languagesComboBox");
             this.languagesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.languagesComboBox.FormattingEnabled = true;
-            resources.ApplyResources(this.languagesComboBox, "languagesComboBox");
             this.languagesComboBox.Name = "languagesComboBox";
             this.languagesComboBox.SelectedIndexChanged += new System.EventHandler(this.LanguageComboBox_Change);
             // 
@@ -161,9 +163,9 @@ namespace PictogramUpdater
             // 
             // logTextbox
             // 
+            resources.ApplyResources(this.logTextbox, "logTextbox");
             this.logTextbox.BackColor = System.Drawing.Color.White;
             this.logTextbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            resources.ApplyResources(this.logTextbox, "logTextbox");
             this.logTextbox.Name = "logTextbox";
             this.logTextbox.ReadOnly = true;
             this.logTextbox.TabStop = false;
@@ -174,6 +176,10 @@ namespace PictogramUpdater
             this.installButton.Name = "installButton";
             this.installButton.UseVisualStyleBackColor = true;
             this.installButton.Click += new System.EventHandler(this.InstallButton_Click);
+            // 
+            // folderBrowserDialog
+            // 
+            resources.ApplyResources(this.folderBrowserDialog, "folderBrowserDialog");
             // 
             // label4
             // 
@@ -212,9 +218,9 @@ namespace PictogramUpdater
             // 
             // flowLayoutPanel3
             // 
+            resources.ApplyResources(this.flowLayoutPanel3, "flowLayoutPanel3");
             this.flowLayoutPanel3.Controls.Add(this.label5);
             this.flowLayoutPanel3.Controls.Add(this.exitLink);
-            resources.ApplyResources(this.flowLayoutPanel3, "flowLayoutPanel3");
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
             // 
             // label5
@@ -231,9 +237,9 @@ namespace PictogramUpdater
             // 
             // formatComboBox
             // 
+            resources.ApplyResources(this.formatComboBox, "formatComboBox");
             this.formatComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.formatComboBox.FormattingEnabled = true;
-            resources.ApplyResources(this.formatComboBox, "formatComboBox");
             this.formatComboBox.Name = "formatComboBox";
             this.formatComboBox.SelectedIndexChanged += new System.EventHandler(this.formatComboBox_SelectedIndexChanged);
             // 
@@ -242,25 +248,38 @@ namespace PictogramUpdater
             resources.ApplyResources(this.formatLabel, "formatLabel");
             this.formatLabel.Name = "formatLabel";
             // 
+            // textlessCheckBox
+            // 
+            resources.ApplyResources(this.textlessCheckBox, "textlessCheckBox");
+            this.textlessCheckBox.Name = "textlessCheckBox";
+            this.textlessCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // textlessDirectoryChooser
+            // 
+            resources.ApplyResources(this.textlessDirectoryChooser, "textlessDirectoryChooser");
+            this.textlessDirectoryChooser.DisplayDirectoryInput = false;
+            this.textlessDirectoryChooser.InstallPath = "C:\\Picto\\WmfSV utan text";
+            this.textlessDirectoryChooser.Name = "textlessDirectoryChooser";
+            // 
             // wmfDirectoryChooser
             // 
+            resources.ApplyResources(this.wmfDirectoryChooser, "wmfDirectoryChooser");
             this.wmfDirectoryChooser.DisplayDirectoryInput = false;
             this.wmfDirectoryChooser.InstallPath = "C:\\Picto";
-            resources.ApplyResources(this.wmfDirectoryChooser, "wmfDirectoryChooser");
             this.wmfDirectoryChooser.Name = "wmfDirectoryChooser";
             // 
             // plainTextDirectoryChooser
             // 
+            resources.ApplyResources(this.plainTextDirectoryChooser, "plainTextDirectoryChooser");
             this.plainTextDirectoryChooser.DisplayDirectoryInput = false;
             this.plainTextDirectoryChooser.InstallPath = "C:\\Picto\\WmfSV";
-            resources.ApplyResources(this.plainTextDirectoryChooser, "plainTextDirectoryChooser");
             this.plainTextDirectoryChooser.Name = "plainTextDirectoryChooser";
             // 
             // soundDirectoryChooser
             // 
+            resources.ApplyResources(this.soundDirectoryChooser, "soundDirectoryChooser");
             this.soundDirectoryChooser.DisplayDirectoryInput = false;
             this.soundDirectoryChooser.InstallPath = "C:\\Picto\\WmfSV";
-            resources.ApplyResources(this.soundDirectoryChooser, "soundDirectoryChooser");
             this.soundDirectoryChooser.Name = "soundDirectoryChooser";
             // 
             // PictogramInstallerForm
@@ -268,6 +287,8 @@ namespace PictogramUpdater
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.textlessDirectoryChooser);
+            this.Controls.Add(this.textlessCheckBox);
             this.Controls.Add(this.formatLabel);
             this.Controls.Add(this.formatComboBox);
             this.Controls.Add(this.flowLayoutPanel3);
@@ -340,6 +361,8 @@ namespace PictogramUpdater
         private System.Windows.Forms.LinkLabel exitLink;
         private System.Windows.Forms.ComboBox formatComboBox;
         private System.Windows.Forms.Label formatLabel;
+        private System.Windows.Forms.CheckBox textlessCheckBox;
+        private DirectoryChooser textlessDirectoryChooser;
     }
 }
 

@@ -42,7 +42,9 @@ namespace PictogramUpdater {
                 return FullCode + ".wav";
             }
 
-            if (InstallationType.PLAIN_TEXT.Equals(installationType)) {
+            Boolean useTextFilename = InstallationType.PLAIN_TEXT.Equals(installationType) || InstallationType.TEXTLESS.Equals(installationType) && !selection.Language.IsTextless;
+
+            if (useTextFilename) {
                 string extra = "";
                 if (!string.IsNullOrEmpty(discriminator)) {
                     extra = " (" + this.discriminator + ")";
