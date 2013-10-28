@@ -165,8 +165,10 @@ namespace PictogramUpdater {
                 login = pictogramRestService.verifyLogin(username, password);
 
                 if (login) {
+                    LogMessage(TextResources.accountDetailsValid);
                     StatusChanged(TextResources.accountDetailsValid);
                 } else {
+                    LogMessage(TextResources.mustCheckAccountDetails);
                     StatusChanged(TextResources.mustCheckAccountDetails);
                 }
             } catch (Exception e) {
