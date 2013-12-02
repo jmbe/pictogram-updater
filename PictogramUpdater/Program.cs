@@ -19,11 +19,7 @@ namespace PictogramUpdater {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            try {
-                CreateDesktopIcon();
-            } catch (Exception) {
-                /* ignored. */
-            }
+            // CreateDesktopIconSafe();
 
             CultureInfo inputLanguage = System.Windows.Forms.InputLanguage.CurrentInputLanguage.Culture;
             //inputLanguage = new CultureInfo("sv");
@@ -73,14 +69,12 @@ namespace PictogramUpdater {
             }
         }
 
-
-
         /// <summary>
         /// For this to work, the Title and Company in the assembly info (Application|Assembly Information button) 
         /// must match the Product name and Publisher name in ClickOnce settings (Publish|Options button).
         /// </summary>
         private static void CreateDesktopIcon() {
-            
+
             if (!ApplicationDeployment.IsNetworkDeployed) {
                 return;
             }
@@ -90,7 +84,7 @@ namespace PictogramUpdater {
             if (!ad.IsFirstRun) {
                 return;
             }
-            
+
 
             Assembly assembly = Assembly.GetEntryAssembly();
             string company = string.Empty;
@@ -109,16 +103,20 @@ namespace PictogramUpdater {
 
             if (!string.IsNullOrEmpty(company)) {
                 var desktopPath = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "\\", title, ".appref-ms");
-               
+
                 var shortcutName = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.Programs), "\\", company, "\\", title, ".appref-ms");
 
                 System.IO.File.Copy(shortcutName, desktopPath, true);
             }
 
         }
+
+        private static void CreateDesktopIconSafe() {
+            try {
+                CreateDesktopIcon();
+            } catch (Exception) {
+                /* ignored. */
+            }
+        }
     }
-
-
-
-
 }
