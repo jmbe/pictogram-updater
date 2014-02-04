@@ -53,7 +53,13 @@ namespace PictogramUpdater {
 
         public bool IsVectorFormat {
             get {
-                return "wmf".Equals(Extension.ToLower()) || "svg".Equals(Extension.ToLower());
+                return "wmf".Equals(Extension.ToLower()) || IsSvg;
+            }
+        }
+
+        public bool IsSvg {
+            get {
+                return "svg".Equals(Extension.ToLower());
             }
         }
     }

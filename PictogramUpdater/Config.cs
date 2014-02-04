@@ -95,6 +95,11 @@ namespace PictogramUpdater {
 
                 /* Set to later date to force refresh at a later time. */
                 DateTimeOffset cutoff = DateTimeOffset.Parse("2013-07-10 21:00:00 +02:00");
+
+                if (selection.ImageFormat.IsSvg) {
+                    cutoff = DateTimeOffset.Parse("2014-02-05 00:00:00 +02:00");
+                }
+
                 if (dto.CompareTo(cutoff) < 0) {
                     return true;
                 }
