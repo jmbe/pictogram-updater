@@ -30,7 +30,7 @@ namespace PictogramUpdater {
             bool refresh = _config.NeedsRefresh(selection, installationType);
             DateTimeOffset refreshedAt = DateTimeOffset.Now;
 
-            DownloadList downloadList = _downloadListManager.GetEntriesToInstall(username, password, selection, installationType, overwrite || refresh);
+            DownloadList downloadList = _downloadListManager.GetEntriesToInstall(targetPath, username, password, selection, installationType, overwrite || refresh);
 
             var downloadManager = CreateDownloadManager(targetPath, username, password, selection.Language);
 

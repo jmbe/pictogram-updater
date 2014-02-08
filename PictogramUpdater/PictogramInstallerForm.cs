@@ -473,7 +473,7 @@ namespace PictogramUpdater {
             this.downloadManager = new DownloadManager(this.languageProvider, this.pictogramRestService);
 
 
-            this.downloadListManager = new DownloadListManager(this.pictogramRestService, this.config);
+            this.downloadListManager = new DownloadListManager(this.pictogramRestService);
 
             this.installationManager = new InstallationManager(this.config, this.downloadListManager, this.languageProvider, this.pictogramRestService);
 

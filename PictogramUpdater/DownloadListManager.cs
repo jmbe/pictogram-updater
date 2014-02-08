@@ -6,18 +6,16 @@ namespace PictogramUpdater {
     internal class DownloadListManager {
 
         private PictogramRestService pictogramRestService;
-        private Config config;
 
-        public DownloadListManager(PictogramRestService pictogramRestService, Config config) {
+        public DownloadListManager(PictogramRestService pictogramRestService) {
             this.pictogramRestService = pictogramRestService;
-            this.config = config;
         }
 
-        public DownloadList GetEntriesToInstall(string username, string password, LanguageSelection selection, InstallationType installationType, bool overwrite) {
+        public DownloadList GetEntriesToInstall(string targetPath, string username, string password, LanguageSelection selection, InstallationType installationType, bool overwrite) {
 
             List<PictogramEntry> all = GetCompleteList(username, password, selection.Language, installationType);
 
-            var missing = overwrite ? all : FilterEntries(selection, all, installationType);
+            var missing = overwrite ? all : FilterEntries(targetPath, selection, all, installationType);
 
             return new DownloadList(all, missing);
         }
@@ -61,18 +59,17 @@ namespace PictogramUpdater {
             return phrases;
         }
 
-        private List<PictogramEntry> FilterEntries(LanguageSelection selection,
+        private List<PictogramEntry> FilterEntries(string installPath, LanguageSelection selection,
                                                           IEnumerable<PictogramEntry> entries, InstallationType installationType) {
 
-            string installPath = this.config.getInstallPathForLanguage(selection, installationType);
-            
+
             var newEntries = new List<PictogramEntry>();
 
             foreach (var entry in entries) {
                 var fileName = entry.ToFilename(installationType, selection);
 
                 var fileInfo = new FileInfo(installPath + @"\" + fileName);
-                if (!fileInfo.Exists || fileInfo.Length == 0  || fileInfo.LastWriteTime.CompareTo(entry.Modified) < 0) {
+                if (!fileInfo.Exists || fileInfo.Length == 0 || fileInfo.LastWriteTime.CompareTo(entry.Modified) < 0) {
                     newEntries.Add(entry);
                 }
             }
