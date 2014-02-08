@@ -5,10 +5,18 @@ using System.Text;
 
 namespace PictogramUpdater {
     public class LanguageSelection {
-        private Language _language = new Language("sv", "Svenska");
+        private Language _language = Language.SWEDISH;
         private ImageFormat imageFormat = new ImageFormat("wmf", "wmf"); // todo get from provider
 
         internal event LanguageChangedCallback LanguageChanged;
+
+        public LanguageSelection() {
+        }
+
+        public LanguageSelection(Language language, ImageFormat imageFormat) {
+            this._language = language;
+            this.imageFormat = imageFormat;
+        }
 
         private void onChange() {
             if (LanguageChanged != null) {
@@ -54,6 +62,9 @@ namespace PictogramUpdater {
     }
 
     public class Language {
+
+        public static readonly Language SWEDISH = new Language("sv", "Svenska");
+
         public Language(string code, string name) {
             Code = code;
             Name = name;
