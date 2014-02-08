@@ -10,10 +10,10 @@ namespace PictogramUpdater {
             get {
                 IList<ImageFormat> result = new List<ImageFormat>();
 
-                result.Add(new ImageFormat("wmf", "WMF ("+ TextResources.pictogramManager +")"));
+                result.Add(new ImageFormat("wmf", "WMF (" + TextResources.pictogramManager + ")"));
                 result.Add(new ImageFormat("png", "PNG"));
-                result.Add(new ImageFormat("jpg", "JPEG"));
-                result.Add(new ImageFormat("svg", "SVG"));
+                result.Add(ImageFormat.JPG);
+                result.Add(ImageFormat.SVG);
 
                 return result;
             }
@@ -21,6 +21,10 @@ namespace PictogramUpdater {
     }
 
     public class ImageFormat {
+
+        public static readonly ImageFormat SVG = new ImageFormat("svg", "SVG");
+        public static readonly ImageFormat JPG = new ImageFormat("jpg", "JPEG");
+
         public ImageFormat(string extension, string display) {
             Extension = extension;
             Display = display;
@@ -40,7 +44,7 @@ namespace PictogramUpdater {
         /* First letter capitalized; for directory names and ini filename. */
         public string CapitalizedExtension {
             get {
-                return  char.ToUpper(Extension[0]) + Extension.Substring(1);
+                return char.ToUpper(Extension[0]) + Extension.Substring(1);
             }
         }
 
