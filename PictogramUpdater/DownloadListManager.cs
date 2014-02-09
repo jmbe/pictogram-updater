@@ -69,7 +69,7 @@ namespace PictogramUpdater {
                 var fileName = entry.ToFilename(installationType, selection);
 
                 var fileInfo = new FileInfo(installPath + @"\" + fileName);
-                if (!fileInfo.Exists || fileInfo.Length == 0 || fileInfo.LastWriteTime.CompareTo(entry.Modified) < 0) {
+                if (Files.shouldWriteTo(fileInfo, entry.Modified)) {
                     newEntries.Add(entry);
                 }
             }
