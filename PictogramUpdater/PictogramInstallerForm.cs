@@ -64,6 +64,7 @@ namespace PictogramUpdater {
         private FileLogger fileLogger;
         private CultureInfo culture;
         private ImageFormatProvider imageFormatProvider;
+        private HargdataProducts hargdata;
 
         public PictogramInstallerForm(CultureInfo culture) {
             this.culture = culture;
@@ -132,6 +133,37 @@ namespace PictogramUpdater {
                     config.CreateOrUpdateWavIni(language, soundDirectoryChooser.InstallPath);
                     LogMessage(TextResources.downloadSoundsComplete);
                     LogMessage("");
+                }
+
+
+                if (false && _languageSelection.Language.IsSwedish) {
+
+                    if (hargdata.IsSymWriterInstalled) {
+                        LogMessage("Installerar bilder för SymWriter...");
+                        LanguageSelection ls = new LanguageSelection(Language.SWEDISH, ImageFormat.SVG);
+                        installationManager.Download(hargdata.SymWriterImagesDirectory, ls, overwriteCheckbox.Checked, InstallationType.PLAIN_TEXT, usernameTextbox.Text, passwordTextbox.Text);
+                        LogMessage("Installerar ordlista för SymWriter...");
+                        hargdata.InstallSymWriterDictionary();
+                        LogMessage("");
+                    }
+
+                    if (hargdata.IsWidgitInstalled) {
+                        LogMessage("Installerar bilder för Widgit Symbolskrift...");
+                        LanguageSelection ls = new LanguageSelection(Language.SWEDISH, ImageFormat.JPG);
+                        installationManager.Download(hargdata.WidgitImagesDirectory, ls, overwriteCheckbox.Checked, InstallationType.PLAIN_TEXT, usernameTextbox.Text, passwordTextbox.Text);
+                        LogMessage("Installerar ordlista för Widgit Symbolskrift...");
+                        hargdata.installWidgitDictionary();
+                        LogMessage("");
+                    }
+
+                    if (hargdata.IsCommunicateInstalled) {
+                        LogMessage("Installerar bilder för Communicate: In Print");
+                        LanguageSelection ls = new LanguageSelection(Language.SWEDISH, ImageFormat.JPG);
+                        installationManager.Download(hargdata.CommunicateImagesDirectory, ls, overwriteCheckbox.Checked, InstallationType.PLAIN_TEXT, usernameTextbox.Text, passwordTextbox.Text);
+                        LogMessage("Installerar ordlista för Communicate: In Print...");
+                        hargdata.installCommunicateDictionary();
+                        LogMessage("");
+                    }
                 }
 
                 config.CreateGenericPicWmfIni(_languageSelection);
@@ -478,6 +510,8 @@ namespace PictogramUpdater {
             this.installationManager = new InstallationManager(this.config, this.downloadListManager, this.languageProvider, this.pictogramRestService);
 
             this.imageFormatProvider = new ImageFormatProvider();
+
+            this.hargdata = new HargdataProducts();
         }
 
         private void LanguageChanged() {

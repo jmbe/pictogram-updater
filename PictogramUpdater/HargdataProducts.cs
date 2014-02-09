@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Win32;
 using System.IO;
+using System.Windows.Forms;
 
 namespace PictogramUpdater {
     class HargdataProducts {
@@ -75,6 +76,25 @@ namespace PictogramUpdater {
             string pf = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFiles);
             string commonAppData = System.Environment.GetFolderPath(System.Environment.SpecialFolder.CommonApplicationData);
             return s.Replace("$(ProgramFiles)", pf).Replace("$(SharedApplicationData)", commonAppData);
+        }
+
+        internal void InstallSymWriterDictionary() {
+            copyDictionaryTo("cfwl", SymWriterDictionaryDirectory);
+        }
+
+        private void copyDictionaryTo(string extension, string targetDir) {
+            Directory.CreateDirectory(targetDir);
+            DirectoryInfo startup = new DirectoryInfo(Application.StartupPath);
+            FileInfo included = new FileInfo(startup.FullName + @"\hargdata\Pictogram." + extension);
+            included.CopyTo(targetDir + @"\" + included.Name);
+        }
+
+        internal void installWidgitDictionary() {
+            copyDictionaryTo("wus", WidgitDictionaryPath);
+        }
+
+        internal void installCommunicateDictionary() {
+            copyDictionaryTo("cwl", CommunicateDictionaryPath);
         }
     }
 }
