@@ -136,7 +136,8 @@ namespace PictogramUpdater {
                 }
 
 
-                if (false && _languageSelection.Language.IsSwedish) {
+                Boolean allowHargdataInstallations = true;
+                if (allowHargdataInstallations && _languageSelection.Language.IsSwedish) {
 
                     if (hargdata.IsSymWriterInstalled) {
                         LogMessage("Installerar bilder för SymWriter...");
