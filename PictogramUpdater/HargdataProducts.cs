@@ -10,6 +10,13 @@ namespace PictogramUpdater {
     class HargdataProducts {
 
 
+        private DateTimeOffset DictionaryDate {
+            get {
+                DateTimeOffset cutoff = DateTimeOffset.Parse("2014-02-08 12:00:00 +02:00");
+                return cutoff;
+            }
+        }
+
         public string WidgitDictionaryPath {
             get {
                 return (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\WSS2000\Application", "Word List Path", null);
@@ -86,7 +93,12 @@ namespace PictogramUpdater {
             Directory.CreateDirectory(targetDir);
             DirectoryInfo startup = new DirectoryInfo(Application.StartupPath);
             FileInfo included = new FileInfo(startup.FullName + @"\hargdata\Pictogram." + extension);
-            included.CopyTo(targetDir + @"\" + included.Name);
+            FileInfo target = new FileInfo(targetDir + @"\" + included.Name);
+
+            if (Files.shouldWriteTo(target, DictionaryDate.DateTime)) {
+                included.CopyTo(target.FullName, true);
+                File.SetLastWriteTime(target.FullName, DictionaryDate.DateTime);
+            }
         }
 
         internal void installWidgitDictionary() {
