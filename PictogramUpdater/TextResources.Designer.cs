@@ -133,6 +133,15 @@ namespace PictogramUpdater {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 3.4.0.2.
+        /// </summary>
+        internal static string currentVersion {
+            get {
+                return ResourceManager.GetString("currentVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pictogram Update.
         /// </summary>
         internal static string dialogExitTitle {

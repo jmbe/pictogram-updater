@@ -246,4 +246,7 @@
   <data name="lookingForNewImagesWithoutText" xml:space="preserve">
     <value>Looking for new images without text...</value>
   </data>
+  <data name="currentVersion" xml:space="preserve">
+    <value>3.4.0.2</value>
+  </data>
 </root>

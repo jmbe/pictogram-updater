@@ -425,10 +425,13 @@ namespace PictogramUpdater {
 
             this.logTextbox.ScrollBars = ScrollBars.None;
 
+            string version = TextResources.currentVersion;
             if (System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed) {
-                this.versionLabel.Text = "Version " + System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
-                this.versionLabel.Show();
+                version = System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
             }
+
+            this.versionLabel.Text = "Version " + version;
+            this.versionLabel.Show();
 
             /* Handler f�r n�r formul�ret st�ngs */
             Closing += PictogramInstallerForm_Closing;
