@@ -164,6 +164,8 @@ namespace PictogramUpdater {
                         hargdata.installCommunicateDictionary();
                         LogMessage("");
                     }
+                } else {
+                    LogToFile("Skipping dictionary installation because language is " + _languageSelection.Language);
                 }
 
                 config.CreateGenericPicWmfIni(_languageSelection);

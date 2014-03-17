@@ -94,5 +94,9 @@ namespace PictogramUpdater {
                 return "xx".Equals(Code.ToLower());
             }
         }
+
+        public override string ToString() {
+            return Code;
+        }
     }
 }
