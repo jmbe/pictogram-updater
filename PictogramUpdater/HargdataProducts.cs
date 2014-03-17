@@ -9,11 +9,12 @@ using System.Windows.Forms;
 namespace PictogramUpdater {
     class HargdataProducts {
 
-
+        /// <summary>
+        /// Date of last dictionary update.
+        /// </summary>
         private DateTimeOffset DictionaryDate {
             get {
-                DateTimeOffset cutoff = DateTimeOffset.Parse("2014-02-08 12:00:00 +02:00");
-                return cutoff;
+                return DateTimeOffset.Parse("2014-02-08 12:00:00 +02:00");
             }
         }
 
