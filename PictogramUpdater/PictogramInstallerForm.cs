@@ -41,10 +41,10 @@ namespace PictogramUpdater {
     internal delegate void LanguageChangedCallback();
 
     /// <summary>
-    /// Inneh�ller metoder som har med anv�ndargr�nssnittet att g�ra.
+    /// Innehåller metoder som har med användargränssnittet att göra.
     /// 
-    /// M�nga metoder har att g�ra med att kunna anropa kontroller p� ett 
-    /// tr�ds�kert s�tt. Information ang�ende det finns p� 
+    /// Många metoder har att göra med att kunna anropa kontroller på ett 
+    /// trådsäkert sätt. Information angående det finns på 
     /// http://msdn2.microsoft.com/en-us/library/ms171728.aspx.
     /// </summary>
     public partial class PictogramInstallerForm : Form {
@@ -72,7 +72,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Laddar ner pictogram som saknas. Avsett att k�ras i egen tr�d.
+        /// Laddar ner pictogram som saknas. Avsett att köras i egen tråd.
         /// </summary>
         private void Download() {
             ClearDownloadLog("");
@@ -232,7 +232,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Kontrollerar om inloggningsuppgifterna �r giltiga. Avsett att k�ras i egen tr�d.
+        /// Kontrollerar om inloggningsuppgifterna är giltiga. Avsett att köras i egen tråd.
         /// </summary>
         private void CheckLogin() {
             SetControlsEnabled(false);
@@ -243,7 +243,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// H�mtar giltiga spr�k och fyller spr�klistan med dem. Avsett att k�ras i egen tr�d.
+        /// Hämtar giltiga språk och fyller språklistan med dem. Avsett att köras i egen tråd.
         /// </summary>
         private void RefreshLanguages() {
             SetProgressBarStyle(ProgressBarStyle.Marquee);
@@ -260,9 +260,9 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Metod f�r att h�mta valt spr�k p� ett tr�ds�kert s�tt.
+        /// Metod för att hämta valt språk på ett trådsäkert sätt.
         /// </summary>
-        /// <returns>valt spr�k</returns>
+        /// <returns>valt språk</returns>
         private string GetLanguage() {
             if (languagesComboBox.InvokeRequired) {
                 return (string)languagesComboBox.Invoke(new GetLanguageCallback(GetLanguage));
@@ -271,7 +271,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Skriver ut ett meddelande i loggen p� ett tr�ds�kert s�tt.
+        /// Skriver ut ett meddelande i loggen på ett trådsäkert sätt.
         /// </summary>
         /// <param name="message">meddelande</param>
         private void LogMessage(string message) {
@@ -304,7 +304,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Anger meddelande att visa i statusf�ltet.
+        /// Anger meddelande att visa i statusfältet.
         /// </summary>
         /// <param name="message">meddelande</param>
         private void SetStatus(string message) {
@@ -341,7 +341,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Metod f�r att s�tta egenskaper f�r progressbar p� ett tr�ds�kert s�tt.
+        /// Metod för att sätta egenskaper för progressbar på ett trådsäkert sätt.
         /// </summary>
         /// <param name="style"></param>
         /// <param name="current"></param>
@@ -369,7 +369,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Hj�lpmetod f�r att aktivera eller inaktivera m�nga kontroller i taget.
+        /// Hjälpmetod för att aktivera eller inaktivera många kontroller i taget.
         /// </summary>
         /// <param name="enabled"></param>
         private void SetControlsEnabled(bool enabled) {
@@ -381,7 +381,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Metod f�r att aktivera eller inaktiver en kontroll p� ett tr�ds�kert s�tt.
+        /// Metod för att aktivera eller inaktiver en kontroll på ett trådsäkert sätt.
         /// </summary>
         /// <param name="control"></param>
         /// <param name="enabled"></param>
@@ -394,7 +394,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Ritar ut grafik p� formul�ret.
+        /// Ritar ut grafik på formuläret.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -412,8 +412,8 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Hanterar klick p� "Kontrollera"-knappen. Kontrollerar att
-        /// kontouppgifterna �r giltiga.
+        /// Hanterar klick på "Kontrollera"-knappen. Kontrollerar att
+        /// kontouppgifterna är giltiga.
         /// </summary>
         private void VerifyLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             this._currentWorkingThread = new Thread(CheckLogin);
@@ -433,17 +433,17 @@ namespace PictogramUpdater {
             this.versionLabel.Text = "Version " + version;
             this.versionLabel.Show();
 
-            /* Handler f�r n�r formul�ret st�ngs */
+            /* Handler för när formuläret stängs */
             Closing += PictogramInstallerForm_Closing;
 
             createDependencyGraph();
 
-            /* Ladda sparade inst�llningar */
+            /* Ladda sparade inställningar */
             usernameTextbox.Text = _authenticationService.GetUsername();
             passwordTextbox.Text = _authenticationService.GetPassword();
 
 
-            /* Installationskatalog f�r wmf */
+            /* Installationskatalog för wmf */
             this.wmfDirectoryChooser.InstallPath = config.GetDefaultPath(_languageSelection);
 
             /* Plain text install dir*/
@@ -461,7 +461,7 @@ namespace PictogramUpdater {
 
             LogToFile("Installationen startas " + DateTime.Now.ToString());
 
-            /* Ladda ner spr�k */
+            /* Ladda ner språk */
             languageProvider.LogMessage += LogMessage;
             languageProvider.LogToFile += LogToFile;
             _currentWorkingThread = new Thread(RefreshLanguages);
@@ -475,7 +475,7 @@ namespace PictogramUpdater {
             installationManager.StatusChanged += SetStatus;
 
 
-            /* Klass att anv�nda f�r att kommunicera med webservice. */
+            /* Klass att använda för att kommunicera med webservice. */
             downloadManager.LogMessage += LogMessage;
             downloadManager.LogToFile += LogToFile;
             downloadManager.ProgressChanged += SetCurrentProgress;
@@ -559,7 +559,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Hanterar att formul�ret st�ngs. St�nger av arbetstr�den och sparar inst�llningar.
+        /// Hanterar att formuläret stängs. Stänger av arbetstråden och sparar inställningar.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -567,7 +567,7 @@ namespace PictogramUpdater {
             try {
                 abortDownload();
 
-                /* Spara inst�llningar */
+                /* Spara inställningar */
                 _authenticationService.saveAccount(usernameTextbox.Text, passwordTextbox.Text);
 
                 LogToFile("Installationen avslutas " + DateTime.Now.ToString());
@@ -578,7 +578,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Hanterar klick p� installationsknappen. S�tter ig�ng nedladdning.
+        /// Hanterar klick på installationsknappen. Sätter igång nedladdning.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -592,7 +592,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Metod f�r att s�tta val f�r spr�k p� ett tr�ds�kert s�tt.
+        /// Metod för att sätta val för språk på ett trådsäkert sätt.
         /// </summary>
         /// <param name="source"></param>
         private void SetLanguageDataSource(IList<string> source) {
@@ -629,7 +629,7 @@ namespace PictogramUpdater {
         }
 
         /// <summary>
-        /// Hanterar klick p� progressbaren. Avbryter nedladdning om s�dan p�g�r.
+        /// Hanterar klick på progressbaren. Avbryter nedladdning om sådan pågår.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
