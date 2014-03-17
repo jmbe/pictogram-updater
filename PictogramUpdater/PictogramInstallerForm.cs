@@ -145,6 +145,8 @@ namespace PictogramUpdater {
                         LogMessage("Installerar ordlista för SymWriter...");
                         hargdata.InstallSymWriterDictionary();
                         LogMessage("");
+                    } else {
+                        LogToFile("Will not install SymWriter dictionary. Application not installed. SymWriter xml path from registry is " + hargdata.SymWriterDirectoriesXmlPath);
                     }
 
                     if (hargdata.IsWidgitInstalled) {
@@ -154,6 +156,8 @@ namespace PictogramUpdater {
                         LogMessage("Installerar ordlista för Widgit Symbolskrift...");
                         hargdata.installWidgitDictionary();
                         LogMessage("");
+                    } else {
+                        LogToFile("Will not install widgit dictionary. Application not installed. Widgit dictionary path from registry is " + hargdata.WidgitDictionaryPath);
                     }
 
                     if (hargdata.IsCommunicateInstalled) {
@@ -163,6 +167,8 @@ namespace PictogramUpdater {
                         LogMessage("Installerar ordlista för Communicate: In Print...");
                         hargdata.installCommunicateDictionary();
                         LogMessage("");
+                    } else {
+                        LogToFile("Will not install Communicate: In Print dictionary. Application not installed. Dictionary directory from registry is " + hargdata.CommunicateDictionaryPath);
                     }
                 } else {
                     LogToFile("Skipping dictionary installation because language is " + _languageSelection.Language);

@@ -54,7 +54,8 @@ namespace PictogramUpdater {
             }
         }
 
-        private string SymWriterDirectoriesXmlPath {
+        /* Public for logging reasons. */
+        public string SymWriterDirectoriesXmlPath {
             get {
                 return (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\Communicate\DirectoryManifest", null, null);
             }
