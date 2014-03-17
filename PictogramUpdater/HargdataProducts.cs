@@ -31,7 +31,7 @@ namespace PictogramUpdater {
 
         public string WidgitImagesDirectory {
             get {
-                return (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\WWS3\Resources\ResDir3", "path", @"C:\WSS2000") + @"\graphics\Pictogram";
+                return (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\WWS3\Resources\ResDir3", "path", null) + @"\graphics\Pictogram";
             }
         }
 
@@ -43,7 +43,7 @@ namespace PictogramUpdater {
 
         public string CommunicateImagesDirectory {
             get {
-                return (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\Communicate_Sw\Resources\ResDir3", "path", @"C:\InPrint") + @"\graphics\Pictogram";
+                return (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\Communicate_Sw\Resources\ResDir3", "path", null) + @"\graphics\Pictogram";
             }
         }
 
