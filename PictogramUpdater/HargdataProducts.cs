@@ -90,6 +90,14 @@ namespace PictogramUpdater {
             copyDictionaryTo("cfwl", SymWriterDictionaryDirectory);
         }
 
+        internal void installWidgitDictionary() {
+            copyDictionaryTo("wus", WidgitDictionaryPath);
+        }
+
+        internal void installCommunicateDictionary() {
+            copyDictionaryTo("cwl", CommunicateDictionaryPath);
+        }
+
         private void copyDictionaryTo(string extension, string targetDir) {
             Directory.CreateDirectory(targetDir);
             DirectoryInfo startup = new DirectoryInfo(Application.StartupPath);
@@ -102,13 +110,6 @@ namespace PictogramUpdater {
             }
         }
 
-        internal void installWidgitDictionary() {
-            copyDictionaryTo("wus", WidgitDictionaryPath);
-        }
-
-        internal void installCommunicateDictionary() {
-            copyDictionaryTo("cwl", CommunicateDictionaryPath);
-        }
     }
 }
 
