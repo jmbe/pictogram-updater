@@ -82,7 +82,7 @@ namespace PictogramUpdater {
         }
 
         private string ExpandSymWriterConstants(string s) {
-            string pf = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFiles);
+            string pf = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFilesX86);
             string commonAppData = System.Environment.GetFolderPath(System.Environment.SpecialFolder.CommonApplicationData);
             return s.Replace("$(ProgramFiles)", pf).Replace("$(SharedApplicationData)", commonAppData);
         }
