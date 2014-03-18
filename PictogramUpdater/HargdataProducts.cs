@@ -20,7 +20,7 @@ namespace PictogramUpdater {
 
         public string WidgitDictionaryPath {
             get {
-                return (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\WSS2000\Application", "Word List Path", null);
+                return (string)(Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Widgit\WSS2000\Application", "Word List Path", null) ?? Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\WSS2000\Application", "Word List Path", null));
             }
         }
 
@@ -32,19 +32,19 @@ namespace PictogramUpdater {
 
         public string WidgitImagesDirectory {
             get {
-                return (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\WWS3\Resources\ResDir3", "path", null) + @"\graphics\Pictogram";
+                return (string)(Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Widgit\WWS3\Resources\ResDir3", "path", null) ?? Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\WWS3\Resources\ResDir3", "path", null)) + @"\graphics\Pictogram";
             }
         }
 
         public string CommunicateDictionaryPath {
             get {
-                return (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\Communicate_Sw\In Print\Application", "Word List Path", null);
+                return (string)(Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Widgit\Communicate_Sw\In Print\Application", "Word List Path", null) ?? Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\Communicate_Sw\In Print\Application", "Word List Path", null));
             }
         }
 
         public string CommunicateImagesDirectory {
             get {
-                return (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\Communicate_Sw\Resources\ResDir3", "path", null) + @"\graphics\Pictogram";
+                return (string)(Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Widgit\Communicate_Sw\Resources\ResDir3", "path", null) ?? Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\Communicate_Sw\Resources\ResDir3", "path", null)) + @"\graphics\Pictogram";
             }
         }
 
@@ -57,7 +57,7 @@ namespace PictogramUpdater {
         /* Public for logging reasons. */
         public string SymWriterDirectoriesXmlPath {
             get {
-                return (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\Communicate\DirectoryManifest", null, null);
+                return (string)(Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Widgit\Communicate\DirectoryManifest", null, null) ?? Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\Communicate\DirectoryManifest", null, null));
             }
         }
 
