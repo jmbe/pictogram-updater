@@ -135,6 +135,7 @@ namespace PictogramUpdater {
             } catch (ArgumentException ex) {
                 LogToFile(ex.ToString());
             } catch (IOException e) {
+                LogMessage(TextResources.failedFileAccess);
                 LogToFile(e.ToString());
             } catch (Exception e) {
                 LogToFile(e.ToString());
