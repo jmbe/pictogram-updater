@@ -527,6 +527,7 @@ namespace PictogramUpdater {
         }
 
         private void LanguageChanged() {
+            LogToFile("Changed language to " + _languageSelection.LanguageCode);
 
             string wmfPath = config.getInstallPathForLanguage(_languageSelection, InstallationType.CODE);
             wmfDirectoryChooser.languageChanged(wmfPath);
