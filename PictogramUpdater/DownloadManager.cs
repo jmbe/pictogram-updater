@@ -14,7 +14,7 @@ using PictogramUpdater;
 
 namespace PictogramUpdater {
     /// <summary>
-    /// Laddar ner bilder från webbtjänsten.
+    /// Laddar ner bilder frï¿½n webbtjï¿½nsten.
     /// </summary>
     class DownloadManager {
         private readonly LanguageProvider _languageProvider;
@@ -46,7 +46,7 @@ namespace PictogramUpdater {
 
         
         /// <summary>
-        /// Anger om befintliga filer ska skrivas över.
+        /// Anger om befintliga filer ska skrivas ï¿½ver.
         /// </summary>
         public bool OverwriteExistingFiles { get; set; }
         public InstallationType InstallationType{ get; set; }
@@ -81,14 +81,14 @@ namespace PictogramUpdater {
 
 
         /// <summary>
-        /// Sätter igång nedladdning av pictogrambilder.
+        /// Sï¿½tter igï¿½ng nedladdning av pictogrambilder.
         /// </summary>
         public void Download() {
             ProgressChanged(ProgressBarStyle.Continuous, 0, 1);
             StatusChanged(TextResources.downloadingFile + " " + DownloadList.Count + " " + TextResources.newFiles);
 
             try {
-                /* Skapa målkatalog */
+                /* Skapa mï¿½lkatalog */
                 var target = CreateTargetDirectory();
 
 
@@ -127,23 +127,27 @@ namespace PictogramUpdater {
 
                     //StatusChanged("Klar");
                     //LogMessage("");
-                    //LogMessage("Installationen är klar.");
+                    //LogMessage("Installationen ï¿½r klar.");
                 } else {
                     /* Fanns tydligen inga pictogram att ladda ner. Kontrollera inloggningsuppgifterna. */
                     //checkLogin(Username, Password);
                 }
             } catch (ArgumentException ex) {
                 LogToFile(ex.ToString());
+            } catch (IOException e) {
+                LogToFile(e.ToString());
+            } catch (Exception e) {
+                LogToFile(e.ToString());
             }
         }
 
         /// <summary>
-        /// Skapar målkatalogen om den inte redan finns.
+        /// Skapar mï¿½lkatalogen om den inte redan finns.
         /// </summary>
         private DirectoryInfo CreateTargetDirectory() {
             DirectoryInfo target = new DirectoryInfo(TargetPath.Trim());
             if (target.Exists) {
-                //LogMessage("Målkatalogen finns.");
+                //LogMessage("Mï¿½lkatalogen finns.");
             } else {
                 LogMessage(TextResources.creatingNewDirectory + " " + target.FullName + "...");
                 Directory.CreateDirectory(target.FullName);
@@ -153,10 +157,10 @@ namespace PictogramUpdater {
 
 
         /// <summary>
-        /// Metod för att kontrollera om inloggningsuppgifterna är giltiga.
+        /// Metod fï¿½r att kontrollera om inloggningsuppgifterna ï¿½r giltiga.
         /// </summary>
-        /// <param name="username">Användarnamn</param>
-        /// <param name="password">Lösenord</param>
+        /// <param name="username">Anvï¿½ndarnamn</param>
+        /// <param name="password">Lï¿½senord</param>
         /// <returns>en boolean som talar om ifall kontouppgifterna var giltiga</returns>
         public bool checkLogin(string username, string password) {
             ProgressChanged(ProgressBarStyle.Marquee, 0, 1);
