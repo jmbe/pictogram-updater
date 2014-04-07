@@ -145,8 +145,8 @@ namespace PictogramUpdater {
             if (target.Exists) {
                 //LogMessage("Målkatalogen finns.");
             } else {
+                LogMessage(TextResources.creatingNewDirectory + " " + target.FullName + "...");
                 Directory.CreateDirectory(target.FullName);
-                LogMessage(TextResources.creatingNewDirectory +  " " + target.FullName + "...");
             }
             return target;
         }
