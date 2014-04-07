@@ -466,6 +466,7 @@ namespace PictogramUpdater {
                 groupBox1.Visible = false;
             }
 
+            LogToFile("Version " + version);
             LogToFile("Installationen startas " + DateTime.Now.ToString());
 
             /* Ladda ner språk */
