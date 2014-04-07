@@ -96,6 +96,7 @@ namespace PictogramUpdater {
 
             try {
                 var language = _languageSelection.Language;
+                LogToFile("Updating ini file with paths " + wmfDirectoryChooser.InstallPath + ", " + plainTextDirectoryChooser.InstallPath);
                 config.CreateOrUpdateWmfIni(_languageSelection, wmfDirectoryChooser.InstallPath, plainTextDirectoryChooser.InstallPath);
 
 
