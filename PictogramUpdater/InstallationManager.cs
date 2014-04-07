@@ -27,6 +27,8 @@ namespace PictogramUpdater {
         public void Download(string targetPath, LanguageSelection selection, bool overwrite, InstallationType installationType,
                              string username, string password) {
 
+            LogToFile("Downloading " + selection + " files of type " + installationType + " to " + targetPath);
+
             bool refresh = _config.NeedsRefresh(selection, installationType);
             DateTimeOffset refreshedAt = DateTimeOffset.Now;
 

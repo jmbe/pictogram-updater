@@ -59,6 +59,10 @@ namespace PictogramUpdater {
                 return imageFormat.IsVectorFormat;
             }
         }
+
+        public override string ToString() {
+            return _language + " " + imageFormat;
+        }
     }
 
     public class Language {

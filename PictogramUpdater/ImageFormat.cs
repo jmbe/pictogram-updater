@@ -66,6 +66,10 @@ namespace PictogramUpdater {
                 return "svg".Equals(Extension.ToLower());
             }
         }
+
+        public override string ToString() {
+            return Display;
+        }
     }
 }
 
