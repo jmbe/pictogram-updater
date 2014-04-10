@@ -144,6 +144,7 @@ namespace PictogramUpdater {
                         LanguageSelection ls = new LanguageSelection(Language.SWEDISH, ImageFormat.SVG);
                         installationManager.Download(hargdata.SymWriterImagesDirectory, ls, overwriteCheckbox.Checked, InstallationType.PLAIN_TEXT, usernameTextbox.Text, passwordTextbox.Text);
                         LogMessage("Installerar ordlista för SymWriter...");
+                        LogToFile("Installerar ordlista för SymWriter till " + hargdata.SymWriterDictionaryDirectory);
                         hargdata.InstallSymWriterDictionary();
                         LogMessage("");
                     } else {
@@ -155,6 +156,7 @@ namespace PictogramUpdater {
                         LanguageSelection ls = new LanguageSelection(Language.SWEDISH, ImageFormat.JPG);
                         installationManager.Download(hargdata.WidgitImagesDirectory, ls, overwriteCheckbox.Checked, InstallationType.PLAIN_TEXT, usernameTextbox.Text, passwordTextbox.Text);
                         LogMessage("Installerar ordlista för Widgit Symbolskrift...");
+                        LogToFile("Installerar ordlista för Widgit Symbolskrift till " + hargdata.WidgitDictionaryPath);
                         hargdata.installWidgitDictionary();
                         LogMessage("");
                     } else {
@@ -166,6 +168,7 @@ namespace PictogramUpdater {
                         LanguageSelection ls = new LanguageSelection(Language.SWEDISH, ImageFormat.JPG);
                         installationManager.Download(hargdata.CommunicateImagesDirectory, ls, overwriteCheckbox.Checked, InstallationType.PLAIN_TEXT, usernameTextbox.Text, passwordTextbox.Text);
                         LogMessage("Installerar ordlista för Communicate: In Print...");
+                        LogToFile("Installerar ordlista för Communicate: In Print till " + hargdata.CommunicateDictionaryPath);
                         hargdata.installCommunicateDictionary();
                         LogMessage("");
                     } else {
