@@ -133,7 +133,7 @@ namespace PictogramUpdater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 3.4.2.0.
+        ///   Looks up a localized string similar to 3.5.0.0.
         /// </summary>
         internal static string currentVersion {
             get {
