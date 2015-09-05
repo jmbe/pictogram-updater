@@ -101,6 +101,7 @@ namespace PictogramUpdater {
 
                         LogMessage(TextResources.downloadingFile + " " + fileName + "...");
                         Stream stream = null;
+                        Boolean success = false;
 
                         try {
                             stream = new FileStream(path, FileMode.OpenOrCreate);
@@ -111,6 +112,8 @@ namespace PictogramUpdater {
                                 this.pictogramRestService.downloadImage(Username, Password, entry.FullCode, Language.Code.ToLower(), InstallationType, LanguageSelection, stream);
                             }
 
+                            success = true;
+
                         } catch (Exception e) {
                             LogMessage(TextResources.errorDownloadingFile + " " + fileName + ": " + e.Message);
                             LogToFile(e.ToString());
@@ -120,7 +123,9 @@ namespace PictogramUpdater {
                             }
                         }
 
-                        File.SetLastWriteTime(path, entry.Modified);
+                        if (success) {
+                            File.SetLastWriteTime(path, entry.Modified);
+                        }
 
                         ProgressChanged(ProgressBarStyle.Blocks, current++, DownloadList.Count);
                     }
