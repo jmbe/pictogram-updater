@@ -142,7 +142,7 @@ namespace PictogramUpdater {
                     if (hargdata.IsSymWriterInstalled) {
                         LogMessage("Installerar bilder för SymWriter...");
                         LanguageSelection ls = new LanguageSelection(Language.SWEDISH, ImageFormat.SVG);
-                        installationManager.Download(hargdata.SymWriterImagesDirectory, ls, overwriteCheckbox.Checked, InstallationType.PLAIN_TEXT, usernameTextbox.Text, passwordTextbox.Text);
+                        installationManager.Download(hargdata.SymWriterImagesDirectory, ls, overwriteCheckbox.Checked, InstallationType.TEXTLESS, usernameTextbox.Text, passwordTextbox.Text);
                         LogMessage("Installerar ordlista för SymWriter...");
                         LogToFile("Installerar ordlista för SymWriter till " + hargdata.SymWriterDictionaryDirectory);
                         hargdata.InstallSymWriterDictionary();

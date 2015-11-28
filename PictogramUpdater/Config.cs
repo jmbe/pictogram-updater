@@ -98,6 +98,10 @@ namespace PictogramUpdater {
 
                 if (selection.ImageFormat.IsSvg) {
                     cutoff = DateTimeOffset.Parse("2014-02-05 00:00:00 +02:00");
+
+                    if (InstallationType.TEXTLESS.Equals(installationType)) {
+                        cutoff = DateTimeOffset.Parse("2015-11-28 18:50:00 +01:00");
+                    }
                 }
 
                 if (dto.CompareTo(cutoff) < 0) {
