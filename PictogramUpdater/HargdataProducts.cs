@@ -112,9 +112,17 @@ namespace PictogramUpdater {
             FileInfo included = new FileInfo(startup.FullName + @"\hargdata\Pictogram." + extension);
             FileInfo target = new FileInfo(targetDir + @"\" + included.Name);
 
-            if (Files.shouldWriteTo(target, DictionaryDate.DateTime)) {
-                included.CopyTo(target.FullName, true);
-                File.SetLastWriteTime(target.FullName, DictionaryDate.DateTime);
+            LogToFile("Installerar " + included + " till " + target);
+
+            try {
+                if (Files.shouldWriteTo(target, DictionaryDate.DateTime)) {
+                    included.CopyTo(target.FullName, true);
+                    File.SetLastWriteTime(target.FullName, DictionaryDate.DateTime);
+                }
+            } catch (FileNotFoundException e) {
+                LogMessage("Kunde inte installera ordlista pga: " + e.Message);
+            } catch (DirectoryNotFoundException e) {
+                LogMessage("Kunde inte installera ordlista pga: " + e.Message);
             }
         }
 
