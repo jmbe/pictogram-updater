@@ -9,6 +9,9 @@ using System.Windows.Forms;
 namespace PictogramUpdater {
     class HargdataProducts {
 
+        public event LogMessageCallback LogMessage;
+        public event LogToFileCallback LogToFile;
+
         /// <summary>
         /// Date of last dictionary update.
         /// </summary>

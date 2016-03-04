@@ -495,6 +495,9 @@ namespace PictogramUpdater {
 
             _languageSelection.LanguageChanged += LanguageChanged;
 
+            hargdata.LogToFile += LogToFile;
+            hargdata.LogMessage += LogMessage;
+
             SetFormatsDataSource(this.imageFormatProvider.Formats);
         }
 
