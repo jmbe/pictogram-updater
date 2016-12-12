@@ -245,6 +245,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="cd-skiva.png" />
+    <Content Include="pictogram-sv.png" />
     <Content Include="pictogramuppdatering.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
