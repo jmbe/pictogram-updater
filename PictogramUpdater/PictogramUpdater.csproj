@@ -144,6 +144,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TextResources.sv.resx</DependentUpon>
     </Compile>
+    <None Include="Resources\pictogramBackground.png" />
     <EmbeddedResource Include="DirectoryChooser.resx">
       <DependentUpon>DirectoryChooser.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -252,7 +253,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="cd-skiva.png" />
-    <Content Include="pictogram-sv.png" />
     <Content Include="pictogramuppdatering.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
