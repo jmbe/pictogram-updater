@@ -217,10 +217,10 @@
     <value>i klartext</value>
   </data>
   <data name="cdHeader" xml:space="preserve">
-    <value>Uppdatering av Bildbas Pictogram 4.0</value>
+    <value>Uppdatering Bildbas Pictogram</value>
   </data>
   <data name="webbHeader" xml:space="preserve">
-    <value>Bildbas Pictogram 4.0 - webbversion</value>
+    <value>Bildbas Pictogram - webbversion</value>
   </data>
   <data name="downloadPlainTextComplete" xml:space="preserve">
     <value>Nedladdning av pictobilder i klartext klar.</value>

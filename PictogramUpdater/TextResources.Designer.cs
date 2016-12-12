@@ -97,7 +97,7 @@ namespace PictogramUpdater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update for Pictogram 4.0.
+        ///   Looks up a localized string similar to Update Pictogram Image Library.
         /// </summary>
         internal static string cdHeader {
             get {
