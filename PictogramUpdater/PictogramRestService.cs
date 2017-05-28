@@ -33,7 +33,7 @@ namespace PictogramUpdater {
         }
 
         private dynamic createRestClient(string path, RestService type) {
-            return new RestClient("http://" + hostname + "/rest/pictogram-1.0" + path, type);
+            return new RestClient("https://" + hostname + "/rest/pictogram-1.0" + path, type);
         }
 
         internal IList<Language> getSwedishLanguageNames() {
