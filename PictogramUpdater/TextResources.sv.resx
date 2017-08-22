@@ -226,7 +226,7 @@
     <value>Nedladdning av pictobilder i klartext klar.</value>
   </data>
   <data name="errorDownloadNew" xml:space="preserve">
-    <value>Kunde inte logga in på servern. Det kan bero på att en ny version av uppdateringsprogrammet har kommit ut. Titta gärna in på http://www.pictogram.se/produkter/ .</value>
+    <value>Kunde inte logga in på servern. Det kan bero på att en ny version av uppdateringsprogrammet har kommit ut. Titta gärna in på https://www.pictogram.se/produkter/ för att ladda ner den nya versionen.</value>
   </data>
   <data name="errorLoginFailed" xml:space="preserve">
     <value>Kunde inte logga in på servern. Kontrollera användarnamn och lösenord.</value>

@@ -241,7 +241,7 @@ namespace PictogramUpdater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not log in to server. Please check if a new version of the update program is available at http://www.pictogram.se/produkter/ ..
+        ///   Looks up a localized string similar to Could not log in to server. Please check if a new version of the update program is available at https://www.pictogram.se/produkter/ ..
         /// </summary>
         internal static string errorDownloadNew {
             get {

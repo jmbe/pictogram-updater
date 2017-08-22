@@ -226,7 +226,7 @@
     <value>Downloading plain text images complete.</value>
   </data>
   <data name="errorDownloadNew" xml:space="preserve">
-    <value>Could not log in to server. Please check if a new version of the update program is available at http://www.pictogram.se/produkter/ .</value>
+    <value>Could not log in to server. Please check if a new version of the update program is available at https://www.pictogram.se/produkter/ .</value>
   </data>
   <data name="errorLoginFailed" xml:space="preserve">
     <value>Could not connect to server. Please check username and password.</value>
