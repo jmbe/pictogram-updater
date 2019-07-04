@@ -37,7 +37,7 @@ namespace PictogramUpdater {
         public string SymWriterImagesDirectory {
             get {
                 string contents = File.ReadAllText(SymWriterDirectoriesXmlPath);
-                return ExpandSymWriterConstants(Strings.FindInString(contents, "<ThirdPartyResources>", "</ThirdPartyResources>")) + "Pictogram";
+                return ExpandSymWriterConstants(Strings.FindInString(contents, "<ThirdPartyResources>", "</ThirdPartyResources>")) + "graphics/Pictogram";
             }
         }
 
