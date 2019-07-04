@@ -44,7 +44,11 @@ namespace PictogramUpdater {
         public string SymWriterDictionaryDirectory {
             get {
                 string contents = File.ReadAllText(SymWriterDirectoriesXmlPath);
-                return ExpandSymWriterConstants(Strings.FindInString(contents, "<ThirdPartyWordlists>", "</ThirdPartyWordlists>")) + "Pictogram";
+                string path = ExpandSymWriterConstants(Strings.FindInString(contents, "<ThirdPartyWordlists>", "</ThirdPartyWordlists>"));
+                if (path.EndsWith("/")) {
+                    return path.Substring(0, path.Length - 1);
+                }
+                return path;
             }
         }
 
