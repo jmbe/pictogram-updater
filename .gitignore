@@ -7,3 +7,5 @@ PictogramUpdater.4.5.resharper.user
 *.user
 TestResult.xml
 */*.VisualState.xml
+#NuGet packages
+packages
