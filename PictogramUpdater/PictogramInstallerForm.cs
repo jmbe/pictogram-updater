@@ -140,15 +140,15 @@ namespace PictogramUpdater {
                 if (_languageSelection.Language.IsSwedish) {
 
                     if (hargdata.IsSymWriterInstalled) {
-                        LogMessage("Installerar bilder för SymWriter...");
+                        LogMessage("Installerar bilder för SymWriter/InPrint 3...");
                         LanguageSelection ls = new LanguageSelection(Language.SWEDISH, ImageFormat.SVG);
                         installationManager.Download(hargdata.SymWriterImagesDirectory, ls, overwriteCheckbox.Checked, InstallationType.TEXTLESS, usernameTextbox.Text, passwordTextbox.Text);
-                        LogMessage("Installerar ordlista för SymWriter...");
-                        LogToFile("Installerar ordlista för SymWriter till " + hargdata.SymWriterDictionaryDirectory);
+                        LogMessage("Installerar ordlista för SymWriter/InPrint 3...");
+                        LogToFile("Installerar ordlista för SymWriter/InPrint 3 till " + hargdata.SymWriterDictionaryDirectory);
                         hargdata.InstallSymWriterDictionary();
                         LogMessage("");
                     } else {
-                        LogToFile("Will not install SymWriter dictionary. Application not installed. SymWriter xml path from registry is " + hargdata.SymWriterDirectoriesXmlPath);
+                        LogToFile("Will not install SymWriter/InPrint 3 dictionary. Application not installed. SymWriter xml path from registry is " + hargdata.SymWriterDirectoriesXmlPath);
                     }
 
                     if (hargdata.IsCommunicateInstalled) {
