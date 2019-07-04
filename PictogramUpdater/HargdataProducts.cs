@@ -21,24 +21,6 @@ namespace PictogramUpdater {
             }
         }
 
-        public string WidgitDictionaryPath {
-            get {
-                return (string)(Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Widgit\WSS2000\Application", "Word List Path", null) ?? Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\WSS2000\Application", "Word List Path", null));
-            }
-        }
-
-        public Boolean IsWidgitInstalled {
-            get {
-                return Files.DirectoryFromRegistryExists(WidgitDictionaryPath);
-            }
-        }
-
-        public string WidgitImagesDirectory {
-            get {
-                return (string)(Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Widgit\WWS3\Resources\ResDir3", "path", null) ?? Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\WWS3\Resources\ResDir3", "path", null)) + @"\graphics\Pictogram";
-            }
-        }
-
         public string CommunicateDictionaryPath {
             get {
                 return (string)(Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Widgit\Communicate_Sw\In Print\Application", "Word List Path", null) ?? Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\Communicate_Sw\In Print\Application", "Word List Path", null));
@@ -96,10 +78,6 @@ namespace PictogramUpdater {
 
         internal void InstallSymWriterDictionary() {
             copyDictionaryTo("cfwl", SymWriterDictionaryDirectory);
-        }
-
-        internal void installWidgitDictionary() {
-            copyDictionaryTo("wus", WidgitDictionaryPath);
         }
 
         internal void installCommunicateDictionary() {

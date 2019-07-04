@@ -151,18 +151,6 @@ namespace PictogramUpdater {
                         LogToFile("Will not install SymWriter dictionary. Application not installed. SymWriter xml path from registry is " + hargdata.SymWriterDirectoriesXmlPath);
                     }
 
-                    if (hargdata.IsWidgitInstalled) {
-                        LogMessage("Installerar bilder för Widgit Symbolskrift...");
-                        LanguageSelection ls = new LanguageSelection(Language.SWEDISH, ImageFormat.JPG);
-                        installationManager.Download(hargdata.WidgitImagesDirectory, ls, overwriteCheckbox.Checked, InstallationType.PLAIN_TEXT, usernameTextbox.Text, passwordTextbox.Text);
-                        LogMessage("Installerar ordlista för Widgit Symbolskrift...");
-                        LogToFile("Installerar ordlista för Widgit Symbolskrift till " + hargdata.WidgitDictionaryPath);
-                        hargdata.installWidgitDictionary();
-                        LogMessage("");
-                    } else {
-                        LogToFile("Will not install widgit dictionary. Application not installed. Widgit dictionary path from registry is " + hargdata.WidgitDictionaryPath);
-                    }
-
                     if (hargdata.IsCommunicateInstalled) {
                         LogMessage("Installerar bilder för Communicate: In Print");
                         LanguageSelection ls = new LanguageSelection(Language.SWEDISH, ImageFormat.JPG);
