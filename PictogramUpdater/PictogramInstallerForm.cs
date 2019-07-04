@@ -151,17 +151,6 @@ namespace PictogramUpdater {
                         LogToFile("Will not install SymWriter/InPrint 3 dictionary. Application not installed. SymWriter xml path from registry is " + hargdata.SymWriterDirectoriesXmlPath);
                     }
 
-                    if (hargdata.IsCommunicateInstalled) {
-                        LogMessage("Installerar bilder för Communicate: In Print");
-                        LanguageSelection ls = new LanguageSelection(Language.SWEDISH, ImageFormat.JPG);
-                        installationManager.Download(hargdata.CommunicateImagesDirectory, ls, overwriteCheckbox.Checked, InstallationType.PLAIN_TEXT, usernameTextbox.Text, passwordTextbox.Text);
-                        LogMessage("Installerar ordlista för Communicate: In Print...");
-                        LogToFile("Installerar ordlista för Communicate: In Print till " + hargdata.CommunicateDictionaryPath);
-                        hargdata.installCommunicateDictionary();
-                        LogMessage("");
-                    } else {
-                        LogToFile("Will not install Communicate: In Print dictionary. Application not installed. Dictionary directory from registry is " + hargdata.CommunicateDictionaryPath);
-                    }
                 } else {
                     LogToFile("Skipping dictionary installation because language is " + _languageSelection.Language);
                 }

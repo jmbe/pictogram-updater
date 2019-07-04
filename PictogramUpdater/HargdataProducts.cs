@@ -21,24 +21,6 @@ namespace PictogramUpdater {
             }
         }
 
-        public string CommunicateDictionaryPath {
-            get {
-                return (string)(Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Widgit\Communicate_Sw\In Print\Application", "Word List Path", null) ?? Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\Communicate_Sw\In Print\Application", "Word List Path", null));
-            }
-        }
-
-        public string CommunicateImagesDirectory {
-            get {
-                return (string)(Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Widgit\Communicate_Sw\Resources\ResDir3", "path", null) ?? Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Widgit\Communicate_Sw\Resources\ResDir3", "path", null)) + @"\graphics\Pictogram";
-            }
-        }
-
-        public Boolean IsCommunicateInstalled {
-            get {
-                return Files.DirectoryFromRegistryExists(CommunicateDictionaryPath);
-            }
-        }
-
         /* Public for logging reasons. */
         public string SymWriterDirectoriesXmlPath {
             get {
@@ -78,10 +60,6 @@ namespace PictogramUpdater {
 
         internal void InstallSymWriterDictionary() {
             copyDictionaryTo("cfwl", SymWriterDictionaryDirectory);
-        }
-
-        internal void installCommunicateDictionary() {
-            copyDictionaryTo("cwl", CommunicateDictionaryPath);
         }
 
         private void copyDictionaryTo(string extension, string targetDir) {
