@@ -17,7 +17,7 @@ namespace PictogramUpdater {
         /// </summary>
         private DateTimeOffset DictionaryDate {
             get {
-                return DateTimeOffset.Parse("2018-03-28 14:00:00 +02:00");
+                return DateTimeOffset.Parse("2019-07-05 14:00:00 +02:00");
             }
         }
 
