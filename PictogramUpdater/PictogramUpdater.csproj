@@ -37,7 +37,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>https://www.pictogram.se/static/update/3.x/</InstallUrl>
-    <SupportUrl>http://www.pictogram.se/kontakt/</SupportUrl>
+    <SupportUrl>https://www.pictogram.se/kontakt/</SupportUrl>
     <ProductName>Uppdatering Bildbas Pictogram</ProductName>
     <PublisherName>Specialpedagogiska skolmyndigheten</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
