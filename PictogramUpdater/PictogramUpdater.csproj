@@ -19,7 +19,7 @@
     <TargetZone>LocalIntranet</TargetZone>
     <GenerateManifests>true</GenerateManifests>
     <SignManifests>true</SignManifests>
-    <ManifestCertificateThumbprint>58254E2BF52D8B27BFC60C1181BE3452C7E126AA</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>B3C267486DBDBA17FDD683EDC2EEB73156D5B486</ManifestCertificateThumbprint>
     <ManifestKeyFile>PictogramUpdater_TemporaryKey.pfx</ManifestKeyFile>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
