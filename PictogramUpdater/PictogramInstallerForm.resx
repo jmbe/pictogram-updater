@@ -592,7 +592,7 @@
     <value>22</value>
   </data>
   <data name="contactLink.Text" xml:space="preserve">
-    <value>http://www.pictogram.se/contact</value>
+    <value>https://www.pictogram.se/contact</value>
   </data>
   <data name="&gt;&gt;contactLink.Name" xml:space="preserve">
     <value>contactLink</value>
