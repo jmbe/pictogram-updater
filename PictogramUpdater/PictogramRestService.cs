@@ -15,6 +15,9 @@ namespace PictogramUpdater {
 
         public PictogramRestService(String hostname) {
             this.hostname = hostname;
+
+            // Support TLS 1.1 and 1.2 for .Net 4.0 https://stackoverflow.com/a/48930280
+            ServicePointManager.SecurityProtocol = (SecurityProtocolType)768 | (SecurityProtocolType)3072;
         }
 
 
